@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'src/components/buttons'
 import { increment, decrement } from 'src/slices/count'
-import useApi from 'src/hooks/useApi'
+
+const Wrapper = styled.div`
+  padding: 1rem;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -17,34 +20,23 @@ const Container = styled.div`
 const Home = () => {
   const countState = useSelector(state => state.countState)
   const dispatch = useDispatch()
-  const [{ isLoading }, createNote] = useApi.post('/note');
-  
-  const handleCreateNote = () => {
-
-  }
 
   return (
-    <div>
+    <Wrapper>
       <Container>
         <Button
           label='decrement'
-          color='primary'
+          color='brand'
           onClick={() => dispatch(decrement())}
         />
         <p>{countState.count}</p>
         <Button
           label='increment'
-          color='primary'
+          color='brand'
           onClick={() => dispatch(increment())}
         />
       </Container>
-
-      <Button
-        label='Create note'
-        color='primary'
-        onClick={handleCreateNote}
-      />
-    </div>
+    </Wrapper>
   )
 }
 

@@ -1,4 +1,4 @@
-import theme from 'shared/theme';
+import theme from 'src/app/theme'
 import styled, { css, keyframes } from 'styled-components';
 
 export const Gradient = (g1, g2) =>
@@ -16,8 +16,7 @@ export const tint = (hex: string, amount: number) => {
   let G = parseInt(hex.substring(3, 5), 16);
   let B = parseInt(hex.substring(5, 7), 16);
 
-  const getSingle = (number: number) =>
-    parseInt((number * (100 + amount)) / 100, 10);
+  const getSingle = (val: number): number => parseInt(((val * (100 + amount)) / 100).toString(), 10);
 
   R = getSingle(R);
   G = getSingle(G);
@@ -27,10 +26,10 @@ export const tint = (hex: string, amount: number) => {
   G = G < 255 ? G : 255;
   B = B < 255 ? B : 255;
 
-  const getDouble = (number: number) =>
-    number.toString(16).length === 1
-      ? `0${number.toString(16)}`
-      : number.toString(16);
+  const getDouble = (val: number) =>
+    val.toString(16).length === 1
+      ? `0${val.toString(16)}`
+      : val.toString(16);
 
   const RR = getDouble(R);
   const GG = getDouble(G);
@@ -40,9 +39,9 @@ export const tint = (hex: string, amount: number) => {
 };
 
 export const hexa = (hex, alpha) => {
-  var r = parseInt(hex.slice(1, 3), 16),
-    g = parseInt(hex.slice(3, 5), 16),
-    b = parseInt(hex.slice(5, 7), 16);
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
 
   if (alpha >= 0) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
@@ -71,93 +70,78 @@ export const Transition = {
   },
 };
 
-export const zIndex = new function() {
-  // Write down a camel-cased element descriptor as the name (e.g. modal or chatInput).
-  // Define at a component level here, then use math to handle order at a local level.
-  // (e.g. const ModalInput = styled.input`z-index: zIndex.modal + 1`;)
-  // This uses constructor syntax because that allows self-referential math
+// z-index computations
 
-  this.base = 1; // z-index: auto content will go here or inherit z-index from a parent
+const base = 1; // z-index: auto content will go here or inherit z-index from a parent
 
-  this.background = this.base - 1; // content that should always be behind other things (e.g. textures/illos)
-  this.hidden = this.base - 2; // this content should be hidden completely (USE ADD'L MEANS OF HIDING)
+const background = base - 1; // content that should always be behind other things (e.g. textures/illos)
+const hidden = base - 2; // content should be hidden completely (USE ADD'L MEANS OF HIDING)
 
-  this.card = this.base + 1; // all cards should default to one layer above the base content
-  this.loading = this.card + 1; // loading elements should never appear behind cards
-  this.avatar = this.card + 1; // avatars should never appear behind cards
-  this.form = this.card + 1; // form elements should never appear behind cards
-  this.search = this.form; // search is a type of form and should appear at the same level
-  this.dmInput = this.form;
+const card = base + 1; // all cards should default to one layer above the base content
+const loading = card + 1; // loading elements should never appear behind cards
+const avatar = card + 1; // avatars should never appear behind cards
+const form = card + 1; // form elements should never appear behind cards
+const search = form; // search is a type of form and should appear at the same level
+const dmInput = form;
 
-  this.composerToolbar = 2000; // composer toolbar - should sit in between most elements
+const composerToolbar = 2000; // composer toolbar - should sit in between most elements
 
-  this.chrome = 3000; // chrome should be visible in modal contexts
-  this.navBar = this.chrome; // navBar is chrome and should appear at the same level
-  this.mobileInput = this.chrome + 1; // the chatInput on mobile should appear above the navBar
-  this.dropDown = this.chrome + 1; // dropDowns shouldn't appear behind the navBar
+const chrome = 3000; // chrome should be visible in modal contexts
+const navBar = chrome; // navBar is chrome and should appear at the same level
+const mobileInput = chrome + 1; // the chatInput on mobile should appear above the navBar
+const dropDown = chrome + 1; // dropDowns shouldn't appear behind the navBar
 
-  this.slider = window.innerWidth < 768 ? this.chrome + 1 : this.chrome; // slider should appear significantly above the base to leave room for other elements
-  this.composer = 4000; // should cover all screen except toasts
-  this.chatInput = this.slider + 1; // the slider chatInput should always appear above the slider
-  this.flyout = this.chatInput + 3; // flyout may overlap with chatInput and should take precedence
+const slider = window.innerWidth < 768 ? chrome + 1 : chrome; // slider should appear significantly above the base to leave room for other elements
+const composer = 4000; // should cover all screen except toasts
+const chatInput = slider + 1; // the slider chatInput should always appear above the slider
+const flyout = chatInput + 3; // flyout may overlap with chatInput and should take precedence
 
-  this.fullscreen = 4000; // fullscreen elements should cover all screen content except toasts
+const fullscreen = 4000; // fullscreen elements should cover all screen content except toasts
 
-  this.modal = 5000; // modals should completely cover base content and slider as well
-  this.gallery = this.modal + 1; // gallery should never appear behind a modal
+const modal = 5000; // modals should completely cover base content and slider as well
+const gallery = modal + 1; // gallery should never appear behind a modal
 
-  this.toast = 6000; // toasts should be visible in every context
-  this.tooltip = this.toast + 1; // tooltips should always be on top
-}();
+const toast = 6000; // toasts should be visible in every context
+const tooltip = toast + 1; // tooltips should always be on top
 
-export const fontStack = css`
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica', 'Segoe',
-    sans-serif;
-`;
-
-export const monoStack = css`
-  font-family: 'Input Mono', 'Menlo', 'Inconsolata', 'Roboto Mono', monospace;
-`;
+export const zIndex = {
+  base,
+  background,
+  hidden,
+  card,
+  loading,
+  avatar,
+  form,
+  search,
+  dmInput,
+  composerToolbar,
+  chrome,
+  navBar,
+  mobileInput,
+  dropDown,
+  slider,
+  composer,
+  chatInput,
+  flyout,
+  fullscreen,
+  modal,
+  gallery,
+  toast,
+  tooltip,
+};
 
 const spin = keyframes`
   to {transform: rotate(360deg);}
 `;
 
-export const Spinner = styled.span`
-  width: ${props => (props.size ? `${props.size}px` : '32px')};
-  height: ${props => (props.size ? `${props.size}px` : '32px')};
-  &:before {
-    content: '';
-    box-sizing: border-box;
-    display: inline-block;
-    position: ${props => (props.inline ? 'relative' : 'absolute')};
-    top: ${props => (props.inline ? '0' : '50%')};
-    left: ${props => (props.inline ? '0' : '50%')};
-    width: ${props => (props.size !== undefined ? `${props.size}px` : '16px')};
-    height: ${props => (props.size !== undefined ? `${props.size}px` : '16px')};
-    margin-top: ${props =>
-      props.size !== undefined ? `-${props.size / 2}px` : '-8px'};
-    margin-left: ${props =>
-      props.size !== undefined ? `-${props.size / 2}px` : '-8px'};
-    border-radius: 50%;
-    border: 2px solid
-      ${props =>
-        props.color
-          ? eval(`props.theme.${props.color}`)
-          : props.theme.brand.alt};
-    border-top-color: transparent;
-    border-right-color: ${props =>
-      props.color ? eval(`props.theme.${props.color}`) : props.theme.brand.alt};
-    border-bottom-color: transparent;
-    animation: ${spin} 2s linear infinite;
-  }
+export const Margin = styled.div`
+  margin: ${props => props.margin && props.margin};
 `;
 
 export const Label = styled.label`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 0.5rem;
   font-weight: 500;
   font-size: 0.875rem;
   letter-spacing: -0.4px;
@@ -183,6 +167,7 @@ export const PrefixLabel = styled.label`
   }
 `;
 
+/*
 export const Input = styled.input`
   flex: 1 0 auto;
   background: ${theme.bg.default};
@@ -254,9 +239,9 @@ export const UnderlineInput = styled.input`
     border-color: ${theme.brand.default};
   }
 `;
+*/
 
 export const H1 = styled.h1`
-  ${fontStack};
   color: ${theme.text.default};
   font-weight: 900;
   font-size: 1.5rem;
@@ -267,7 +252,6 @@ export const H1 = styled.h1`
 
 export const H2 = styled.h2`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 700;
   font-size: 1.25rem;
   line-height: 1.3;
@@ -277,7 +261,6 @@ export const H2 = styled.h2`
 
 export const H3 = styled.h3`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.5;
@@ -287,7 +270,6 @@ export const H3 = styled.h3`
 
 export const H4 = styled.h4`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -297,7 +279,6 @@ export const H4 = styled.h4`
 
 export const H5 = styled.h5`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -307,7 +288,6 @@ export const H5 = styled.h5`
 
 export const H6 = styled.h6`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.675rem;
@@ -318,7 +298,6 @@ export const H6 = styled.h6`
 
 export const P = styled.p`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -328,7 +307,6 @@ export const P = styled.p`
 
 export const Span = styled.span`
   color: ${theme.text.default};
-  ${fontStack};
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -369,7 +347,6 @@ export const Onboarding = props => css`
   &:after {
     content: ${props.onboarding ? `'${props.onboarding}'` : "''"};
     z-index: ${zIndex.tooltip};
-    ${fontStack};
     text-align: left;
     line-height: 20px;
     font-size: 14px;

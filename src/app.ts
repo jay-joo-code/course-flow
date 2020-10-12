@@ -7,12 +7,30 @@ import cors from 'cors'
 import helmet from 'helmet'
 import compression from 'compression'
 import dotenv from "dotenv"
+import mongoose from 'mongoose'
+import morgan from 'morgan'
 
 dotenv.config({ path: __dirname + '/../.env' });
+
+// MONGODB
+const isProdDb = (process.env.NODE_ENV === 'production' && process.env.DB_PROD)
+const dbType = isProdDb ? 'prod' : 'dev'
+const URI = isProdDb ? process.env.DB_PROD : process.env.DB_DEV
+mongoose.connect(URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+const db = mongoose.connection
+db.once('open', () => {
+  // tslint:disable-next-line
+  console.log('DB type:', dbType)
+})
+
 const app = express()
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = { origin: isProduction ? false : '*' }
 
+app.use(morgan('dev'))
 app.set('trust proxy', 1)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

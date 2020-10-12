@@ -6,11 +6,10 @@ export const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 12px;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: -0.4px;
-  color: ${theme.text.default};
+  color: ${props => props.theme.text.default};
   transition: ${Transition.hover.off};
   position: relative;
   a {
@@ -35,7 +34,7 @@ export const StyledPrefixLabel = styled.label`
   margin-top: 4px;
   font-size: 14px;
   font-weight: 500;
-  color: ${theme.text.placeholder};
+  color: ${props => props.theme.text.placeholder};
   white-space: nowrap;
   text-overflow: ellipsis;
   > input {
@@ -50,14 +49,14 @@ export const StyledPrefixLabel = styled.label`
 
 export const StyledInput = styled.input`
   flex: 1 0 auto;
-  background: ${props =>
+  background: ${props => 
     props.disabled ? props.theme.bg.wash : props.theme.bg.default};
   font-weight: 500;
-  width: 100%;
+  width: ${props => props.width && `${props.width}px`};
   font-size: 14px;
-  border: 2px solid
-    ${props =>
-      props.disabled ? props.theme.bg.border : props.theme.bg.inactive};
+  border: 2px solid ${props => props.theme.bg.border};
+  border-color: ${props => props.error && props.theme.core.danger};
+  border-color: ${props => props.disabled && props.theme.bg.inactive};
   border-radius: 4px;
   padding: 8px 12px;
   margin-top: 2px;
@@ -70,19 +69,19 @@ export const StyledInput = styled.input`
       width: initial;
       margin-right: 0.5em;
     `} &::placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &::-webkit-input-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:-moz-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:-ms-input-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:focus {
-    border-color: ${theme.brand.default};
+    border-color: ${props => props.theme.brand.default};
     transition: ${Transition.hover.on};
   }
   &[type='file'] {
@@ -96,29 +95,29 @@ export const StyledInput = styled.input`
 export const StyledTextArea = styled(Textarea)`
   flex: 1 0 auto;
   width: 100%;
-  background: ${theme.bg.default};
+  background: ${props => props.theme.bg.default};
   font-weight: 500;
   font-size: 14px;
-  border: 2px solid ${theme.bg.inactive};
+  border: 2px solid ${props => props.theme.bg.inactive};
   border-radius: 4px;
   padding: 12px;
   margin-top: 2px;
   box-shadow: none;
   transition: ${Transition.hover.off};
   &::placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &::-webkit-input-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:-moz-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:-ms-input-placeholder {
-    color: ${theme.text.placeholder};
+    color: ${props => props.theme.text.placeholder};
   }
   &:focus {
-    border-color: ${theme.brand.default};
+    border-color: ${props => props.theme.brand.default};
     transition: ${Transition.hover.on};
   }
 `;
@@ -139,7 +138,7 @@ export const StyledUnderlineInput = styled.input`
     transition: ${Transition.hover.on};
   }
   &:focus {
-    border-color: ${theme.brand.default};
+    border-color: ${props => props.theme.brand.default};
     transition: ${Transition.hover.on};
   }
 `;
@@ -151,7 +150,7 @@ export const StyledHiddenInput = styled.input`
 `;
 
 export const StyledCheckboxWrapper = styled(FlexRow)`
-  color: ${theme.text.alt};
+  color: ${props => props.theme.text.alt};
   display: flex;
   align-items: ${props => props.align};
   line-height: 1.4;
@@ -160,20 +159,16 @@ export const StyledCheckboxWrapper = styled(FlexRow)`
     color: ${({ theme, disabled }) =>
       disabled ? theme.text.alt : theme.brand.alt};
   }
-  > div {
-    margin-left: -6px;
-    margin-right: 6px;
-  }
   > a {
     text-decoration: none;
-    color: ${theme.brand.alt};
+    color: ${props => props.theme.brand.alt};
     font-weight: 600;
     border-bottom: 2px solid transparent;
     position: relative;
     padding-bottom: 0px;
     transition: ${Transition.hover.off};
     &:hover {
-      border-bottom: 2px solid ${theme.brand.alt};
+      border-bottom: 2px solid ${props => props.theme.brand.alt};
       padding-bottom: 2px;
       transition: ${Transition.hover.on};
     }
@@ -182,7 +177,7 @@ export const StyledCheckboxWrapper = styled(FlexRow)`
 
 export const StyledError = styled.p`
   font-size: 14px;
-  color: ${theme.warn.default};
+  color: ${props => props.theme.warn.default};
   padding: 8px 0 16px;
   line-height: 1.4;
   font-weight: 600;
@@ -193,7 +188,7 @@ export const StyledError = styled.p`
 
 export const StyledSuccess = styled.p`
   font-size: 14px;
-  color: ${theme.success.default};
+  color: ${props => props.theme.success.default};
   padding: 8px 0 16px;
   line-height: 1.4;
   font-weight: 600;
@@ -207,7 +202,7 @@ export const PhotoInputLabel = styled.label`
   border-radius: ${props =>
     props.type === 'user' ? `${props.size}px` : '8px'};
   margin-top: 8px;
-  background-color: ${theme.bg.reverse};
+  background-color: ${props => props.theme.bg.reverse};
 `;
 
 export const PhotoInputImage = styled.img`
@@ -215,7 +210,7 @@ export const PhotoInputImage = styled.img`
   height: ${props => `${props.size}px`};
   border-radius: ${props =>
     props.type === 'user' ? `${props.size}px` : '8px'};
-  box-shadow: 0 0 0 2px ${theme.bg.default};
+  box-shadow: 0 0 0 2px ${props => props.theme.bg.default};
 `;
 
 export const CoverInputLabel = styled.label`
@@ -226,7 +221,7 @@ export const CoverInputLabel = styled.label`
   width: 100%;
   margin-top: 8px;
   border-radius: 8px;
-  background-color: ${theme.bg.reverse};
+  background-color: ${props => props.theme.bg.reverse};
 `;
 
 export const ProfileImage = styled.img`
@@ -241,11 +236,11 @@ export const ProfileImage = styled.img`
   height: 100%;
   border-radius: ${props =>
     props.type === 'user' ? `${props.size}px` : '8px'};
-  border: 2px solid ${theme.text.reverse};
+  border: 2px solid ${props => props.theme.text.reverse};
 `;
 
 export const CoverImage = styled.div`
-  background-color: ${theme.brand.default};
+  background-color: ${props => props.theme.brand.default};
   background-image: url('${props => props.src}');
   background-position: center;
   background-size: cover;
@@ -272,7 +267,7 @@ export const InputOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  color: ${theme.text.reverse};
+  color: ${props => props.theme.text.reverse};
   background-color: ${({ theme }) => hexa(theme.bg.reverse, 0.6)};
   padding: 8px;
   border-radius: ${props =>

@@ -3,6 +3,14 @@
    License: none (public domain)
 */
 
+* {
+	box-sizing: border-box !important;
+}
+
+*:focus {
+	outline: none;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -22,7 +30,6 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -57,15 +64,6 @@ input, button {
 	border:none; 
 } 
 
-a:focus, a:active, button:active, button:focus {
-	outline:0;
-}
-
 html {
-	font-size: 14px;
-	font-family: 'Roboto', sans-serif;
-	
-	@media (min-width: 768px) {
-        font-size: 16px;
-    }
+	font-family: 'Noto Sans KR', sans-serif !important;
 }

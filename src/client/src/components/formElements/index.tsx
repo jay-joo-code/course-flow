@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from '../icon';
+import styled from 'styled-components'
 
 import {
   StyledLabel,
@@ -24,30 +26,125 @@ export interface InputProps {
   value?: any
   placeholder?: string
   onChange?: React.FormEventHandler<HTMLInputElement>
+  onBlur?: React.FormEventHandler<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   autoFocus?: boolean
-  checked?: boolean
   disabled?: boolean
   id?: string
-  dataCy?: string
   size?: number
+  width?: number
+  error?: boolean
+  name?: string
 };
 
 export const Input = (props: InputProps) => {
+  const propsWithoutChildren = {
+    ...props,
+    children: undefined,
+  }
+
   return (
     <StyledLabel {...props}>
       {props.children}
       <StyledInput
-        id={props.id}
-        type={props.inputType}
-        defaultValue={props.defaultValue}
-        value={props.value}
-        placeholder={props.placeholder}
-        onChange={props.onChange}
-        autoFocus={props.autoFocus}
-        disabled={props.disabled}
-        data-cy={props.dataCy}
+        {...propsWithoutChildren}
       />
     </StyledLabel>
+  );
+};
+
+const CheckboxContainer = styled.div`
+  position: relative;
+  text-align: left;
+
+  & label {
+    cursor: pointer;
+    display: inline;
+    line-height: 1.25rem;
+    vertical-align: top;
+    clear: both;
+    padding-left: 1px;
+    &:not(:empty) {
+      padding-left: .75rem;
+    }
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    &:before {
+      // box
+      width: 1.25rem;
+      height: 1.25rem;
+      background: #fff;
+      border: 2px solid ${props => props.theme.bg.border};
+      border-radius: .125rem;
+      cursor: pointer;
+      transition: background .3s;
+
+      // box (checked)
+      background: ${props => props.checked && props.theme.brand.default};
+      border: ${props => props.checked && 'none'};
+    }
+
+    &:after {
+      // checkmark
+      transform: translate(.25rem, .25rem) rotate(-45deg);
+      width: .7rem;
+      height: .3rem;
+
+      border: 0.125rem solid white;
+      border-top-style: none;
+      border-right-style: none;
+
+      display: ${props => props.checked ? 'block' : 'none'};
+    }
+  }
+
+  input[type="checkbox"] {
+    outline: 0;
+    visibility: hidden;
+    width: 1.25rem;
+    margin: 0;
+    display: block;
+    float: left;
+    font-size: inherit;
+    
+    &:disabled {
+      + label:before{
+        border-color: ${props => props.theme.bg.border};
+      }
+      &:checked {
+        + label:before{
+          background: ${props => props.theme.bg.border};
+        }
+      }
+    }
+  }
+ 
+}
+`;
+
+export interface CheckboxProps extends InputProps {
+  checked?: boolean
+  onClick?: () => void
+}
+
+export const Checkbox = (props: CheckboxProps) => {
+  return (
+    <CheckboxContainer
+      checked={props.checked}
+      onClick={props.onClick}
+    >
+      <input
+        type='checkbox'
+        checked={props.checked}
+      />
+      <label />
+      {props.children}
+    </CheckboxContainer>
   );
 };
 
@@ -133,32 +230,6 @@ export const CoverInput = (props: CoverPhotoInputProps) => {
   );
 };
 
-export const Checkbox = (props: InputProps) => {
-  return (
-    <StyledLabel>
-      <StyledCheckboxWrapper
-        disabled={props.disabled || false}
-        align={props.align || 'center'}
-        data-cy={
-          props.dataCy
-            ? `${props.dataCy}-${props.checked ? 'checked' : 'unchecked'}`
-            : null
-        }
-      >
-        {props.checked ? <Icon glyph="checkmark" /> : <Icon glyph="checkbox" />}
-        <StyledHiddenInput
-          type="checkbox"
-          id={props.id}
-          checked={props.checked}
-          disabled={props.disabled || false}
-          onChange={props.onChange}
-          data-cy={props.dataCy}
-        />
-        {props.children}
-      </StyledCheckboxWrapper>
-    </StyledLabel>
-  );
-};
 
 export const TextArea = (props: InputProps) => {
   return (

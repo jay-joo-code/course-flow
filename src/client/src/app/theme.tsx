@@ -1,4 +1,10 @@
 export const theme = {
+  core: {
+    success: '#66c088',
+    primary: '#0275d8',
+    warning: '#f0ad4e',
+    danger: '#de6362'
+  },
   bg: {
     default: '#FFFFFF',
     reverse: '#16171A',
@@ -13,10 +19,6 @@ export const theme = {
     wash: '#E8E5FF',
     border: '#DDD9FF',
     dark: '#2A0080',
-  },
-  generic: {
-    default: '#E6ECF7',
-    alt: '#F6FBFC',
   },
   social: {
     facebook: {
