@@ -12,7 +12,6 @@ const useQuery = (url, propsVariables = {}) => {
 
   const makeRequest = useCallback(() => {
       mergeState({ isLoading: true });
-      console.log('make request')
       api.get(url).then(
         data => {
           mergeState({ data, error: null, isLoading: false });
@@ -27,13 +26,11 @@ const useQuery = (url, propsVariables = {}) => {
   );
 
   useEffect(() => {
-    console.log('useEffect')
     makeRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setLocalData = useCallback((getUpdatedData) => {
-    console.log('setLocalData')
     mergeState(({ data }) => {
         const updatedData = getUpdatedData(data);
         return { data: updatedData };

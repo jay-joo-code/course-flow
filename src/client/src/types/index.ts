@@ -14,3 +14,9 @@ export interface RootState {
   authState: AuthState
   countState: CountState
 }
+
+export interface ITask {
+  _id: string
+  name: string
+  complete: boolean
+}

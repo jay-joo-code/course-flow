@@ -1,32 +1,50 @@
 import React from 'react'
-import { Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-import history from 'src/util/browserHistory';
 import Home from 'src/pages/Home'
 import TodoList from 'src/pages/TodoList';
 import UserRegistration from 'src/pages/UserRegistration';
+import Counter from 'src/pages/Counter';
+import Header from './Header';
+import history from 'src/util/history';
 
-const routes = [
+export const routes = [
   {
     path: '/todo',
-    component: TodoList
+    component: TodoList,
+    label: 'Todo',
+    header: true,
   },
   {
     path: '/register',
-    component: UserRegistration
+    component: UserRegistration,
+    label: 'Register',
+    header: true,
+  },
+  {
+    path: '/counter',
+    component: Counter,
+    label: 'Counter',
+    header: true,
+  },
+  {
+    path: '/',
+    component: Home,
+    label: 'Home',
+    header: false,
   },
 ]
 
 const Routes = () => {
   return (
-    <Router history={history}>
+    <BrowserRouter history={history}>
+      <Header />
       <Switch>
-        <Route exact path="/" component={Home} />
-          {routes.map(({ path, component }) => (
-            <Route key={path} path={path} component={component} />
-          ))}
+        {routes.map(({ path, component }) => (
+          <Route key={path} path={path} component={component} />
+        ))}
       </Switch>
-    </Router>
+    </BrowserRouter>
   )
 }
 

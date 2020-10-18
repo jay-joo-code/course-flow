@@ -35,17 +35,15 @@ export const SvgWrapper = styled.div`
         font-size: 14px;
         font-weight: 600;
         background: ${theme.bg.default};
-        color: ${({ theme }) =>
-          process.env.NODE_ENV === 'production'
+        color: ${process.env.NODE_ENV === 'production'
             ? theme.text.default
-            : theme.warn.alt};
+            : theme.core.danger};
         border-radius: 8px;
         padding: 2px 4px;
         border: 2px solid
-          ${({ theme }) =>
-            process.env.NODE_ENV === 'production'
-              ? theme.text.default
-              : theme.warn.alt};
+          ${process.env.NODE_ENV === 'production'
+              ? props.theme.text.default
+              : props.theme.core.danger};
       }
     `};
 `;

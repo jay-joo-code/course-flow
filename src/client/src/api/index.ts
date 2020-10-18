@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import history from 'src/util/browserHistory';
+import history from 'src/util/history';
 import { objectToQueryString } from 'src/util/url';
 import { getStoredAuthToken, removeStoredAuthToken } from 'src/util/authToken';
 

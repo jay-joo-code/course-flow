@@ -1,13 +1,6 @@
 import express from 'express'
 import Task from '../models/Task';
 
-const log = async () => {
-  const tasks = await Task.find()
-  console.log('tasks', tasks)
-}
-
-log()
-
 const taskRouter = express.Router();
 
 taskRouter.post('/', async (req, res) => {
@@ -37,7 +30,7 @@ taskRouter.get('/:id', async (req, res) => {
   }
 });
 
-taskRouter.put('/', async (req, res) => {
+taskRouter.put('/:id', async (req, res) => {
   try {
     const note = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.send(note)

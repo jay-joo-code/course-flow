@@ -36,6 +36,6 @@ export const generateErrors = (fieldValues, fieldValidators) => {
       }
     });
   });
-  
+
   return errors;
 };

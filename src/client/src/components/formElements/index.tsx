@@ -17,6 +17,7 @@ import {
   InputOverlay,
   CoverImage,
   PhotoInputImage,
+  StyledCheckbox,
 } from './styles';
 
 export interface InputProps {
@@ -52,99 +53,22 @@ export const Input = (props: InputProps) => {
   );
 };
 
-const CheckboxContainer = styled.div`
-  position: relative;
-  text-align: left;
-
-  & label {
-    cursor: pointer;
-    display: inline;
-    line-height: 1.25rem;
-    vertical-align: top;
-    clear: both;
-    padding-left: 1px;
-    &:not(:empty) {
-      padding-left: .75rem;
-    }
-
-    &:before, &:after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    &:before {
-      // box
-      width: 1.25rem;
-      height: 1.25rem;
-      background: #fff;
-      border: 2px solid ${props => props.theme.bg.border};
-      border-radius: .125rem;
-      cursor: pointer;
-      transition: background .3s;
-
-      // box (checked)
-      background: ${props => props.checked && props.theme.brand.default};
-      border: ${props => props.checked && 'none'};
-    }
-
-    &:after {
-      // checkmark
-      transform: translate(.25rem, .25rem) rotate(-45deg);
-      width: .7rem;
-      height: .3rem;
-
-      border: 0.125rem solid white;
-      border-top-style: none;
-      border-right-style: none;
-
-      display: ${props => props.checked ? 'block' : 'none'};
-    }
-  }
-
-  input[type="checkbox"] {
-    outline: 0;
-    visibility: hidden;
-    width: 1.25rem;
-    margin: 0;
-    display: block;
-    float: left;
-    font-size: inherit;
-    
-    &:disabled {
-      + label:before{
-        border-color: ${props => props.theme.bg.border};
-      }
-      &:checked {
-        + label:before{
-          background: ${props => props.theme.bg.border};
-        }
-      }
-    }
-  }
- 
-}
-`;
-
-export interface CheckboxProps extends InputProps {
-  checked?: boolean
-  onClick?: () => void
+export interface CheckboxProps {
+  checked: boolean
+  onChange: React.FormEventHandler<HTMLInputElement>
+  children: React.ReactNode
 }
 
 export const Checkbox = (props: CheckboxProps) => {
   return (
-    <CheckboxContainer
-      checked={props.checked}
-      onClick={props.onClick}
-    >
+    <StyledCheckbox>
       <input
         type='checkbox'
+        onChange={props.onChange}
         checked={props.checked}
       />
-      <label />
-      {props.children}
-    </CheckboxContainer>
+      <span>{props.children}</span>
+    </StyledCheckbox>
   );
 };
 
