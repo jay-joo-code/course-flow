@@ -38,11 +38,28 @@ const useQuery = (url, propsVariables = {}) => {
     [mergeState, url],
   );
 
+  const updateLocalById = useCallback((id, newData) => {
+    mergeState(({ data }) => {
+        const updatedData = data.map((doc) => {
+          if (doc._id === id) {
+            return {
+              ...doc,
+              ...newData,
+            }
+          }
+          return doc
+        })
+        return { data: updatedData };
+      })},
+    [mergeState, url],
+  );
+
   return [
     {
       ...state,
       variables: { ...propsVariables, ...state.variables },
       setLocalData,
+      updateLocalById,
     },
     makeRequest,
   ];
