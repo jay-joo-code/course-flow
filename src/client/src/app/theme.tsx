@@ -1,54 +1,46 @@
 export const theme = {
-  core: {
-    success: '#66c088',
-    primary: '#0275d8',
-    warning: '#f0ad4e',
-    danger: '#de6362'
-  },
-  bg: {
-    default: '#FFFFFF',
-    reverse: '#16171A',
-    wash: '#FAFAFA',
-    divider: '#F6F7F8',
-    border: '#EBECED',
-    inactive: '#DFE7EF',
-  },
-  brand: {
-    default: '#4400CC',
-    alt: '#7B16FF',
-    wash: '#E8E5FF',
-    border: '#DDD9FF',
-    dark: '#2A0080',
-  },
-  social: {
-    facebook: {
-      default: '#3B5998',
-      alt: '#5A85DF',
-    },
-    twitter: {
-      default: '#00ACED',
-      alt: '#53D0FF',
-    },
-    google: {
-      default: '#ea4335',
-      alt: '#ea4335',
-    },
-    github: {
-      default: '#16171A',
-      alt: '#828C99',
-    },
-    ph: {
-      default: '#D85537',
-      alt: '#D85537',
-    },
-  },
-  text: {
-    default: '#24292E',
-    secondary: '#384047',
-    alt: '#67717A',
-    placeholder: '#7C8894',
-    reverse: '#FFFFFF',
-  },
+  // feedback
+  success: '#66c088',
+  info: '#0275d8',
+  warning: '#f0ad4e',
+  danger: '#de6362',
+
+  // bg
+  white: '#FFFFFF',
+  bg: '#FFFFFF',
+  bgWash: '#FAFAFA',
+
+  // border
+  border: '#EBECED',
+  borderLight: '#FAFAFB',
+  borderDark: '#CECFCF',
+
+  // brand
+  brand: '#4D84F4',
+  brandLight: '#A6C2FA',
+  brandDark: '#305399',
+  brandBg: '#E9F0FE',
+
+  // accent
+  accent: '#f5414f',
+  accentLight: '#FCC0C4',
+  accentDark: '#A32B35',
+  accentBg: '#FEE7E9',
+
+  // text
+  text: '#24292E',
+  textLight: '#76797C',
+  textMuted: '#ADAFB1',
+  textPlaceholder: '#7C8894',
+
+  // shadow
+  shadow: '0 2px 4px rgba(0, 0, 0, .2)',
+
+  // social
+  facebook:'#3B5998',
+  twitter:'#00ACED',
+  google:'#ea4335',
+  github:'#16171A',
 };
 
 export default theme;

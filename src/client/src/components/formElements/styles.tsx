@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FlexRow, Transition, hexa, zIndex } from '../globals';
+import { hexToAlpha, Transition } from '../globals';
 import Textarea from 'react-textarea-autosize';
 
 export const StyledLabel = styled.label`
@@ -291,7 +291,8 @@ export const StyledHiddenInput = styled.input`
   height: 0;
 `;
 
-export const StyledCheckboxWrapper = styled(FlexRow)`
+export const StyledCheckboxWrapper = styled.div`
+  display: flex;
   color: ${props => props.theme.text.alt};
   display: flex;
   align-items: ${props => props.align};
@@ -339,7 +340,6 @@ export const StyledSuccess = styled.p`
 export const PhotoInputLabel = styled.label`
   position: relative;
   height: ${props => `${props.size}px`};
-  z-index: ${zIndex.form + 1};
   width: ${props => `${props.size}px`};
   border-radius: ${props =>
     props.type === 'user' ? `${props.size}px` : '8px'};
@@ -359,7 +359,6 @@ export const CoverInputLabel = styled.label`
   position: relative;
   height: 114px;
   max-width: 342px;
-  z-index: ${zIndex.form};
   width: 100%;
   margin-top: 8px;
   border-radius: 8px;
@@ -369,7 +368,6 @@ export const CoverInputLabel = styled.label`
 export const ProfileImage = styled.img`
   position: absolute;
   object-fit: cover;
-  z-index: ${zIndex.form + 1};
   top: 0;
   right: 0;
   bottom: 0;
@@ -387,7 +385,6 @@ export const CoverImage = styled.div`
   background-position: center;
   background-size: cover;
   position: absolute;
-  z-index: ${zIndex.form};
   top: 0;
   right: 0;
   bottom: 0;
@@ -402,7 +399,6 @@ export const InputOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: ${zIndex.form + 2};
   top: 0;
   right: 0;
   bottom: 0;
@@ -410,7 +406,7 @@ export const InputOverlay = styled.div`
   width: 100%;
   height: 100%;
   color: ${props => props.theme.text.reverse};
-  background-color: ${({ theme }) => hexa(theme.bg.reverse, 0.6)};
+  background-color: ${({ theme }) => hexToAlpha(theme.bg.reverse, 0.6)};
   padding: 8px;
   border-radius: ${props =>
     props.type === 'user' ? `${props.size}px` : '8px'};

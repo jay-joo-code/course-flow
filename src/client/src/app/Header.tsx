@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { routes } from './Routes'
 import { NavLink } from 'react-router-dom'
 import history from 'src/util/history'
+import useRouter from 'src/hooks/useRouter'
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +18,9 @@ const Container = styled.div`
 
 const Header = () => {
   const headerRoutes = routes.filter((route) => route.header)
+  const router = useRouter();
+
+  if (router.pathname === '/landing') return null;
 
   return (
     <Container>

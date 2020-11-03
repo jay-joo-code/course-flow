@@ -10,6 +10,11 @@ import rootReducer from 'src/slices';
 import './normalise.scss'
 import Routes from './Routes'
 
+import Header from './Header';
+import history from 'src/util/history';
+import { BrowserRouter } from 'react-router-dom';
+import ToastWrapper from './ToastWrapper'
+
 const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : [];
 
 const store = configureStore({
@@ -22,7 +27,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Routes />
+        <BrowserRouter history={history}>
+          <Header />
+          <Routes />
+          <ToastWrapper />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );

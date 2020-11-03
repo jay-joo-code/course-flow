@@ -1,12 +1,11 @@
 import React from 'react'
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Home from 'src/pages/Home'
 import TodoList from 'src/pages/TodoList';
 import UserRegistration from 'src/pages/UserRegistration';
 import Counter from 'src/pages/Counter';
-import Header from './Header';
-import history from 'src/util/history';
+import Landing from 'src/pages/Landing';
 
 export const routes = [
   {
@@ -28,6 +27,12 @@ export const routes = [
     header: true,
   },
   {
+    path: '/landing',
+    component: Landing,
+    label: 'Landing',
+    header: true,
+  },
+  {
     path: '/',
     component: Home,
     label: 'Home',
@@ -37,14 +42,11 @@ export const routes = [
 
 const Routes = () => {
   return (
-    <BrowserRouter history={history}>
-      <Header />
-      <Switch>
-        {routes.map(({ path, component }) => (
-          <Route key={path} path={path} component={component} />
-        ))}
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      {routes.map(({ path, component }) => (
+        <Route key={path} path={path} component={component} />
+      ))}
+    </Switch>
   )
 }
 
