@@ -57,9 +57,8 @@ const TaskElt = ({ task, fetchTasks, toggleLocalTask }: TaskEltProps) => {
       <Checkbox
         checked={task.complete}
         onChange={handleChange}
-      >
-        <Label>{task.name}</Label>
-      </Checkbox>
+        label={task.name}
+      />
     </TaskContainer>
   )
 }

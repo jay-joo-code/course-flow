@@ -1,31 +1,16 @@
-import styled, { css } from 'styled-components';
-import { hexToAlpha, Transition } from '../globals';
+import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
+import ReactSelect from 'react-select'
 
-export const StyledLabel = styled.label`
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-weight: 500;
-  font-size: 14px;
-  letter-spacing: -0.4px;
-  color: ${props => props.theme.text.default};
-  transition: ${Transition.hover.off};
-  position: relative;
-  a {
-    text-decoration: underline;
-  }
-  &:hover > input,
-  &:hover > textarea {
-    border-color: ${props =>
-      props.disabled ? props.theme.bg.border : props.theme.text.alt};
-    transition: ${Transition.hover.on};
-  }
-  &:hover > input:focus,
-  &:hover > textarea:focus {
-    border-color: ${props =>
-      props.disabled ? props.theme.bg.inactive : props.theme.brand.alt};
-  }
+`;
+
+export const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const StyledCheckbox = styled.label`
@@ -100,13 +85,13 @@ export const StyledCheckbox = styled.label`
 /* Checked, Indeterminate */
   & > input:checked,
   & > input:indeterminate {
-    background-color: ${props => props.theme.brand.default};
+    background-color: ${props => props.theme.brand};
 }
 
   & > input:checked + span::before,
   & > input:indeterminate + span::before {
-    border-color: ${props => props.theme.brand.default};
-    background-color: ${props => props.theme.brand.default};
+    border-color: ${props => props.theme.brand};
+    background-color: ${props => props.theme.brand};
 }
 
   & > input:checked + span::after,
@@ -125,11 +110,11 @@ export const StyledCheckbox = styled.label`
 }
 
   & > input:focus {
-    opacity: 0.12;
+    opacity: 0;
 }
 
   &:hover > input:focus {
-    opacity: 0.16;
+    opacity: 0.12;
 }
 
 /* Active */
@@ -140,7 +125,7 @@ export const StyledCheckbox = styled.label`
 }
 
   & > input:active + span::before {
-    border-color: ${props => props.theme.brand.default};
+    border-color: ${props => props.theme.brand};
 }
 
   & > input:checked:active + span::before {
@@ -170,100 +155,61 @@ export const StyledCheckbox = styled.label`
 
 `;
 
-export const StyledPrefixLabel = styled.label`
-  display: flex;
-  width: 100%;
-  margin-top: 4px;
-  font-size: 14px;
+export const StyledInput = styled.input`
+  flex: 1 0 auto;
+  background: ${props => props.theme.bg};
   font-weight: 500;
-  color: ${props => props.theme.text.placeholder};
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  > input {
-    margin-left: 2px;
-  }
-  &:hover > input {
-    border-color: ${props =>
-      props.disabled ? props.theme.bg.inactive : props.theme.text.alt};
-    transition: ${Transition.hover.on};
+  font-size: .9rem;
+  border: 2px solid ${props => props.theme.borderDark};
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: border .1s ease-in-out;
+
+  // disabled
+  background: ${props => props.disabled && props.theme.bgWash};
+
+  // width
+  width: ${props => props.width && `${props.width}px`};
+
+  // error
+  border-color: ${props => props.error && props.theme.danger};
+
+  &:focus {
+    border-color: ${props => props.theme.brand};
   }
 `;
 
-export const StyledInput = styled.input`
-  flex: 1 0 auto;
-  background: ${props =>
-    props.disabled ? props.theme.bg.wash : props.theme.bg.default};
-  font-weight: 500;
-  width: ${props => props.width && `${props.width}px`};
-  font-size: 14px;
-  border: 2px solid ${props => props.theme.bg.border};
-  border-color: ${props => props.error && props.theme.core.danger};
-  border-color: ${props => props.disabled && props.theme.bg.inactive};
-  border-radius: 4px;
-  padding: 8px 12px;
-  margin-top: 2px;
-  box-shadow: none;
-  transition: ${Transition.hover.off};
-  ${props =>
-    props.type === 'checkbox' &&
-    css`
-      flex: initial;
-      width: initial;
-      margin-right: 0.5em;
-    `} &::placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &::-webkit-input-placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &:-moz-placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &:-ms-input-placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &:focus {
-    border-color: ${props => props.theme.brand.default};
-    transition: ${Transition.hover.on};
-  }
-  &[type='file'] {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
-    visibility: hidden;
-  }
+export const TextAreaContainer = styled.div`
+  
 `;
 
 export const StyledTextArea = styled(Textarea)`
-  flex: 1 0 auto;
   width: 100%;
-  background: ${props => props.theme.bg.default};
-  font-weight: 500;
-  font-size: 14px;
-  border: 2px solid ${props => props.theme.bg.inactive};
+  background: ${props => props.theme.bg};
+  font-size: .9rem;
+  font-family: inherit;
+  border: 2px solid ${props => props.theme.borderDark};
   border-radius: 4px;
-  padding: 12px;
-  margin-top: 2px;
-  box-shadow: none;
-  transition: ${Transition.hover.off};
+  line-height: 1.5;
+  padding: .5rem;
+  overflow: hidden;
+  transition: border .1s ease-in-out;
+
   &::placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &::-webkit-input-placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &:-moz-placeholder {
-    color: ${props => props.theme.text.placeholder};
-  }
-  &:-ms-input-placeholder {
-    color: ${props => props.theme.text.placeholder};
+    color: ${props => props.theme.textPlaceholder};
   }
   &:focus {
-    border-color: ${props => props.theme.brand.default};
-    transition: ${Transition.hover.on};
+    border-color: ${props => props.theme.brand};
   }
 `;
 
+export const StyledSelect = styled(ReactSelect)`
+  & * {
+    cursor: pointer !important;
+  }
+`;
+
+/*
 export const StyledUnderlineInput = styled.input`
   font-size: inherit;
   font-weight: inherit;
@@ -282,39 +228,6 @@ export const StyledUnderlineInput = styled.input`
   &:focus {
     border-color: ${props => props.theme.brand.default};
     transition: ${Transition.hover.on};
-  }
-`;
-
-export const StyledHiddenInput = styled.input`
-  visibility: hidden;
-  width: 0;
-  height: 0;
-`;
-
-export const StyledCheckboxWrapper = styled.div`
-  display: flex;
-  color: ${props => props.theme.text.alt};
-  display: flex;
-  align-items: ${props => props.align};
-  line-height: 1.4;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  &:hover {
-    color: ${({ theme, disabled }) =>
-      disabled ? theme.text.alt : theme.brand.alt};
-  }
-  > a {
-    text-decoration: none;
-    color: ${props => props.theme.brand.alt};
-    font-weight: 600;
-    border-bottom: 2px solid transparent;
-    position: relative;
-    padding-bottom: 0px;
-    transition: ${Transition.hover.off};
-    &:hover {
-      border-bottom: 2px solid ${props => props.theme.brand.alt};
-      padding-bottom: 2px;
-      transition: ${Transition.hover.on};
-    }
   }
 `;
 
@@ -425,3 +338,5 @@ export const InputOverlay = styled.div`
     transition: ${Transition.hover.on};
   }
 `;
+
+*/

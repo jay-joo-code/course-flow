@@ -9,12 +9,6 @@ import Landing from 'src/pages/Landing';
 
 export const routes = [
   {
-    path: '/todo',
-    component: TodoList,
-    label: 'Todo',
-    header: true,
-  },
-  {
     path: '/register',
     component: UserRegistration,
     label: 'Register',

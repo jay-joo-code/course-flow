@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
 const Loading = styled.div`
-  border-top: 3px solid ${props => props.theme.bgDark};
-  border-right: 3px solid ${props => props.theme.bgDark};
-  border-bottom: 3px solid ${props => props.theme.bgDark};
+  border-top: 3px solid ${props => props.theme.borderDark};
+  border-right: 3px solid ${props => props.theme.borderDark};
+  border-bottom: 3px solid ${props => props.theme.borderDark};
   border-left: 3px solid ${props => props.theme.brand};
 
   transform: translateZ(0);

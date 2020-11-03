@@ -1,74 +1,102 @@
 import React from 'react';
-import Icon from '../icon';
-import styled from 'styled-components'
-
 import {
-  StyledLabel,
-  StyledPrefixLabel,
   StyledInput,
-  StyledTextArea,
-  StyledUnderlineInput,
-  StyledHiddenInput,
-  StyledCheckboxWrapper,
-  StyledError,
-  StyledSuccess,
-  PhotoInputLabel,
-  CoverInputLabel,
-  InputOverlay,
-  CoverImage,
-  PhotoInputImage,
+  InputContainer,
   StyledCheckbox,
+  CheckboxContainer,
+  StyledTextArea,
+  TextAreaContainer,
+  StyledSelect,
 } from './styles';
+import { H4, Label } from '../globals';
+import theme from 'src/app/theme';
 
 export interface InputProps {
-  children?: React.ReactNode
-  inputType?: string
-  defaultValue?: string
+  label: string
   value?: any
   placeholder?: string
   onChange?: React.FormEventHandler<HTMLInputElement>
   onBlur?: React.FormEventHandler<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   autoFocus?: boolean
   disabled?: boolean
-  id?: string
   size?: number
   width?: number
   error?: boolean
-  name?: string
 };
 
 export const Input = (props: InputProps) => {
-  const propsWithoutChildren = {
-    ...props,
-    children: undefined,
-  }
-
   return (
-    <StyledLabel {...props}>
-      {props.children}
-      <StyledInput
-        {...propsWithoutChildren}
-      />
-    </StyledLabel>
+    <InputContainer>
+      <Label {...props}>{props.label}</Label>
+      <StyledInput {...props} />
+    </InputContainer>
   );
 };
 
 export interface CheckboxProps {
-  checked: boolean
-  onChange: React.FormEventHandler<HTMLInputElement>
-  children: React.ReactNode
+  label: string
+  checked?: boolean
+  onChange?: React.FormEventHandler<HTMLInputElement>
 }
 
 export const Checkbox = (props: CheckboxProps) => {
   return (
-    <StyledCheckbox>
-      <input
-        type='checkbox'
-        onChange={props.onChange}
-        checked={props.checked}
+    <CheckboxContainer>
+      <StyledCheckbox>
+        <input
+          type='checkbox'
+          onChange={props.onChange}
+          checked={props.checked}
+        />
+        <span />
+      </StyledCheckbox>
+      <Label noMargin {...props}>{props.label}</Label>
+    </CheckboxContainer>
+  );
+};
+
+interface TextAreaProps extends InputProps {
+  maxRows?: number
+  minRows?: number
+}
+
+export const TextArea = (props: TextAreaProps) => {
+  return (
+    <TextAreaContainer>
+      <Label {...props}>{props.label}</Label>
+      <div>
+        <StyledTextArea {...props} />
+      </div>
+    </TextAreaContainer>
+  );
+};
+
+interface Option {
+  label: string
+  value: string
+}
+
+interface SelectProps extends InputProps {
+  options: Option[]
+}
+
+export const Select = (props: SelectProps) => {
+  return (
+    <TextAreaContainer>
+      <Label {...props}>{props.label}</Label>
+      <StyledSelect
+        {...props}
+        theme={defaultStyles => ({
+          ...defaultStyles,
+          colors: {
+            ...defaultStyles.colors,
+            primary25: theme.brandLight,
+            primary50: theme.bgWash,
+            primary: theme.brand,
+          },
+        })}
       />
-      <span>{props.children}</span>
-    </StyledCheckbox>
+    </TextAreaContainer>
   );
 };
 
@@ -151,23 +179,6 @@ export const CoverInput = (props: CoverPhotoInputProps) => {
         data-cy={props.dataCy}
       />
     </CoverInputLabel>
-  );
-};
-
-
-export const TextArea = (props: InputProps) => {
-  return (
-    <StyledLabel>
-      {props.children}
-      <StyledTextArea
-        id={props.id}
-        placeholder={props.placeholder}
-        defaultValue={props.defaultValue}
-        onChange={props.onChange}
-        autoFocus={props.autoFocus}
-        data-cy={props.dataCy}
-      />
-    </StyledLabel>
   );
 };
 

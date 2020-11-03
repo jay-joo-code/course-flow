@@ -1,5 +1,6 @@
 import React from 'react'
-import { H3, H4, Margin, P } from 'src/components/globals';
+import { H3, H4, P } from 'src/components/globals';
+import { Margin } from 'src/components/layout'
 import styled from 'styled-components'
 import { ReactComponent as FactorySVG } from 'src/assets/illustrations/factory.svg'
 import { ReactComponent as WavesSmSVG } from 'src/assets/illustrations/waves-sm.svg'

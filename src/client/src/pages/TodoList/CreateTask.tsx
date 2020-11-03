@@ -46,9 +46,8 @@ const CreateTask = ({ fetchTasks }: CreateTaskProps) => {
           formik={formik}
           name='name'
           automargin
-        >
-          <Label>Task name</Label>
-        </FormikInput>
+          label='task name'
+        />
         <Button
           label='submit'
           type='submit'
