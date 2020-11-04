@@ -6,8 +6,15 @@ import TodoList from 'src/pages/TodoList';
 import UserRegistration from 'src/pages/UserRegistration';
 import Counter from 'src/pages/Counter';
 import Landing from 'src/pages/Landing';
+import ZoomTest from 'src/pages/ZoomTest';
 
 export const routes = [
+  {
+    path: '/zoom',
+    component: ZoomTest,
+    label: 'Zoom Test',
+    header: true,
+  },
   {
     path: '/register',
     component: UserRegistration,
