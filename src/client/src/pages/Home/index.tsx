@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import theme from 'src/app/theme';
 import { Button } from 'src/components/buttons';
-import { Checkbox, Input, Select, TextArea } from 'src/components/formElements';
+import { Checkbox, DatePicker, Input, RadioGroup, Select, TextArea } from 'src/components/formElements';
 import { H1, H2, H3, H4, H5, H6, P } from 'src/components/globals';
 import Icon from 'src/components/icon';
 import { FlexColumn, Margin } from 'src/components/layout';
@@ -9,6 +9,7 @@ import Loading from 'src/components/loading';
 import Modal from 'src/components/modal';
 import { showToast } from 'src/util/toast';
 import styled from 'styled-components'
+import FormikForm from './FormikForm'
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,6 +67,11 @@ const Home = () => {
       value: 'c',
     },
   ]
+
+  const [radioValue, setRadioValue] = useState('')
+  const [checkboxState, setCheckboxState] = useState(false)
+  const [date, setDate] = useState()
+  console.log('typeof date, date :>> ', typeof date, date);
 
   return (
     <>
@@ -158,16 +164,29 @@ const Home = () => {
           />
           <Checkbox
             label='test checkbox'
+            checked={checkboxState}
+            onChange={(e) => setCheckboxState(e.currentTarget.checked)}
+          />
+          <RadioGroup
+            options={testOptions}
+            value={radioValue}
+            setValue={setRadioValue}
           />
           <TextArea
             label='test textarea'
             minRows={4}
           />
-          <Select
-            label='test select'
-            options={testOptions}
+          <TextArea
+            label='disabled textarea'
+            minRows={4}
+            disabled
+          />
+          <DatePicker
+            date={date}
+            setDate={setDate}
           />
         </FlexColumn>
+        <FormikForm />
       </Wrapper>
     </>
   )

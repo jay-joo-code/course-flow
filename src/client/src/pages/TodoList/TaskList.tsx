@@ -78,7 +78,7 @@ const TaskElt = ({ task, queryConfig }: TaskEltProps) => {
         onChange={handleChange}
         label={task.name}
       />
-      <Icon 
+      <Icon
         variant='delete'
         onClick={handleDelete}
         pointer

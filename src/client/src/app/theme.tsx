@@ -32,7 +32,7 @@ export const theme = {
   text: '#24292E',
   textLight: '#76797C',
   textMuted: '#ADAFB1',
-  textPlaceholder: '#7C8894',
+  textPlaceholder: '#D3D7DB',
 
   // shadow
   shadow: '0 2px 4px rgba(0, 0, 0, .2)',

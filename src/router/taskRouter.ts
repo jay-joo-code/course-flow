@@ -1,5 +1,4 @@
 import express from 'express'
-import pause from '../util/pause';
 import Task from '../models/Task';
 import substringQuery from '../util/substringQuery';
 

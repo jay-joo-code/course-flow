@@ -1,6 +1,5 @@
 import React from 'react'
 import { Input } from 'src/components/formElements'
-import debounce from 'debounce'
 
 const TaskFilter = ({ queryConfig, setQueryConfig }) => {
   const handleChange = (e) => {

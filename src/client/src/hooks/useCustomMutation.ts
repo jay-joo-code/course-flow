@@ -29,10 +29,10 @@ const useCustomMutation = <T>({ url, method, updateLocal }: IMutationOptions) =>
           const queryKey = [fetchUrl, fetchVariables]
           // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
           queryCache.cancelQueries(queryKey)
-      
+
           // Snapshot the previous value
           const previousValues = queryCache.getQueryData(queryKey)
-      
+
           // Optimistically update to the new value
           queryCache.setQueryData(queryKey, (old: any) => {
             // create
@@ -71,7 +71,7 @@ const useCustomMutation = <T>({ url, method, updateLocal }: IMutationOptions) =>
 
             return [...old]
           })
-      
+
           // Return the snapshotted value
           return () => queryCache.setQueryData(queryKey, previousValues)
         }

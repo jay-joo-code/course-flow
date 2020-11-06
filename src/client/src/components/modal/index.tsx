@@ -6,7 +6,7 @@ import Icon from '../icon';
 import { FlexRow } from '../layout';
 import theme from 'src/app/theme';
 import { hexToRGBA } from 'src/util/colors';
- 
+
 const customStyles = {
   content : {
     top: '50%',
@@ -47,7 +47,7 @@ interface ModalProps {
   heading?: string
   onAfterOpen?: () => void
 }
- 
+
 const Modal = (props: ModalProps) => {
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Modal = (props: ModalProps) => {
   }, [props.isOpen])
 
   if (!props.isOpen) return null;
- 
+
   return (
     <ReactModal
       isOpen={props.isOpen}
@@ -77,5 +77,5 @@ const Modal = (props: ModalProps) => {
     </ReactModal>
   );
 }
- 
+
 export default Modal

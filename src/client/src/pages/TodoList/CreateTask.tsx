@@ -52,7 +52,6 @@ const CreateTask = ({ queryConfig }) => {
         <FormikInput
           formik={formik}
           name='name'
-          automargin
           label='task name'
         />
         <Button

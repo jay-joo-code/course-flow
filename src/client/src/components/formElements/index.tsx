@@ -7,19 +7,26 @@ import {
   StyledTextArea,
   TextAreaContainer,
   StyledSelect,
+  RadioLabel,
+  RadioGroupContainer,
+  StyledDateWrapper,
 } from './styles';
 import { H4, Label } from '../globals';
 import theme from 'src/app/theme';
+import { isInclusivelyAfterDay, DayPickerSingleDateController } from 'react-dates'
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './DatePickerStyles.scss'
+import moment from 'moment'
 
 export interface InputProps {
-  label: string
+  label?: string
   value?: any
   placeholder?: string
   onChange?: React.FormEventHandler<HTMLInputElement>
   onBlur?: React.FormEventHandler<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   autoFocus?: boolean
   disabled?: boolean
-  size?: number
   width?: number
   error?: boolean
 };
@@ -35,8 +42,8 @@ export const Input = (props: InputProps) => {
 
 export interface CheckboxProps {
   label: string
-  checked?: boolean
-  onChange?: React.FormEventHandler<HTMLInputElement>
+  checked: boolean
+  onChange: React.FormEventHandler<HTMLInputElement>
 }
 
 export const Checkbox = (props: CheckboxProps) => {
@@ -55,7 +62,7 @@ export const Checkbox = (props: CheckboxProps) => {
   );
 };
 
-interface TextAreaProps extends InputProps {
+export interface TextAreaProps extends InputProps {
   maxRows?: number
   minRows?: number
 }
@@ -71,21 +78,26 @@ export const TextArea = (props: TextAreaProps) => {
   );
 };
 
-interface Option {
+export interface IOption {
   label: string
   value: string
 }
 
-interface SelectProps extends InputProps {
-  options: Option[]
+export interface SelectProps  {
+  options: IOption[]
+  value: string
+  onChange: React.FormEventHandler<HTMLInputElement>
+  label?: string
+  disabled?: boolean
 }
 
 export const Select = (props: SelectProps) => {
+  const valueObject = props.options.find((option) => option.value === props.value)
   return (
-    <TextAreaContainer>
+    <div>
       <Label {...props}>{props.label}</Label>
       <StyledSelect
-        {...props}
+        isDisabled={props.disabled}
         theme={defaultStyles => ({
           ...defaultStyles,
           colors: {
@@ -95,8 +107,70 @@ export const Select = (props: SelectProps) => {
             primary: theme.brand,
           },
         })}
+        {...props}
+        value={valueObject}
       />
-    </TextAreaContainer>
+    </div>
+  );
+};
+
+interface RadioGroupProps extends InputProps {
+  value: any
+  setValue: (newValue: string) => void
+  options: IOption[]
+}
+
+export const RadioGroup = (props: RadioGroupProps) => {
+  const handleRadioClick = (e, value) => {
+    if (e.target.checked) {
+      if (value === props.value) {
+        // already checked, uncheck
+        props.setValue('')
+      } else {
+        // check
+        props.setValue(value)
+      }
+    }
+  }
+
+  return (
+    <RadioGroupContainer>
+      {props.options.map(({ value, label }) => (
+        <RadioLabel key={value}>
+          <input
+            type='radio'
+            value={value}
+            checked={props.value === value}
+            onClick={(e) => handleRadioClick(e, value)}
+          />
+          <span>{label}</span>
+        </RadioLabel>
+      ))}
+    </RadioGroupContainer>
+  );
+};
+
+export interface DatePickerProps {
+  date: Date | undefined
+  setDate: (newDate: any) => void
+}
+
+export const DatePicker = (props: DatePickerProps) => {
+  const handleDateChange = (newDate) => {
+    props.setDate(newDate.toDate())
+  }
+  
+  return (
+    <StyledDateWrapper>
+      <DayPickerSingleDateController
+        {...props}
+        onDateChange={handleDateChange}
+        focused={true}
+        date={props.date && moment(props.date)}
+        hideKeyboardShortcutsPanel
+        isOutsideRange={day => !isInclusivelyAfterDay(day, moment())}
+      />
+    </StyledDateWrapper>
   );
 };
 
