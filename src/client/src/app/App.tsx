@@ -14,6 +14,7 @@ import Header from './Header';
 import history from 'src/util/history';
 import { BrowserRouter } from 'react-router-dom';
 import ToastWrapper from './ToastWrapper'
+import { queryCache, ReactQueryCacheProvider } from 'react-query'
 
 const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : [];
 
@@ -28,9 +29,11 @@ const App = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <BrowserRouter history={history}>
-          <Header />
-          <Routes />
-          <ToastWrapper />
+          <ReactQueryCacheProvider queryCache={queryCache}>
+            <Header />
+            <Routes />
+            <ToastWrapper />
+          </ReactQueryCacheProvider>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

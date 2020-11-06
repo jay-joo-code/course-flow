@@ -3,6 +3,7 @@ import axios from 'axios';
 import history from 'src/util/history';
 import { objectToQueryString } from 'src/util/url';
 import { getStoredAuthToken, removeStoredAuthToken } from 'src/util/authToken';
+import { showToast } from 'src/util/toast';
 
 const defaults = {
   baseURL: '/api',
@@ -18,7 +19,11 @@ const defaults = {
   },
 };
 
-const api = (method, url, variables) =>
+const api = (
+  method: 'get' | 'post' | 'put' | 'delete',
+  url: string,
+  variables: any
+) =>
   new Promise((resolve, reject) => {
     axios({
       url: `${defaults.baseURL}${url}`,
@@ -27,11 +32,12 @@ const api = (method, url, variables) =>
       params: method === 'get' ? variables : undefined,
       data: method !== 'get' ? variables : undefined,
       paramsSerializer: objectToQueryString,
-    }).then(
-      response => {
+    })
+      .then((response) => {
         resolve(response.data);
       },
       error => {
+        // TODO: improve error handling
         if (error.response) {
           if (error.response.data?.error?.code === 'INVALID_TOKEN') {
             removeStoredAuthToken();
@@ -46,15 +52,5 @@ const api = (method, url, variables) =>
     );
   });
 
-export default {
-  // @ts-ignore
-  get: (...args) => api('get', ...args),
-  // @ts-ignore
-  post: (...args) => api('post', ...args),
-  // @ts-ignore
-  put: (...args) => api('put', ...args),
-  // @ts-ignore
-  patch: (...args) => api('patch', ...args),
-  // @ts-ignore
-  delete: (...args) => api('delete', ...args),
-};
+
+export default api

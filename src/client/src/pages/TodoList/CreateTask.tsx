@@ -1,12 +1,14 @@
 import React from 'react'
 import { Button } from 'src/components/buttons'
-import useApi from 'src/hooks/useApi'
 import styled from 'styled-components'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Input } from 'src/components/formElements';
 import { FormikInput } from 'src/components/formikElements';
 import { Label } from 'src/components/globals';
+import useCustomMutation from 'src/hooks/useCustomMutation';
+import { ITask } from 'src/types';
+import { IQueryConfig } from 'src/hooks/useCustomQuery';
 
 const Container = styled.div`
   width: 400px;
@@ -14,11 +16,18 @@ const Container = styled.div`
 `
 
 interface CreateTaskProps {
-  fetchTasks: () => void
+  queryConfig: IQueryConfig
 }
 
-const CreateTask = ({ fetchTasks }: CreateTaskProps) => {
-  const [{ data, isLoading }, createTask] = useApi.post('/task')
+const CreateTask = ({ queryConfig }) => {
+  const { isLoading, mutate } = useCustomMutation<ITask>({
+    url: '/task',
+    method: 'post',
+    updateLocal: {
+      queryConfig,
+      type: 'create',
+    }
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -30,11 +39,9 @@ const CreateTask = ({ fetchTasks }: CreateTaskProps) => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        await createTask({ ...values })
-        await fetchTasks()
+        await mutate(values as any)
         resetForm()
       } catch (e) {
-        // TODO: render toast
       }
     },
   });

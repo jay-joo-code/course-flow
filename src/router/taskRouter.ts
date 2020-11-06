@@ -1,5 +1,7 @@
 import express from 'express'
+import pause from '../util/pause';
 import Task from '../models/Task';
+import substringQuery from '../util/substringQuery';
 
 const taskRouter = express.Router();
 
@@ -14,7 +16,7 @@ taskRouter.post('/', async (req, res) => {
 
 taskRouter.get('/', async (req, res) => {
   try {
-    const docs = await Task.find()
+    const docs = await Task.find(substringQuery(req.query, ['name']))
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

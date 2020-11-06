@@ -8,5 +8,5 @@ export const StyledField = styled.div`
 export const FieldError = styled(H5)`
   margin-top: 6px;
   line-height: 1;
-  color: ${props => props.theme.core.danger};
+  color: ${props => props.theme.danger};
 `;
