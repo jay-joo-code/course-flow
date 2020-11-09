@@ -10,14 +10,9 @@ export interface CountState {
   count: number
 }
 
-export interface TokenState {
-  token: string
-}
-
 export interface RootState {
   authState: AuthState
   countState: CountState
-  tokenState: TokenState
 }
 
 export interface ITask {
