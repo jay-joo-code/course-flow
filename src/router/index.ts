@@ -1,6 +1,6 @@
 import express from 'express'
-import taskRouter from './taskRouter'
-import authRouter from './authRouter'
+import privateRouter from './privateRouter'
+import publicRouter from './publicRouter'
 
 const router = express.Router()
 
@@ -8,7 +8,7 @@ router.get('/ping', async (req, res) => {
   res.send('pong')
 })
 
-router.use('/task', taskRouter)
-router.use('/auth', authRouter)
+router.use('/public', publicRouter)
+router.use('/private', privateRouter)
 
 export default router

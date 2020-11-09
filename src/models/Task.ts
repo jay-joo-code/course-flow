@@ -13,4 +13,10 @@ const taskSchema = new Schema({
   },
 }, { timestamps: true });
 
-export default mongoose.model('Task', taskSchema)
+export interface TaskDoc extends mongoose.Document {
+  _id: string
+  name: string
+  complete: boolean
+}
+
+export default mongoose.model<TaskDoc>('Task', taskSchema)

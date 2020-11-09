@@ -1,10 +1,10 @@
 import express from 'express'
-import Task from '../models/Task';
-import substringQuery from '../util/substringQuery';
+import Task from '../../models/Task';
+import substringQuery from '../../util/substringQuery';
 
-const authRouter = express.Router();
+const taskRouter = express.Router();
 
-authRouter.post('/', async (req, res) => {
+taskRouter.post('/', async (req, res) => {
   try {
     const doc = await new Task(req.body).save()
     res.send(doc)
@@ -13,7 +13,7 @@ authRouter.post('/', async (req, res) => {
   }
 });
 
-authRouter.get('/', async (req, res) => {
+taskRouter.get('/', async (req, res) => {
   try {
     const docs = await Task.find(substringQuery(req.query, ['name']))
     res.send(docs)
@@ -22,19 +22,7 @@ authRouter.get('/', async (req, res) => {
   }
 });
 
-authRouter.get('/current', async (req, res) => {
-  try {
-    const TEST_USER_DATA = {
-     name: 'test user' 
-    }
-    // res.send(TEST_USER_DATA)
-    res.send(null)
-  } catch (e) {
-    res.status(500).send(e)
-  }
-});
-
-authRouter.get('/:id', async (req, res) => {
+taskRouter.get('/:id', async (req, res) => {
   try {
     const doc = await Task.findById(req.params.id)
     res.send(doc)
@@ -43,7 +31,7 @@ authRouter.get('/:id', async (req, res) => {
   }
 });
 
-authRouter.put('/:id', async (req, res) => {
+taskRouter.put('/:id', async (req, res) => {
   try {
     const note = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.send(note)
@@ -52,7 +40,7 @@ authRouter.put('/:id', async (req, res) => {
   }
 });
 
-authRouter.delete('/:id', async (req, res) => {
+taskRouter.delete('/:id', async (req, res) => {
   try {
     const result = await Task.findByIdAndDelete(req.params.id)
     res.send(result)
@@ -61,4 +49,4 @@ authRouter.delete('/:id', async (req, res) => {
   }
 });
 
-export default authRouter
+export default taskRouter
