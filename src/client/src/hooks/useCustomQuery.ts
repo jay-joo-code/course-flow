@@ -4,7 +4,7 @@ import { objectToQueryString } from "src/util/url"
 
 export interface IQueryConfig {
   url: string
-  variables: any
+  variables?: any
 }
 
 const useCustomQuery = <T>({ url, variables }: IQueryConfig) => {

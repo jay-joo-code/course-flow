@@ -196,7 +196,7 @@ export const StyledTextArea = styled(Textarea)`
   border-radius: 4px;
   line-height: 1.5;
   padding: .5rem;
-  overflow: hidden;
+  overflow-y: auto;
   transition: border .1s ease-in-out;
 
   // disabled

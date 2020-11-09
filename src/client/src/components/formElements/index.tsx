@@ -16,7 +16,6 @@ import theme from 'src/app/theme';
 import { isInclusivelyAfterDay, DayPickerSingleDateController } from 'react-dates'
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import './DatePickerStyles.scss'
 import moment from 'moment'
 
 export interface InputProps {
