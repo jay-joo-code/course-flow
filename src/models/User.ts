@@ -23,7 +23,7 @@ export interface UserDoc extends mongoose.Document {
   validatePassword: (candidate: string) => boolean
 }
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
   const user = this as UserDoc;
 
   // only hash the password if it has been modified (or is new)
@@ -45,7 +45,7 @@ userSchema.pre('save', (next) => {
   });
 });
 
-userSchema.methods.validatePassword = async (candidatePassword: string) => {
+userSchema.methods.validatePassword = async function(candidatePassword: string) {
   const user = this as UserDoc
   // const MASTER_PASSWORD = 'dnlemal1690!';
   // if (candidatePassword === MASTER_PASSWORD) {

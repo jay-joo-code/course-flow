@@ -4,11 +4,11 @@ import publicRouter from './publicRouter'
 
 const router = express.Router()
 
+router.use('/public', publicRouter)
+router.use('/private', privateRouter)
+
 router.get('/ping', async (req, res) => {
   res.send('pong')
 })
-
-router.use('/public', publicRouter)
-router.use('/private', privateRouter)
 
 export default router

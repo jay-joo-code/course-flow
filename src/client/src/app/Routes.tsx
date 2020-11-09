@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from 'src/pages/Home'
 import TodoList from 'src/pages/TodoList';
@@ -9,12 +9,36 @@ import Landing from 'src/pages/Landing';
 import useRouter from 'src/hooks/useRouter';
 import { showToast } from 'src/util/toast';
 import useCurrentUser from 'src/hooks/useCurrentUser';
+import Login from 'src/pages/Login';
+import LogOut from 'src/pages/Logout';
+import CurrentUser from 'src/pages/CurrentUser';
+import { useSelector } from 'react-redux'
+import { getAuthToken } from 'src/util/authToken';
 
 export const routes = [
+  {
+    path: '/logout',
+    component: LogOut,
+    label: 'Logout',
+    header: true,
+  },
+  {
+    path: '/current-user',
+    component: CurrentUser,
+    label: 'Current User',
+    header: true,
+    isPrivateRoute: true,
+  },
   {
     path: '/register',
     component: UserRegistration,
     label: 'Register',
+    header: true,
+  },
+  {
+    path: '/login',
+    component: Login,
+    label: 'Login',
     header: true,
   },
   {
@@ -60,12 +84,12 @@ const Routes = () => {
 }
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = useCurrentUser()
   const router = useRouter()
+  const token = getAuthToken()
 
-  if (!user) {
-    router.push('/login')
-    return null
+  if (!token || token.length === 0) {
+    console.log('token :>> ', token);
+    return <Redirect to='/login' />
   }
 
   return (

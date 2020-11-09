@@ -4,6 +4,17 @@ import jwt from 'jsonwebtoken';
 
 const authRouter = express.Router();
 
+const runLogs = async () => {
+  try {
+    const users = await User.find()
+    console.log('users', users)
+  } catch (e) {
+    console.log('e', e)
+  }
+}
+
+// runLogs()
+
 authRouter.post('/register', async (req, res) => {
   try {
     const { email } = req.body;
@@ -12,7 +23,7 @@ authRouter.post('/register', async (req, res) => {
     if (!user) {
       const newUser = await new User(req.body).save()
       const token = jwt.sign({ _id: newUser._id }, process.env.AUTH_SECRET);
-      res.send({ ...newUser, token })
+      res.send({ ...newUser.toObject(), token })
     } else {
       res.status(500).send('User already exists')
     }
@@ -28,7 +39,7 @@ authRouter.post('/login', async (req, res) => {
     if (user) {
       if (user.validatePassword(password)) {
         const token = jwt.sign({ _id: user._id }, process.env.AUTH_SECRET);
-        res.send({ ...user, token })
+        res.send({ ...user.toObject(), token })
       } else {
         throw new Error('Incorrect password')
       }

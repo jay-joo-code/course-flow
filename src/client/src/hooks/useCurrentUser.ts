@@ -3,7 +3,7 @@ import useCustomQuery from './useCustomQuery'
 
 const useCurrentUser = () => {
   const { data } = useCustomQuery({
-    url: '/auth/current',
+    url: '/private/user/current',
   })
   return data
 }

@@ -22,6 +22,15 @@ userRouter.get('/', async (req, res) => {
   }
 });
 
+userRouter.get('/current', async (req, res) => {
+  try {
+    console.log('req.user', req.user)
+    res.send(req.user)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+});
+
 userRouter.get('/:id', async (req, res) => {
   try {
     const doc = await User.findById(req.params.id)

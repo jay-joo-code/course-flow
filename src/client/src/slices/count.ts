@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { CountState } from "src/types";
 
@@ -18,8 +18,8 @@ const countSlice = createSlice({
       state.count -= 1
     },
 
-    set: (state, action) => {
-      state.count = 0
+    set: (state, { payload }) => {
+      state.count = payload
     },
 
     reset: (state) => {

@@ -18,7 +18,7 @@ import { queryCache, ReactQueryCacheProvider } from 'react-query'
 
 const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : [];
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: [...getDefaultMiddleware({ thunk: false }), ...loggerMiddleware],
   devTools: process.env.NODE_ENV !== 'production',

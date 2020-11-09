@@ -28,6 +28,7 @@ export interface InputProps {
   disabled?: boolean
   width?: number
   error?: boolean
+  type?: string
 };
 
 export const Input = (props: InputProps) => {

@@ -2,14 +2,14 @@ import axios from 'axios';
 
 import history from 'src/util/history';
 import { objectToQueryString } from 'src/util/url';
-import { getStoredAuthToken, removeStoredAuthToken } from 'src/util/authToken';
+import { getAuthToken, resetAuthToken } from 'src/util/authToken';
 import { showToast } from 'src/util/toast';
 
 const defaults = {
   baseURL: '/api',
   headers: () => ({
     'Content-Type': 'application/json',
-    Authorization: getStoredAuthToken() ? `Bearer ${getStoredAuthToken()}` : undefined,
+    Authorization: getAuthToken() ? `Bearer ${getAuthToken()}` : undefined,
   }),
   error: {
     code: 'INTERNAL_ERROR',
@@ -37,11 +37,11 @@ const api = (
         resolve(response.data);
       },
       error => {
-        // TODO: improve error handling
         if (error.response) {
           if (error.response.data?.error?.code === 'INVALID_TOKEN') {
-            removeStoredAuthToken();
-            history.push('/auth');
+            // TODO: change to on error code 401
+            resetAuthToken();
+            history.push('/login');
           } else {
             reject(error.response.data.error);
           }

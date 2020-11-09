@@ -1,6 +1,6 @@
 
-export const getStoredAuthToken = () => localStorage.getItem('authToken');
+export const getAuthToken = () => localStorage.getItem('authToken');
 
-export const storeAuthToken = token => localStorage.setItem('authToken', token);
+export const setAuthToken = token => localStorage.setItem('authToken', token);
 
-export const removeStoredAuthToken = () => localStorage.removeItem('authToken');
+export const resetAuthToken = () => localStorage.removeItem('authToken');
