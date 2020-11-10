@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import useCustomMutation from 'src/hooks/useCustomMutation';
 import { Button } from 'src/components/buttons';
 import { FormikCheckbox, FormikDatePicker, FormikInput, FormikRadioGroup, FormikSelect, FormikTextArea } from 'src/components/formikElements';
-import { setAuthToken } from 'src/util/authToken';
+import { getAuthToken, setAuthToken } from 'src/util/authToken';
 
 const Form = styled.form`
   width: 400px;

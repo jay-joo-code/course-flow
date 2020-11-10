@@ -3,7 +3,6 @@ import axios from 'axios';
 import history from 'src/util/history';
 import { objectToQueryString } from 'src/util/url';
 import { getAuthToken, resetAuthToken } from 'src/util/authToken';
-import { showToast } from 'src/util/toast';
 
 const defaults = {
   baseURL: '/api',
@@ -38,8 +37,7 @@ const api = (
       },
       error => {
         if (error.response) {
-          if (error.response.data?.error?.code === 'INVALID_TOKEN') {
-            // TODO: change to on error code 401
+          if (error.response.status === 401) {
             resetAuthToken();
             history.push('/login');
           } else {

@@ -72,12 +72,8 @@ const Routes = () => {
   return (
     <Switch>
       {routes.map(({ path, component, isPrivateRoute }) => isPrivateRoute
-      ? (
-        <PrivateRoute key={path} path={path} component={component} />
-        ) 
-      : (
-        <Route key={path} path={path} component={component} />
-      )
+        ? <PrivateRoute key={path} path={path} component={component} />
+        : <Route key={path} path={path} component={component} />
       )}
     </Switch>
   )
@@ -86,9 +82,9 @@ const Routes = () => {
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const router = useRouter()
   const token = getAuthToken()
+  const user = useCurrentUser()
 
-  if (!token || token.length === 0) {
-    console.log('token :>> ', token);
+  if (!token || token.length === 0 || !user) {
     return <Redirect to='/login' />
   }
 

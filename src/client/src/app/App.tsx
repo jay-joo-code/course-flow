@@ -11,10 +11,10 @@ import './normalise.scss'
 import Routes from './Routes'
 
 import Header from './Header';
-import history from 'src/util/history';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import ToastWrapper from './ToastWrapper'
 import { queryCache, ReactQueryCacheProvider } from 'react-query'
+import history from 'src/util/history'
 
 const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : [];
 
@@ -28,13 +28,13 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter history={history}>
+        <Router history={history}>
           <ReactQueryCacheProvider queryCache={queryCache}>
             <Header />
             <Routes />
             <ToastWrapper />
           </ReactQueryCacheProvider>
-        </BrowserRouter>
+        </Router>
       </ThemeProvider>
     </Provider>
   );

@@ -5,6 +5,7 @@ const useCurrentUser = () => {
   const { data } = useCustomQuery({
     url: '/private/user/current',
   })
+
   return data
 }
 
