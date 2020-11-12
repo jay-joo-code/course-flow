@@ -13,6 +13,10 @@ import { ReactComponent as BookmarkFilledIcon } from 'src/assets/icons/bookmark-
 import { ReactComponent as ReportIcon } from 'src/assets/icons/report.svg';
 import { ReactComponent as ExchangeIcon } from 'src/assets/icons/exchange.svg';
 import { ReactComponent as AddIcon } from 'src/assets/icons/add.svg';
+import { ReactComponent as PeopleIcon } from 'src/assets/icons/people.svg';
+import { ReactComponent as UpIcon } from 'src/assets/icons/up.svg';
+import { ReactComponent as LeftIcon } from 'src/assets/icons/left.svg';
+import { ReactComponent as PersonIcon } from 'src/assets/icons/person.svg';
 
 const IconContainer = styled.div`
   height: 1rem;
@@ -45,6 +49,8 @@ const Icon = (props: IconProps) => {
     'done': <DoneIcon />,
     'right': <RightIcon />,
     'down': <DownIcon />,
+    'up': <UpIcon />,
+    'left': <LeftIcon />,
     'delete': <DeleteIcon />,
     'close': <CloseIcon />,
     'download': <DownloadIcon />,
@@ -53,6 +59,8 @@ const Icon = (props: IconProps) => {
     'add': <AddIcon />,
     'exchange': <ExchangeIcon />,
     'bookmark-filled': <BookmarkFilledIcon />,
+    'people': <PeopleIcon />,
+    'person': <PersonIcon />,
   }
 
   return (
