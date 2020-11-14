@@ -1,16 +1,51 @@
-const passport = require('passport')
-const FacebookStrategy = require('passport-facebook').Strategy;
-const User = require('../models/User');
+import passport from 'passport'
+import { Strategy as FacebookStrategy } from 'passport-facebook'
+import User from '../models/User'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: __dirname + '/../../.env' });
+
+/*
+https://developers.facebook.com/apps/
+
+1. create app
+2. settings > basic
+privacy policy (can use github privacy policy page), data deletion url
+app id, secret shown here
+add domains to "App Domains"
+3. products > Facebook Login > Settings > Valid OAuth Redirect URIs
+localhost not accepted here
+only prod domains
+
+auth works on localhost if in "development mode"
+throws invalid redirectUrl error if in live mode,
+bc localhost is not registered as an accepted redirect url
+*/
 
 passport.use(new FacebookStrategy({
-    clientID: "159030901322260",
-    clientSecret: "0d641e47f5d55af221ec80346f3f2d43",
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+    clientID: process.env.ID_FACEBOOK,
+    clientSecret: process.env.SECRET_FACEBOOK,
+    callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/facebook/callback`,
   },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ userid: profile.id }, {name: profile.displayName,userid: profile.id}, function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      const user = await User.findOne({ providerId: profile.id })
+      console.log('profile', profile)
+
+      if (user) {
+        // update providerData
+        await User.findByIdAndUpdate(user._id, { providerData: profile })
+
+        return done(null, user)
+      } else {
+        const userData = { authProvider: 'facebook', providerId: profile.id, providerData: profile }
+        const newUser = await new User(userData).save()
+        return done(null, newUser)
+      }
+    } catch (error) {
+      return done(error, null)
+    }
   }
 ));
+
+export default passport

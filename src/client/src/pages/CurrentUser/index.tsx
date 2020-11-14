@@ -1,5 +1,6 @@
 import React from 'react'
 import useCurrentUser from 'src/hooks/useCurrentUser'
+import { getAuthToken } from 'src/util/authToken'
 
 const CurrentUser = () => {
   const user = useCurrentUser()
@@ -7,7 +8,14 @@ const CurrentUser = () => {
   if (!user) return null
 
   return (
-    <div>{JSON.stringify(user)}</div>
+    <div>
+      <div>
+        {JSON.stringify(user)}
+      </div>
+      <div>
+        {getAuthToken()}
+      </div>
+    </div>
   )
 }
 

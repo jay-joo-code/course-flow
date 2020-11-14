@@ -8,7 +8,7 @@ dotenv.config({ path: __dirname + '/../../.env' });
 passport.use(new GoogleStrategy({
     clientID: process.env.ID_GOOGLE,
     clientSecret: process.env.SECRET_GOOGLE,
-    callbackURL: "http://localhost:5000/api/public/auth/google/callback"
+    callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/google/callback`
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
 
       if (user) {
         // update providerData
-        await User.findByIdAndUpdate(user._id, { providerData: profile }, { new: true })
+        await User.findByIdAndUpdate(user._id, { providerData: profile })
 
         return done(null, user)
       } else {

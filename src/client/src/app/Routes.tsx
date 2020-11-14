@@ -41,6 +41,7 @@ export const routes = [
     component: CurrentUser,
     label: 'Current User',
     header: true,
+    isPrivateRoute: false,
   },
   {
     path: '/auth/callback',

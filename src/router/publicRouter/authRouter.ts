@@ -2,8 +2,9 @@ import express from 'express'
 import User from '../../models/User'
 import jwt from 'jsonwebtoken';
 import passportGoogle from '../../auth/google'
-
-// console.log('passportGoogle', passportGoogle)
+import passportKakao from '../../auth/kakao'
+import passportNaver from '../../auth/naver'
+import passportFacebook from '../../auth/facebook'
 
 const authRouter = express.Router();
 
@@ -23,7 +24,7 @@ authRouter.post('/register', async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      const newUser = await new User(req.body).save()
+      const newUser = await new User({ ...req.body, provider: 'email' }).save()
       const token = jwt.sign({ _id: newUser._id }, process.env.AUTH_SECRET);
       res.send({ ...newUser.toObject(), token })
     } else {
@@ -69,7 +70,52 @@ authRouter.get('/google',
 
 authRouter.get('/google/callback',
   passportGoogle.authenticate('google', {
-    failureRedirect: '/failure-redirect',
+    failureRedirect: '/google-failure-redirect',
+    session: false,
+  }),
+  (req, res) => {
+    // @ts-ignore
+    const token = jwt.sign({ _id: req.user._id }, process.env.AUTH_SECRET);
+    res.redirect(`${process.env.CLIENT_DOMAIN}/auth/callback?token=${token}`)
+  }
+);
+
+/* KAKAO */
+authRouter.get('/kakao', passportKakao.authenticate('kakao'));
+
+authRouter.get('/kakao/callback',
+  passportKakao.authenticate('kakao', {
+    failureRedirect: '/kakao-failure-redirect',
+    session: false,
+  }),
+  (req, res) => {
+    // @ts-ignore
+    const token = jwt.sign({ _id: req.user._id }, process.env.AUTH_SECRET);
+    res.redirect(`${process.env.CLIENT_DOMAIN}/auth/callback?token=${token}`)
+  }
+);
+
+/* NAVER */
+authRouter.get('/naver', passportNaver.authenticate('naver'));
+
+authRouter.get('/naver/callback',
+  passportNaver.authenticate('naver', {
+    failureRedirect: '/naver-failure-redirect',
+    session: false,
+  }),
+  (req, res) => {
+    // @ts-ignore
+    const token = jwt.sign({ _id: req.user._id }, process.env.AUTH_SECRET);
+    res.redirect(`${process.env.CLIENT_DOMAIN}/auth/callback?token=${token}`)
+  }
+);
+
+/* FACEBOOK */
+authRouter.get('/facebook', passportFacebook.authenticate('facebook'));
+
+authRouter.get('/facebook/callback',
+  passportFacebook.authenticate('facebook', {
+    failureRedirect: '/facebook-failure-redirect',
     session: false,
   }),
   (req, res) => {
