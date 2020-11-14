@@ -1,13 +1,15 @@
 import express from 'express'
 import User from '../../models/User'
 import jwt from 'jsonwebtoken';
+import passportGoogle from '../../auth/google'
+
+// console.log('passportGoogle', passportGoogle)
 
 const authRouter = express.Router();
 
 const runLogs = async () => {
   try {
-    const users = await User.find()
-    console.log('users', users)
+    User.syncIndexes()
   } catch (e) {
     console.log('e', e)
   }
@@ -50,5 +52,31 @@ authRouter.post('/login', async (req, res) => {
     res.status(500).send(e)
   }
 });
+
+/* FACEBOOK */
+// router.post('/facebook', passportFacebook.authenticate('facebook', { session: false }));
+
+// router.get('/facebook/callback',
+//   passportFacebook.authenticate('facebook', { failureRedirect: '/failure-redirect' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/users');
+//   });
+
+/* GOOGLE */
+authRouter.get('/google',
+  passportGoogle.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login']}));
+
+authRouter.get('/google/callback',
+  passportGoogle.authenticate('google', {
+    failureRedirect: '/failure-redirect',
+    session: false,
+  }),
+  (req, res) => {
+    // @ts-ignore
+    const token = jwt.sign({ _id: req.user._id }, process.env.AUTH_SECRET);
+    res.redirect(`${process.env.CLIENT_DOMAIN}/auth/callback?token=${token}`)
+  }
+);
 
 export default authRouter

@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const TodoList = () => {
   const [queryConfig, setQueryConfig] = useMergeState({
-    url: '/task',
+    url: '/private/task',
     variables: {},
   })
 

@@ -14,20 +14,15 @@ import LogOut from 'src/pages/Logout';
 import CurrentUser from 'src/pages/CurrentUser';
 import { useSelector } from 'react-redux'
 import { getAuthToken } from 'src/util/authToken';
+import AuthCallback from 'src/pages/AuthCallback';
 
 export const routes = [
+  // auth
   {
     path: '/logout',
     component: LogOut,
     label: 'Logout',
     header: true,
-  },
-  {
-    path: '/current-user',
-    component: CurrentUser,
-    label: 'Current User',
-    header: true,
-    isPrivateRoute: true,
   },
   {
     path: '/register',
@@ -41,6 +36,20 @@ export const routes = [
     label: 'Login',
     header: true,
   },
+  {
+    path: '/current-user',
+    component: CurrentUser,
+    label: 'Current User',
+    header: true,
+  },
+  {
+    path: '/auth/callback',
+    component: AuthCallback,
+    label: '',
+    header: false,
+  },
+
+  // examples
   {
     path: '/counter',
     component: Counter,
@@ -60,6 +69,8 @@ export const routes = [
     header: true,
     isPrivateRoute: true,
   },
+
+  // display
   {
     path: '/',
     component: Home,

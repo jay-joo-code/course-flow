@@ -7,7 +7,7 @@ const CurrentUser = () => {
   if (!user) return null
 
   return (
-    <div>{user.email}</div>
+    <div>{JSON.stringify(user)}</div>
   )
 }
 

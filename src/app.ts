@@ -47,12 +47,11 @@ app.use(helmet())
 app.use(compression())
 
 // PASSPORT
+app.use(passport.initialize())
 const { Strategy: JwtStrategy, ExtractJwt } = PassportJwt
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.AUTH_SECRET,
-  // issuer: 'accounts.examplesoft.com',
-  // audience: 'yoursite.net',
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
   User.findById(jwtPayload._id, (err, user) => {

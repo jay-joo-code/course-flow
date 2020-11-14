@@ -7,13 +7,22 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
   },
   password: {
     type: String,
-    required: true,
   },
+  authProvider: {
+    // 'email'
+    // 'google' | 'facebook' | 'github' | 'twitter'
+    // 'kakao' | 'naver'
+    type: String,
+  },
+  providerId: {
+    type: String,
+  },
+  providerData: {
+    
+  }
 }, { timestamps: true });
 
 export interface UserDoc extends mongoose.Document {
