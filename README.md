@@ -1,18 +1,3 @@
-
-checklist
-
-- [ ] create DB
-    - [ ] dev project
-    - [ ] prod project
-MongoDB Atlas, GCP Tokyo, M0 Free
-
-- [ ] firebase integration
-    - [ ] update firebase config
-
-- [ ] .gitignore file
-- [ ] local .env file
-
-- [ ] deploy to lightsail https://medium.com/@sharmasha2nk/aws-lightsail-bitnami-nodejs-letsencrypt-cf653573b8a1
 1. create node instance (not MEAN)
 2. assign static public ip to server instance
 at lightsail console:
