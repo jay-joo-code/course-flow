@@ -1,3 +1,18 @@
+
+checklist
+
+- [ ] create DB
+    - [ ] dev project
+    - [ ] prod project
+MongoDB Atlas, GCP Tokyo, M0 Free
+
+- [ ] firebase integration
+    - [ ] update firebase config
+
+- [ ] .gitignore file
+- [ ] local .env file
+
+- [ ] deploy to lightsail https://medium.com/@sharmasha2nk/aws-lightsail-bitnami-nodejs-letsencrypt-cf653573b8a1
 1. create node instance (not MEAN)
 2. assign static public ip to server instance
 at lightsail console:
@@ -44,8 +59,8 @@ vi .env
 [required env variables]
 PORT=3000
 FORCE_PROD_DB=true
-(with ssl) FORCE_HTTPS=false
-(without ssl) FORCE_HTTPS=true
+(with ssl) FORCE_HTTPS=true
+(without ssl) FORCE_HTTPS=false
 NODE_ENV=production
 DB_PROD=
 DB_DEV=
@@ -61,6 +76,8 @@ sudo pm2 start npm --name prod -- start
 [pm2 commands]
 sudo pm2 restart prod
 sudo pm2 stop prod
+sudo pm2 start prod
+sudo pm2 logs
 
 4. 80 (default) -> 3000 fowarding
 sudo cp /opt/bitnami/apache/conf/vhosts/sample-http-vhost.conf.disabled /opt/bitnami/apache/conf/vhosts/sample-http-vhost.conf
