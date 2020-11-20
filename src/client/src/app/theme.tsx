@@ -45,12 +45,13 @@ export const theme = {
 
   // breakpoints
   mobileS: '320px',
-  mobileM: '375px',
+  mobileM: '376px',
   mobileL: '425px',
   tablet: '768px',
   laptop: '1024px',
   laptopL: '1440px',
-  desktop: '2560px',
+  fhd: '1920px',
+  fourk: '2560px',
 };
 
 export default theme;

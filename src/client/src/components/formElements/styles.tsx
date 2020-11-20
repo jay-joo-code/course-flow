@@ -215,6 +215,10 @@ export const StyledSelect = styled(ReactSelect)`
     cursor: pointer !important;
     line-height: 1.5 !important;
   }
+
+  & .css-1okebmr-indicatorSeparator {
+    display: none;
+  }
 `;
 
 export const RadioGroupContainer = styled.div`
