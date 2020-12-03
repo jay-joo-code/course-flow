@@ -17,10 +17,13 @@ import { ReactComponent as PeopleIcon } from 'src/assets/icons/people.svg';
 import { ReactComponent as UpIcon } from 'src/assets/icons/up.svg';
 import { ReactComponent as LeftIcon } from 'src/assets/icons/left.svg';
 import { ReactComponent as PersonIcon } from 'src/assets/icons/person.svg';
+import { ReactComponent as MenuIcon } from 'src/assets/icons/menu.svg';
 
 const IconContainer = styled.div`
-  height: 1rem;
-  width: 1rem;
+  height: 2rem;
+  width: 2rem;
+
+  // size
   height: ${props => props.size && props.size};
   width: ${props => props.size && props.size};
 
@@ -30,7 +33,26 @@ const IconContainer = styled.div`
   & svg {
     height: 100%;
     width: 100%;
-    fill: ${props => props.fill && props.theme[props.fill]};
+    fill: ${props => props.theme.text};
+
+    // fill
+    fill: ${props => props.fill && props.fill};
+
+    // interactiveHover
+    height: ${props => props.interactiveHover && '70%'};
+    width: ${props => props.interactiveHover && '70%'};
+  }
+
+  // interactiveHover
+  border-radius: ${props => props.interactiveHover && '50%'};
+  display: ${props => props.interactiveHover && 'flex'};
+  justify-content: ${props => props.interactiveHover && 'center'};
+  align-items: ${props => props.interactiveHover && 'center'};
+
+  @media (min-width: ${props => props.theme.medium}) {
+    &:hover {
+      background: ${props => props.interactiveHover && props.theme.grey[50]};
+    }
   }
 `;
 
@@ -40,6 +62,7 @@ interface IconProps {
   size?: string
   onClick?: () => void
   pointer?: boolean
+  interactiveHover?: boolean
 }
 
 const Icon = (props: IconProps) => {
@@ -61,6 +84,7 @@ const Icon = (props: IconProps) => {
     'bookmark-filled': <BookmarkFilledIcon />,
     'people': <PeopleIcon />,
     'person': <PersonIcon />,
+    'menu': <MenuIcon />,
   }
 
   return (

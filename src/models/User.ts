@@ -21,7 +21,7 @@ const userSchema = new Schema({
     type: String,
   },
   providerData: {
-    
+
   }
 }, { timestamps: true });
 
@@ -44,8 +44,8 @@ userSchema.pre('save', function(next) {
     if (err) return next(err);
 
     // hash the password using our new salt
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) return next(err);
+    bcrypt.hash(user.password, salt, (hashError, hash) => {
+      if (hashError) return next(hashError);
 
       // override the cleartext password with the hashed one
       user.password = hash;

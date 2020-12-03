@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components'
 import ReactModal from 'react-modal';
-import { H4 } from '../globals';
 import Icon from '../icon';
 import { FlexRow } from '../layout';
 import theme from 'src/app/theme';
 import { hexToRGBA } from 'src/util/colors';
+import Text from '../text';
 
 const customStyles = {
   content : {
@@ -20,7 +20,7 @@ const customStyles = {
     maxWidth: '95vw',
   },
   overlay: {
-    background: hexToRGBA(theme.bgOverlay, .3),
+    background: hexToRGBA('#000000', .3),
   }
 };
 
@@ -68,7 +68,7 @@ const Modal = (props: ModalProps) => {
       style={customStyles}
     >
       <TopRow justifySpaceBetween alignCenter>
-        <H4>{props.heading}</H4>
+        <Text variant='h4'>{props.heading}</Text>
         <Icon variant='close' onClick={props.onRequestClose} pointer />
       </TopRow>
       <ContentContainer>

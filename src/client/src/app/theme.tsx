@@ -1,4 +1,8 @@
+import palette from "src/util/palette";
+
 export const theme = {
+  ...palette,
+  
   // feedback
   success: '#66c088',
   info: '#0275d8',
@@ -6,21 +10,20 @@ export const theme = {
   danger: '#de6362',
 
   // bg
-  white: '#FFFFFF',
   bg: '#FFFFFF',
-  bgWash: '#FAFAFA',
-  bgOverlay: '#AAAAAA',
+  bgWash1: palette.grey[50],
+  bgWash2: palette.grey[200],
 
   // border
-  border: '#EBECED',
-  borderLight: '#FAFAFB',
-  borderDark: '#CECFCF',
+  border: '#D8D8D9',
+  borderLight: '#E2E2E3',
+  borderDark: '#C6C6C7',
 
   // brand
-  brand: '#4D84F4',
-  brandLight: '#A6C2FA',
-  brandDark: '#305399',
-  brandBg: '#E9F0FE',
+  brand: '#5B2D95',
+  brandLight: '#C8B9DC',
+  brandDark: '#1E0F32',
+  brandBg: '#FAFAFA',
 
   // accent
   accent: '#f5414f',
@@ -30,8 +33,8 @@ export const theme = {
 
   // text
   text: '#24292E',
-  textLight: '#76797C',
-  textMuted: '#ADAFB1',
+  textLight: '#575859',
+  textMuted: '#737576',
   textPlaceholder: '#D3D7DB',
 
   // shadow
@@ -44,14 +47,9 @@ export const theme = {
   github:'#16171A',
 
   // breakpoints
-  mobileS: '320px',
-  mobileM: '376px',
-  mobileL: '425px',
-  tablet: '768px',
-  laptop: '1024px',
-  laptopL: '1440px',
-  fhd: '1920px',
-  fourk: '2560px',
+  small: '576px',   // landscape phones
+  medium: '768px',  // tablets
+  large: '992px',   // desktops, laptops
 };
 
 export default theme;

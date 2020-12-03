@@ -1,23 +1,7 @@
-import theme from 'src/app/theme'
 import styled from 'styled-components'
 
-export const Label = styled.label`
-  font-weight: 500;
-  font-size: .9rem;
-  letter-spacing: -0.4px;
-  margin-bottom: .4rem;
-  color: ${props => props.theme.text};
-  display: block;
-
-  // disabled
-  color: ${props => props.disabled && props.theme.textLight};
-
-  // noMargin
-  margin-bottom: ${props => props.noMargin && '0'};
-`;
-
 const CoreText = styled.p`
-  color: ${theme.text};
+  color: ${props => props.theme.text};
   white-space: pre-line;
   word-break: break-word;
   font-weight: 300;
@@ -33,11 +17,8 @@ const CoreText = styled.p`
   // color
   color: ${(props) => (props.color ? props.theme[props.color] : '')};
 
-  // bold
-  font-weight: ${(props) => (props.bold ? 'bold' : '')};
-
-  // lighter
-  font-weight: ${props => props.lighter && 'lighter'};
+  // fontWeight
+  font-weight: ${(props) => (props.fontWeight && props.fontWeight)};
 
   // maxWidth
   max-width: ${(props) => (props.maxWidth ? `${props.maxWidth}px` : '')};
@@ -57,12 +38,12 @@ export const H2 = styled(CoreText)`
 `;
 
 export const H3 = styled(CoreText)`
-  font-size: 1.875rem;
+  font-size: 1.25rem;
   line-height: 1.5;
 `;
 
 export const H4 = styled(CoreText)`
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.4;
 `;
 

@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import useRouter from 'src/hooks/useRouter'
-import { setAuthToken } from 'src/util/authToken'
+import { setAccessToken } from 'src/slices/auth'
 
 const AuthCallback = () => {
   const router = useRouter()
   const { token } = router.query
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (token) {
-      setAuthToken(token)
+      dispatch(setAccessToken(token))
     }
     router.push('/')
   }, [token])

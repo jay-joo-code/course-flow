@@ -1,18 +1,10 @@
 
 export interface AuthState {
-  loading: boolean
-  currentUser: object
-  isAuthenticated: boolean
-  error?: string
-}
-
-export interface CountState {
-  count: number
+  accessToken: string | null
 }
 
 export interface RootState {
   authState: AuthState
-  countState: CountState
 }
 
 export interface ITask {

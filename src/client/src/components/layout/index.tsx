@@ -4,19 +4,31 @@ const FlexElement = styled.div`
   display: flex;
 
   // justifySpaceBetween
-  justify-content: ${props => props.justifySpaceBetween && 'space-between'};
+  justify-content: ${props => (props.jsb || props.justifySpaceBetween) && 'space-between'};
 
   // justifyCenter
-  justify-content: ${props => props.justifyCenter && 'center'};
+  justify-content: ${props => (props.jc || props.justifyCenter) && 'center'};
 
   // justifyEnd
-  justify-content: ${props => props.justifyEnd && 'flex-end'};
+  justify-content: ${props => (props.je || props.justifyEnd) && 'flex-end'};
+
+  // alignStart
+  align-items: ${props => (props.as || props.alignStart) && 'flex-start'};
 
   // alignCenter
-  align-items: ${props => props.alignCenter && 'center'};
+  align-items: ${props => (props.ac || props.alignCenter) && 'center'};
+
+  // alignEnd
+  align-items: ${props => (props.ae || props.alignEnd) && 'flex-end'};
 
   // wrap
   flex-wrap: ${props => props.wrap && 'wrap'};
+
+  // fullWidth
+  width: ${props => props.fullWidth && '100%' };
+
+  // fullHeight
+  height: ${props => props.fullHeight && '100%' };
 `;
 
 export const FlexColumn = styled(FlexElement)`
@@ -30,29 +42,6 @@ export const Margin = styled.div`
   margin: ${props => props.margin && props.margin};
 `;
 
-export const DesktopContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  & > div {
-    width: 65%;
-  }
+export const Padding = styled.div`
+  padding: ${props => props.padding && props.padding};
 `;
-
-export const WashedTextbox = styled.div`
-  background: ${props => props.theme.bgWash};
-  padding: .5rem;
-  max-height: 200px;
-  overflow-y: auto;
-`;
-
-export const AnimatedExpansionContainer = styled.div`
-  max-height: 0;
-  transition: max-height .5s ease-in-out;
-  overflow: hidden;
-
-  // expanded
-  max-height: ${props => props.expanded && '100vh'};
-`;
-

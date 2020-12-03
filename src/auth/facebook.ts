@@ -30,8 +30,6 @@ passport.use(new FacebookStrategy({
   async (accessToken, refreshToken, profile, done) => {
     try {
       const user = await User.findOne({ providerId: profile.id })
-      console.log('profile', profile)
-
       if (user) {
         // update providerData
         await User.findByIdAndUpdate(user._id, { providerData: profile })

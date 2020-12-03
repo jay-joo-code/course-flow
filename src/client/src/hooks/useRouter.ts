@@ -9,7 +9,7 @@ export default function useRouter() {
   const location = useLocation();
   const match = useRouteMatch();
 
-  const query = {
+  const query: any = {
     ...queryString.parse(location.search), // Convert string to object
     ...params
   }

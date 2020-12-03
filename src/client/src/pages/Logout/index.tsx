@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import useRouter from 'src/hooks/useRouter'
-import { resetAuthToken } from 'src/util/authToken'
+import { logout } from 'src/slices/auth'
 
 const LogOut = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    resetAuthToken()
+    dispatch(logout())
     router.push('/')
   }, [])
-  
+
   return null
 }
 

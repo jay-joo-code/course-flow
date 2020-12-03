@@ -8,16 +8,6 @@ import passportFacebook from '../../auth/facebook'
 
 const authRouter = express.Router();
 
-const runLogs = async () => {
-  try {
-    User.syncIndexes()
-  } catch (e) {
-    console.log('e', e)
-  }
-}
-
-// runLogs()
-
 authRouter.post('/register', async (req, res) => {
   try {
     const { email } = req.body;
@@ -48,7 +38,7 @@ authRouter.post('/login', async (req, res) => {
       }
     } else {
       throw new Error('User does not exist')
-    } 
+    }
   } catch (e) {
     res.status(500).send(e)
   }

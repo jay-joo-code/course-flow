@@ -5,8 +5,9 @@ import * as Yup from 'yup';
 import useCustomMutation from 'src/hooks/useCustomMutation';
 import { Button } from 'src/components/buttons';
 import { FormikCheckbox, FormikDatePicker, FormikInput, FormikRadioGroup, FormikSelect, FormikTextArea } from 'src/components/formikElements';
-import { getAuthToken, setAuthToken } from 'src/util/authToken';
 import { Margin } from 'src/components/layout';
+import { useDispatch } from 'react-redux';
+import { setAccessToken } from 'src/slices/auth';
 
 const Form = styled.form`
   width: 400px;
@@ -17,6 +18,7 @@ const Form = styled.form`
 `;
 
 const LoginForm = () => {
+  const dispatch = useDispatch()
   const { mutate } = useCustomMutation({
     url: '/public/auth/login',
     method: 'post'
@@ -36,7 +38,7 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       const authRes: any = await mutate(values)
       const { token } = authRes
-      setAuthToken(token)
+      dispatch(setAccessToken(token))
     },
   })
 

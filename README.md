@@ -59,8 +59,10 @@ vi .env
 [required env variables]
 PORT=3000
 FORCE_PROD_DB=true
-(with ssl) FORCE_HTTPS=true
-(without ssl) FORCE_HTTPS=false
+(with ssl) FORCE_HTTPS=false
+FORCE_PROD_DB=true
+FORCE_HTTPS=false
+(without ssl) FORCE_HTTPS=true
 NODE_ENV=production
 DB_PROD=
 DB_DEV=
@@ -71,13 +73,13 @@ sudo chown -R bitnami prod
 cd prod
 npm i
 sudo npm run heroku-postbuild
-sudo pm2 start npm --name prod -- start
+sudo pm2 restart prod
 
 [pm2 commands]
 sudo pm2 restart prod
 sudo pm2 stop prod
-sudo pm2 start prod
 sudo pm2 logs
+
 
 4. 80 (default) -> 3000 fowarding
 sudo cp /opt/bitnami/apache/conf/vhosts/sample-http-vhost.conf.disabled /opt/bitnami/apache/conf/vhosts/sample-http-vhost.conf
@@ -205,7 +207,7 @@ sudo /opt/bitnami/bncert-tool
 set up SSL through the cli
 remove browser data on the domain to apply SSL
 
-sudo /opt/bitnami/letsencrypt/lego --tls --email="jj534@cornell.edu" --domains="DOMAIN" --path="/opt/bitnami/letsencrypt" renew --days 90
+sudo /opt/bitnami/letsencrypt/lego --tls --email="jj534@cornell.edu" --domains="sindyschool.com" --path="/opt/bitnami/letsencrypt" renew --days 90
 
 [check certificate renewal status]
 sudo /opt/bitnami/letsencrypt/lego --path /opt/bitnami/letsencrypt --email="jj534@cornell.edu" --http --http-timeout 30 --http.webroot /opt/bitnami/apps/letsencrypt --domains=www.goondaetalk.com renew

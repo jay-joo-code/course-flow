@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { FlexRow, Margin } from '.'
-import { H4, P } from '../globals'
 import Icon from '../icon'
 import styled from 'styled-components'
+import Text from '../text';
 
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -19,12 +19,12 @@ const ExpandableSection = ({ heading, expandedDefault, children }: ExpandableSec
 
   return (
     <Container>
-      <FlexRow 
-        alignCenter 
+      <FlexRow
+        alignCenter
         onClick={() => setIsExpanded(!isExpanded)}
         style={{ cursor: 'pointer' }}
       >
-        <P bold>{heading}</P>
+        <Text variant='p' fontWeight={500}>{heading}</Text>
         <Margin margin='0 .2rem' />
         {isExpanded
           ? <Icon variant='up' pointer size='1.5rem' />

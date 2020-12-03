@@ -1,14 +1,14 @@
 import axios from 'axios';
-
 import history from 'src/util/history';
 import { objectToQueryString } from 'src/util/url';
-import { getAuthToken, resetAuthToken } from 'src/util/authToken';
+import store from 'src/slices/store';
+import { logout } from 'src/slices/auth';
+import { showToast } from 'src/util/toast';
 
 const defaults = {
-  baseURL: '/api',
+  baseURL: 'http://54.180.149.120:3058',
   headers: () => ({
     'Content-Type': 'application/json',
-    Authorization: getAuthToken() ? `Bearer ${getAuthToken()}` : undefined,
   }),
   error: {
     code: 'INTERNAL_ERROR',
@@ -17,6 +17,16 @@ const defaults = {
     data: {},
   },
 };
+
+const listener = () => {
+  const { accessToken } = store.getState().authState
+  defaults.headers = () => ({
+    'Content-Type': 'application/json',
+    accessToken,
+  })
+}
+
+store.subscribe(listener)
 
 const api = (
   method: 'get' | 'post' | 'put' | 'delete',
@@ -36,15 +46,22 @@ const api = (
         resolve(response.data);
       },
       error => {
+        // TOOD: auth error handling
         if (error.response) {
-          if (error.response.status === 401) {
-            resetAuthToken();
-            history.push('/login');
+          const { code, message } = error.response.data
+          if (code === 404) {
+            if (message === '접속 토큰이 유효하지 않습니다. msg : jwt expired') {
+              history.push('/refresh-token');
+            } else {
+              showToast('error', '세션이 만료되었습니다')
+              store.dispatch(logout())
+              history.push('/login');
+            }
           } else {
-            reject(error.response.data.error);
+            reject(error);
           }
         } else {
-          reject(defaults.error);
+          reject(error);
         }
       },
     );

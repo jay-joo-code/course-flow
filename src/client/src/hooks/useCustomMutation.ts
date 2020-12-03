@@ -23,17 +23,17 @@ const useCustomMutation = <T>({ url, method, updateLocal }: IMutationOptions) =>
         const queryKey = [fetchUrl, fetchVariables]
         // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
         queryCache.cancelQueries(queryKey)
-  
+
         // Snapshot the previous value
         const previousValues = queryCache.getQueryData(queryKey)
-  
+
         // Optimistically update to the new value
         queryCache.setQueryData(queryKey, (old: any) => {
           // create
           if (updateLocal.type === 'create') {
             return [...old, newVariables]
           }
-  
+
           // update
           if (updateLocal.type === 'update') {
             // update by id
@@ -46,11 +46,11 @@ const useCustomMutation = <T>({ url, method, updateLocal }: IMutationOptions) =>
               })
               return newValues
             }
-  
+
             // if newVariables._id not defined, dont update locally
             return [...old]
           }
-  
+
           // delete
           if (updateLocal.type === 'delete') {
             // delete by id
@@ -58,14 +58,14 @@ const useCustomMutation = <T>({ url, method, updateLocal }: IMutationOptions) =>
               const newValues = old?.filter((value) => value._id !== newVariables._id)
               return newValues
             }
-  
+
             // if newVariables._id not defined, dont delete locally
             return [...old]
           }
-  
+
           return [...old]
         })
-  
+
         // Return the snapshotted value
         return () => queryCache.setQueryData(queryKey, previousValues)
       }
