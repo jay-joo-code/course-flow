@@ -21,6 +21,16 @@ interface IRoute {
 }
 
 export const routes: IRoute[] = [
+  {
+    path: '/private-route',
+    component: Home,
+    label: 'Private Route',
+    isPublicNav: true,
+    isPrivateNav: true,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+
   // auth
   {
     path: '/logout',

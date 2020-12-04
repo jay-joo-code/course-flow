@@ -3,7 +3,7 @@ import Icon from 'src/components/icon';
 import { FlexRow, Space } from 'src/components/layout';
 import Text from 'src/components/text';
 import useCustomMutation from 'src/hooks/useCustomMutation';
-import { taskList } from 'src/queries';
+import { fetchTasksConfig, useDeleteTask, useUpdateTask } from 'src/api/task';
 import { TaskDoc } from 'src/types';
 import styled from 'styled-components'
 
@@ -17,30 +17,15 @@ const Container = styled(FlexRow)`
 
 const TaskItem = ({ task }: TaskItemProps) => {
   const { _id, complete, name } = task
-  const { mutate: toggleComplete } = useCustomMutation({
-    url: `/private/task/${_id}`,
-    method: 'put',
-    updateLocal: {
-      queryConfig: taskList(),
-      type: 'update',
-    }
-  })
+  const { updateTask } = useUpdateTask(_id)
+  const { deleteTask } = useDeleteTask(_id)
 
   const handleToggleComplete = () => {
-    toggleComplete({
+    updateTask({
       _id,
       complete: !complete
     })
   }
-
-  const { mutate: deleteTask } = useCustomMutation({
-    url: `/private/task/${_id}`,
-    method: 'delete',
-    updateLocal: {
-      queryConfig: taskList(),
-      type: 'delete',
-    }
-  })
 
   const handleDeleteTask = () => {
     deleteTask({

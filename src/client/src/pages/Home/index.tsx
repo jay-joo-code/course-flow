@@ -1,7 +1,5 @@
 import React from 'react'
-import useCurrentUser from 'src/hooks/useCurrentUser';
-import useCustomQuery from 'src/hooks/useCustomQuery';
-import { taskList } from 'src/queries';
+import { useTasks } from 'src/api/task';
 import styled from 'styled-components'
 import CreateTask from './CreateTask';
 import TaskList from './TaskList';
@@ -11,8 +9,7 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const user = useCurrentUser()
-  const { data: tasks } = useCustomQuery(taskList())
+  const { tasks } = useTasks()
 
   return (
     <Container>
