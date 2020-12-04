@@ -6,7 +6,7 @@ import { logout } from 'src/slices/auth';
 import { showToast } from 'src/util/toast';
 
 const defaults = {
-  baseURL: 'http://54.180.149.120:3058',
+  baseURL: '/api',
   headers: () => ({
     'Content-Type': 'application/json',
   }),
@@ -22,7 +22,7 @@ const listener = () => {
   const { accessToken } = store.getState().authState
   defaults.headers = () => ({
     'Content-Type': 'application/json',
-    accessToken,
+    Authorization: `Bearer ${accessToken}`,
   })
 }
 

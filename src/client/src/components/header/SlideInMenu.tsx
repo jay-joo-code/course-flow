@@ -55,7 +55,7 @@ const SlideInMenu = ({ isOpen, setIsOpen }: SlideInMenuProps) => {
         <List>
           {navs.map((nav) => (
             <div key={nav.path}>
-              <Link to={nav.path}>
+              <Link to={nav.path} onClick={() => setIsOpen(false)}>
                 <Text variant='h4' fontWeight={500}>{nav.label}</Text>
               </Link>
             </div>

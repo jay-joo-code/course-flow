@@ -2,7 +2,7 @@ import palette from "src/util/palette";
 
 export const theme = {
   ...palette,
-  
+
   // feedback
   success: '#66c088',
   info: '#0275d8',
@@ -15,12 +15,13 @@ export const theme = {
   bgWash2: palette.grey[200],
 
   // border
-  border: '#D8D8D9',
+  // border: '#D8D8D9',
+  border: palette.grey[200],
   borderLight: '#E2E2E3',
   borderDark: '#C6C6C7',
 
   // brand
-  brand: '#5B2D95',
+  brand: palette.grey[900],
   brandLight: '#C8B9DC',
   brandDark: '#1E0F32',
   brandBg: '#FAFAFA',

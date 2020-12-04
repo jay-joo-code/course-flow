@@ -1,3 +1,5 @@
+
+// formats query so that mongoose's find matches substrings
 const substringQuery = (query: any, keys: string[]) => {
   if (keys.length === 0) return query
 

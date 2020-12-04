@@ -1,21 +1,20 @@
 import express from 'express'
 import Task from '../../models/Task';
-import substringQuery from '../../util/substringQuery';
 
 const taskRouter = express.Router();
 
 taskRouter.post('/', async (req, res) => {
   try {
-    const doc = await new Task(req.body).save()
+    const doc = await new Task({ ...req.body, userId: req.user._id }).save()
     res.send(doc)
   } catch (e) {
     res.status(500).send(e)
   }
 });
 
-taskRouter.get('/', async (req, res) => {
+taskRouter.get('/user', async (req, res) => {
   try {
-    const docs = await Task.find(substringQuery(req.query, ['name']))
+    const docs = await Task.find({ userId: req.user._id })
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

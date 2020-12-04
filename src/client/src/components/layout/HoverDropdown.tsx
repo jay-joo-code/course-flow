@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Margin } from '.';
+import { Space } from '.';
 
 const TriggerContainer = styled.div`
   cursor: pointer;
@@ -38,7 +38,7 @@ const HoverDropdown = (props: HoverDropdownProps) => {
       <TriggerContainer>
         {props.triggerComponent}
       </TriggerContainer>
-      <Margin margin='.5rem 0' />
+      <Space margin='.5rem 0' />
       <DropdownWrapper>
         <DropdownContainer>
           {props.children}

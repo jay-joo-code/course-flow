@@ -1,11 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from 'src/types'
+import { RootState, UserDoc } from 'src/types'
 import useCustomQuery from './useCustomQuery'
 
 const useCurrentUser = () => {
-  const { data } = useCustomQuery({
+  const { data } = useCustomQuery<UserDoc>({
     url: '/private/user/current',
+    config: {
+      retry: 3,
+    }
   })
 
   const { accessToken } = useSelector((state: RootState) => state.authState)

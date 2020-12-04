@@ -1,13 +1,17 @@
 import { useQuery } from "react-query"
 import api from "src/api"
-import { objectToQueryString } from "src/util/url"
+
+export interface IConfig {
+  retry?: number
+}
 
 export interface IQueryConfig {
   url: string
   variables?: any
+  config?: IConfig
 }
 
-const useCustomQuery = <T>({ url, variables }: IQueryConfig) => {
+const useCustomQuery = <T>({ url, variables, config }: IQueryConfig) => {
   return useQuery<T>({
     queryKey: [url, variables],
     queryFn: () => new Promise(async (resolve, reject) => {
@@ -19,7 +23,11 @@ const useCustomQuery = <T>({ url, variables }: IQueryConfig) => {
       } catch (error) {
         reject(error)
       }
-    })
+    }),
+    config: {
+      retry: false,
+      ...config,
+    }
   })
 }
 

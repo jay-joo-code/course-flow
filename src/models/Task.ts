@@ -11,12 +11,17 @@ const taskSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  }
 }, { timestamps: true });
 
 export interface TaskDoc extends mongoose.Document {
   _id: string
   name: string
   complete: boolean
+  userId: string
 }
 
 export default mongoose.model<TaskDoc>('Task', taskSchema)

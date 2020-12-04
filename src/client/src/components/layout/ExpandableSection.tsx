@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlexRow, Margin } from '.'
+import { FlexRow, Space } from '.'
 import Icon from '../icon'
 import styled from 'styled-components'
 import Text from '../text';
@@ -25,7 +25,7 @@ const ExpandableSection = ({ heading, expandedDefault, children }: ExpandableSec
         style={{ cursor: 'pointer' }}
       >
         <Text variant='p' fontWeight={500}>{heading}</Text>
-        <Margin margin='0 .2rem' />
+        <Space margin='0 .2rem' />
         {isExpanded
           ? <Icon variant='up' pointer size='1.5rem' />
           : <Icon variant='down' pointer size='1.5rem' />

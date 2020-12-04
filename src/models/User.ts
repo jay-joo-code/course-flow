@@ -21,14 +21,17 @@ const userSchema = new Schema({
     type: String,
   },
   providerData: {
-
+    type: Schema.Types.Mixed,
   }
 }, { timestamps: true });
 
 export interface UserDoc extends mongoose.Document {
   _id: string
-  email: string
-  password: string
+  authProvider: 'email' | 'google' | 'facebook' | 'github' | 'twitter' | 'kakao' | 'naver'
+  email?: string
+  password?: string
+  providerId?: string
+  providerData?: any
   validatePassword: (candidate: string) => boolean
 }
 

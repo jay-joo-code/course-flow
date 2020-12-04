@@ -58,7 +58,6 @@ export const H5 = styled(CoreText)`
 `;
 
 export const H6 = styled(CoreText)`
-  text-transform: uppercase;
   font-size: 0.75rem;
   line-height: 1.5;
 `;

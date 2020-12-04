@@ -11,8 +11,9 @@ const persistBlacklist = process.env.NODE_ENV === 'development'
 const persistConfig = {
   key: 'root',
   storage,
-  // blacklist: persistBlacklist,
+  blacklist: persistBlacklist,
 }
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({

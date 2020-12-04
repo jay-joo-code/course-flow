@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { routes } from '../../app/Routes'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import useRouter from 'src/hooks/useRouter'
 import useNavs from 'src/hooks/useNavs'
 import useIsMobile from 'src/hooks/useIsMobile'
@@ -11,11 +11,23 @@ import Icon from '../icon'
 import theme from 'src/app/theme'
 import SlideInMenu from './SlideInMenu'
 import { useState } from 'react'
+import DesktopContainer from '../layout/DesktopContainer'
+import Text from '../text'
 
-const Container = styled(FlexRow)`
+const MobileContainer = styled(FlexRow)`
   border-bottom: 1px solid ${props => props.theme.border};
   padding: 1rem 1.5rem;
 `
+
+const Container = styled.div`
+  border-bottom: 1px solid ${props => props.theme.border};
+`;
+
+const NavList = styled(FlexRow)`
+  & > * {
+    margin-right: 1rem;
+  }
+`;
 
 const Header = () => {
   const navs = useNavs()
@@ -25,7 +37,7 @@ const Header = () => {
   if (isMobile) {
     return (
       <>
-        <Container jsb ac>
+        <MobileContainer jsb ac>
           <Logo />
           <Icon
             variant='menu'
@@ -33,9 +45,9 @@ const Header = () => {
             onClick={() => setIsOpen(!isOpen)}
             fill={theme.text}
           />
-        </Container>
-        <SlideInMenu 
-          isOpen={isOpen} 
+        </MobileContainer>
+        <SlideInMenu
+          isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
       </>
@@ -44,10 +56,20 @@ const Header = () => {
 
   return (
     <Container>
-      {navs.map((route) => (
-        <NavLink key={route.path} to={route.path}>
-        </NavLink>
-      ))}
+      <DesktopContainer>
+        <FlexRow ac jsb fullWidth style={{ padding: '.5rem' }}>
+          <Logo />
+          <NavList ac>
+            {navs.map((nav) => (
+              <div key={nav.path}>
+                <Link to={nav.path}>
+                  <Text variant='h5' fontWeight={500}>{nav.label}</Text>
+                </Link>
+              </div>
+            ))}
+          </NavList>
+        </FlexRow>
+      </DesktopContainer>
     </Container>
   )
 }

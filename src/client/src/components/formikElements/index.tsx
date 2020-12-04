@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker } from 'src/components/formElements';
-import { Margin } from '../layout';
+import { Space } from '../layout';
 import styled from 'styled-components'
 import Text from '../text';
 
@@ -25,7 +25,7 @@ export const FormikInput = ({ formik, name, ...rest }: FormikInputProps) => {
         {...formik.getFieldProps(name)}
         {...rest}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );
@@ -48,7 +48,7 @@ export const FormikTextArea = ({ formik, name, ...rest }: FormikTextAreaProps) =
         {...formik.getFieldProps(name)}
         {...rest}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );
@@ -75,7 +75,7 @@ export const FormikCheckbox = ({ formik, name, ...rest }: FormikCheckboxProps) =
         checked={formik.values[name]}
         onChange={handleChange}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );
@@ -103,7 +103,7 @@ export const FormikRadioGroup = ({ formik, name, options, ...rest }: FormikRadio
         setValue={handleSetValue}
         {...rest}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );
@@ -133,7 +133,7 @@ export const FormikSelect = ({ formik, name, ...rest }: FormikSelectProps) => {
         value={formik.values[name]}
         onChange={handleChange}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );
@@ -158,7 +158,7 @@ export const FormikDatePicker = ({ formik, name, ...rest }: FormikDatePickerProp
         date={formik.values[name]}
         setDate={handleSetDate}
       />
-      <Margin margin='.2rem 0' />
+      <Space margin='.2rem 0' />
       {error && <Text variant='h5' color='danger'>{error}</Text>}
     </FullWidth>
   );

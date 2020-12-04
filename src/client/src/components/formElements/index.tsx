@@ -24,6 +24,7 @@ export interface InputProps {
   placeholder?: string
   onChange?: React.FormEventHandler<HTMLInputElement>
   onBlur?: React.FormEventHandler<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
+  onEnterPress?: () => void
   autoFocus?: boolean
   disabled?: boolean
   width?: number
@@ -32,10 +33,19 @@ export interface InputProps {
 };
 
 export const Input = (props: InputProps) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && props.onEnterPress) {
+      props.onEnterPress()
+    }
+  }
+  
   return (
     <InputContainer>
       <Label {...props}>{props.label}</Label>
-      <StyledInput {...props} />
+      <StyledInput 
+        onKeyDown={handleKeyDown}
+        {...props} 
+      />
     </InputContainer>
   );
 };

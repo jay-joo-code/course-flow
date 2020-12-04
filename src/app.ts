@@ -11,7 +11,7 @@ import mongoose from 'mongoose'
 import morgan from 'morgan'
 import PassportJwt from 'passport-jwt'
 import passport from 'passport'
-import User from './models/User'
+import User, { UserDoc } from './models/User'
 
 dotenv.config({ path: __dirname + '/../.env' });
 
@@ -47,6 +47,12 @@ app.use(helmet())
 app.use(compression())
 
 // PASSPORT
+declare global {
+  namespace Express {
+      interface User extends UserDoc {}
+  }
+}
+
 app.use(passport.initialize())
 const { Strategy: JwtStrategy, ExtractJwt } = PassportJwt
 const opts = {
@@ -54,7 +60,7 @@ const opts = {
   secretOrKey: process.env.AUTH_SECRET,
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
-  User.findById(jwtPayload._id, (err, user) => {
+  User.findById(jwtPayload._id, (err, user: UserDoc) => {
     if (err) {
       return done(err, false);
     }

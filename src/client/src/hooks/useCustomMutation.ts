@@ -1,5 +1,6 @@
-import { queryCache, useMutation, useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import api from "src/api"
+import { queryCache } from "src/app/App"
 import { IQueryConfig } from "./useCustomQuery"
 
 interface IUpdateLocal {

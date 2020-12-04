@@ -1,10 +1,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom';
-
 import Home from 'src/pages/Home'
 import UserRegistration from 'src/pages/UserRegistration';
 import useRouter from 'src/hooks/useRouter';
-import { showToast } from 'src/util/toast';
 import useCurrentUser from 'src/hooks/useCurrentUser';
 import Login from 'src/pages/Login';
 import LogOut from 'src/pages/Logout';

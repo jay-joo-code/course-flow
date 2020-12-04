@@ -21,6 +21,9 @@ const FlexElement = styled.div`
   // alignEnd
   align-items: ${props => (props.ae || props.alignEnd) && 'flex-end'};
 
+  // flexDirection
+  flex-direction: ${props => props.flexDirection && props.flexDirection};
+
   // wrap
   flex-wrap: ${props => props.wrap && 'wrap'};
 
@@ -38,10 +41,7 @@ export const FlexColumn = styled(FlexElement)`
 export const FlexRow = styled(FlexElement)`
 `
 
-export const Margin = styled.div`
+export const Space = styled.div`
   margin: ${props => props.margin && props.margin};
-`;
-
-export const Padding = styled.div`
   padding: ${props => props.padding && props.padding};
 `;

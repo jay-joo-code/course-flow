@@ -3,7 +3,7 @@ import LoginForm from './LoginForm'
 import { Button } from 'src/components/buttons';
 import useCustomMutation from 'src/hooks/useCustomMutation';
 import useRouter from 'src/hooks/useRouter';
-import { Margin } from 'src/components/layout';
+import { Space } from 'src/components/layout';
 
 const Login = () => {
   const handleGoogleLogin = () => {
@@ -29,22 +29,22 @@ const Login = () => {
         label='google login'
         onClick={handleGoogleLogin}
       />
-      <Margin margin='1rem 0' />
+      <Space margin='1rem 0' />
       <Button
         label='kakao login'
         onClick={handleKakaoLogin}
       />
-      <Margin margin='1rem 0' />
+      <Space margin='1rem 0' />
       <Button
         label='naver login'
         onClick={handleNaverLogin}
       />
-      <Margin margin='1rem 0' />
+      <Space margin='1rem 0' />
       <Button
         label='facebook login'
         onClick={handleFacebookLogin}
       />
-      <Margin margin='1rem 0' />
+      <Space margin='1rem 0' />
     </div>
   )
 }

@@ -6,7 +6,11 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: ${props => props.theme.mobileM}) {
+  & > div {
+    width: 100%;
+  }
+
+  @media (min-width: ${props => props.theme.medium}) {
     & > div {
       width: 65%;
     }
