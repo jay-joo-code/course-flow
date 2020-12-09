@@ -27,7 +27,7 @@ const Footer = () => {
     <Container>
       <DesktopContainer>
         <FlexRow jsb flexDirection={isMobile && 'column'}>
-          <Logo />
+          <Logo variant='black' />
           {isMobile && <Space margin='1rem 0' />}
           <MenuList>
             <Text variant='h5' fontWeight={500}>MENU</Text>
@@ -41,7 +41,7 @@ const Footer = () => {
           </MenuList>
         </FlexRow>
         <Space margin='3rem 0' />
-        <Text variant='h6' color='textLight'>© 2020 SampleCompany. All rights reserved.</Text>
+        <Text variant='h6' color='textLight'>© 2020 Cornlet. All rights reserved.</Text>
         <Space margin='1rem 0' />
       </DesktopContainer>
     </Container>

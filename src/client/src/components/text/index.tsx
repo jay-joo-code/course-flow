@@ -4,6 +4,7 @@ import { H1, H2, H3, H4, H5, H6, P } from './styles'
 interface TextProps {
   variant: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
   children: React.ReactNode
+  style?: any
   ellipsis?: boolean
   nowrap?: boolean
   color?: string

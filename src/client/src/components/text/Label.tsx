@@ -8,6 +8,7 @@ const StyledLabel = styled.label`
   margin-bottom: .4rem;
   color: ${props => props.theme.text};
   display: block;
+  text-transform: uppercase;
 
   // disabled
   color: ${props => props.disabled && props.theme.textLight};

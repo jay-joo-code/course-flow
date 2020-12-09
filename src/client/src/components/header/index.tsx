@@ -38,7 +38,7 @@ const Header = () => {
     return (
       <>
         <MobileContainer jsb ac>
-          <Logo />
+          <Logo variant='brand' />
           <Icon
             variant='menu'
             size='2rem'
@@ -58,7 +58,7 @@ const Header = () => {
     <Container>
       <DesktopContainer>
         <FlexRow ac jsb fullWidth style={{ padding: '.5rem' }}>
-          <Logo />
+          <Logo variant='brand' />
           <NavList ac>
             {navs.map((nav) => (
               <div key={nav.path}>

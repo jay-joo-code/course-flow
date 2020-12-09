@@ -1,14 +1,16 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Home from 'src/pages/Home'
-import UserRegistration from 'src/pages/UserRegistration';
-import useRouter from 'src/hooks/useRouter';
+import { RootState } from 'src/types';
+import { useSelector } from 'react-redux'
 import useCurrentUser from 'src/hooks/useCurrentUser';
+import useRouter from 'src/hooks/useRouter';
+
+import Home from 'src/pages/Home'
 import Login from 'src/pages/Login';
 import LogOut from 'src/pages/Logout';
-import { useSelector } from 'react-redux'
 import AuthCallback from 'src/pages/AuthCallback';
-import { RootState } from 'src/types';
+import New from 'src/pages/New';
+import Edit from 'src/pages/Edit';
 
 interface IRoute {
   path: string
@@ -22,12 +24,30 @@ interface IRoute {
 
 export const routes: IRoute[] = [
   {
-    path: '/private-route',
-    component: Home,
-    label: 'Private Route',
-    isPublicNav: true,
+    path: '/edit/5fd0b76361d5d548d6ae96b8',
+    component: Edit,
+    label: 'Test Listing',
+    isPublicNav: false,
     isPrivateNav: true,
     isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/edit/:lid',
+    component: Edit,
+    label: 'Edit Listing',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/new',
+    component: New,
+    label: 'Create Listing',
+    isPublicNav: true,
+    isPrivateNav: true,
+    isPrivateRoute: false,
     isDesktopOnly: false,
   },
 
@@ -35,25 +55,16 @@ export const routes: IRoute[] = [
   {
     path: '/logout',
     component: LogOut,
-    label: 'Logout',
+    label: 'Sign out',
     isPublicNav: false,
     isPrivateNav: true,
     isPrivateRoute: false,
     isDesktopOnly: false,
   },
   {
-    path: '/register',
-    component: UserRegistration,
-    label: 'Register',
-    isPublicNav: true,
-    isPrivateNav: false,
-    isPrivateRoute: false,
-    isDesktopOnly: false,
-  },
-  {
     path: '/login',
     component: Login,
-    label: 'Login',
+    label: 'Sign in',
     isPublicNav: true,
     isPrivateNav: false,
     isPrivateRoute: false,
@@ -97,7 +108,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const { accessToken } = useSelector((state: RootState) => state.authState)
   const user = useCurrentUser()
 
-  if (!accessToken || accessToken.length === 0 || !user) {
+  if (!accessToken || accessToken.length === 0) {
     return <Redirect to='/login' />
   }
 

@@ -15,22 +15,15 @@ export const theme = {
   bgWash2: palette.grey[200],
 
   // border
-  // border: '#D8D8D9',
   border: palette.grey[200],
   borderLight: '#E2E2E3',
   borderDark: '#C6C6C7',
 
   // brand
-  brand: palette.grey[900],
-  brandLight: '#C8B9DC',
-  brandDark: '#1E0F32',
-  brandBg: '#FAFAFA',
-
-  // accent
-  accent: '#f5414f',
-  accentLight: '#FCC0C4',
-  accentDark: '#A32B35',
-  accentBg: '#FEE7E9',
+  brand: '#B31B1B',
+  brandLight: '#D98D8D',
+  brandDark: '#5A0E0E',
+  brandBg: '#F4DFDF',
 
   // text
   text: '#24292E',

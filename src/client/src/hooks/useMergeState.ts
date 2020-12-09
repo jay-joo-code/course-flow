@@ -8,12 +8,11 @@ const useMergeState = (initialState) => {
   const [state, setState] = useState(initialState || {});
 
   const mergeState = useCallback(newState => {
-    if (isFunction(newState)) {
-      setState((currentState) => ({ ...currentState, ...newState(currentState) }));
-    } else {
-      setState((currentState) => ({ ...currentState, ...newState }));
-    }
-  }, []);
+    setState({
+      ...state,
+      ...newState,
+    })
+  }, [state]);
 
   return [state, mergeState];
 };

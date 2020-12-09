@@ -1,20 +1,18 @@
 import React from 'react'
-import { useTasks } from 'src/api/task';
 import styled from 'styled-components'
-import CreateTask from './CreateTask';
-import TaskList from './TaskList';
+
+interface HomeProps {
+  
+}
 
 const Container = styled.div`
-  padding: 1rem;
+  
 `;
 
-const Home = () => {
-  const { tasks } = useTasks()
-
+const Home = ({  }: HomeProps) => {
   return (
     <Container>
-      <CreateTask />
-      <TaskList tasks={tasks} />
+      Home
     </Container>
   )
 }

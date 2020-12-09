@@ -159,11 +159,13 @@ export const StyledInput = styled.input`
   flex: 1 0 auto;
   background: ${props => props.theme.bg};
   font-weight: 500;
-  font-size: .9rem;
+  font-size: 1rem;
   border: 2px solid ${props => props.theme.borderDark};
   border-radius: 4px;
   padding: 8px 12px;
   transition: border .1s ease-in-out;
+  box-shadow: none;
+  -webkit-appearance: none;
 
   // disabled
   background: ${props => props.disabled && props.theme.bgWash};
@@ -198,6 +200,7 @@ export const StyledTextArea = styled(Textarea)`
   padding: .5rem;
   overflow-y: auto;
   transition: border .1s ease-in-out;
+  -webkit-appearance: none;
 
   // disabled
   background: ${props => props.disabled && props.theme.bgWash};

@@ -5,6 +5,7 @@ const CoreText = styled.p`
   white-space: pre-line;
   word-break: break-word;
   font-weight: 300;
+  line-height: 1.2;
 
   // ellipsis
   text-overflow: ${(props) => (props.ellipsis ? 'ellipsis' : '')};
@@ -15,7 +16,7 @@ const CoreText = styled.p`
   white-space: ${(props) => (props.nowrap ? 'nowrap' : '')};
 
   // color
-  color: ${(props) => (props.color ? props.theme[props.color] : '')};
+  color: ${(props) => (props.color && props.color)};
 
   // fontWeight
   font-weight: ${(props) => (props.fontWeight && props.fontWeight)};
@@ -28,36 +29,50 @@ const CoreText = styled.p`
 `;
 
 export const H1 = styled(CoreText)`
-  font-size: 3rem;
-  line-height: 1.3;
+  font-size: 42px;
+  font-weight: 500;
+
+  @media (min-width: ${props => props.theme.medium}) {
+    font-size: 48px;
+  }
 `;
 
 export const H2 = styled(CoreText)`
-  font-size: 2.25rem;
-  line-height: 1.3;
+  font-size: 30px;
+  font-weight: 500;
+
+  @media (min-width: ${props => props.theme.medium}) {
+    font-size: 36px;
+  }
 `;
 
 export const H3 = styled(CoreText)`
-  font-size: 1.25rem;
-  line-height: 1.5;
+  font-size: 24px;
+  font-weight: 500;
+
+  @media (min-width: ${props => props.theme.medium}) {
+    font-size: 30px;
+  }
 `;
 
 export const H4 = styled(CoreText)`
-  font-size: 1.125rem;
-  line-height: 1.4;
+  font-size: 16px;
+  font-weight: 500;
+
+  @media (min-width: ${props => props.theme.medium}) {
+    font-size: 20px;
+  }
 `;
 
 export const P = styled(CoreText)`
-  font-size: 1rem;
-  line-height: 1.4;
+  font-size: 16px;
 `;
 
 export const H5 = styled(CoreText)`
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: 14px;
 `;
 
 export const H6 = styled(CoreText)`
-  font-size: 0.75rem;
-  line-height: 1.5;
+  font-size: 12px;
+  text-transform: uppercase;
 `;

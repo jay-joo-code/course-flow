@@ -18,6 +18,8 @@ import { ReactComponent as UpIcon } from 'src/assets/icons/up.svg';
 import { ReactComponent as LeftIcon } from 'src/assets/icons/left.svg';
 import { ReactComponent as PersonIcon } from 'src/assets/icons/person.svg';
 import { ReactComponent as MenuIcon } from 'src/assets/icons/menu.svg';
+import { ReactComponent as LockIcon } from 'src/assets/icons/lock.svg';
+import { ReactComponent as PlaceIcon } from 'src/assets/icons/place.svg';
 
 const IconContainer = styled.div`
   height: 2rem;
@@ -85,6 +87,8 @@ const Icon = (props: IconProps) => {
     'people': <PeopleIcon />,
     'person': <PersonIcon />,
     'menu': <MenuIcon />,
+    'lock': <LockIcon />,
+    'place': <PlaceIcon />,
   }
 
   return (
