@@ -1,8 +1,9 @@
 import React from 'react';
-import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker } from 'src/components/formElements';
+import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker, Incrementor } from 'src/components/formElements';
 import { Space } from '../layout';
 import styled from 'styled-components'
 import Text from '../text';
+import theme from 'src/app/theme';
 
 const FullWidth = styled.div`
   width: 100%;
@@ -26,7 +27,7 @@ export const FormikInput = ({ formik, name, ...rest }: FormikInputProps) => {
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };
@@ -49,7 +50,7 @@ export const FormikTextArea = ({ formik, name, ...rest }: FormikTextAreaProps) =
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };
@@ -76,7 +77,7 @@ export const FormikCheckbox = ({ formik, name, ...rest }: FormikCheckboxProps) =
         onChange={handleChange}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };
@@ -104,7 +105,7 @@ export const FormikRadioGroup = ({ formik, name, options, ...rest }: FormikRadio
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };
@@ -134,7 +135,7 @@ export const FormikSelect = ({ formik, name, ...rest }: FormikSelectProps) => {
         onChange={handleChange}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };
@@ -159,7 +160,37 @@ export const FormikDatePicker = ({ formik, name, ...rest }: FormikDatePickerProp
         setDate={handleSetDate}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' color='danger'>{error}</Text>}
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+    </FullWidth>
+  );
+};
+
+interface FormikIncrementorProps {
+  formik: any
+  name: string
+  label: string
+  minValue?: number
+  maxValue?: number
+  step?: number
+}
+
+export const FormikIncrementor = ({ formik, name, ...rest }: FormikIncrementorProps) => {
+  const hasError = formik.touched[name] && formik.errors[name]
+  const error = hasError ? formik.errors[name] : ''
+
+  const handleChange = (newValue) => {
+    formik.setFieldValue(name, newValue)
+  }
+
+  return (
+    <FullWidth>
+      <Incrementor
+        value={formik.values[name]}
+        onChange={handleChange}
+        {...rest}
+      />
+      <Space margin='.2rem 0' />
+      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
     </FullWidth>
   );
 };

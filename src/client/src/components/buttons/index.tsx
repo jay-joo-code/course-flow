@@ -1,4 +1,5 @@
 import React from 'react'
+import theme from 'src/app/theme';
 import styled from 'styled-components'
 import Icon from '../icon';
 import Loading from '../loading';
@@ -15,7 +16,7 @@ export interface ButtonProps {
 }
 
 const StyledButton = styled.button`
-  background: ${props => props.theme[props.color]};
+  background: ${props => props.theme.brand};
   color: ${props => props.theme.bg};
   padding: .5rem 1rem;
   cursor: pointer;
@@ -31,28 +32,30 @@ const StyledButton = styled.button`
   justify-content: center;
 
   // bordered
-  color: ${props => props.bordered && props.theme[props.color]};
+  color: ${props => props.bordered && props.color};
   background: ${props => props.bordered && props.theme.bg};
   border: ${props => props.bordered && `1px solid ${props.theme.brand}`};
   box-shadow: ${props => props.bordered && 'none'};
 
   // text
-  color: ${props => props.text && props.theme[props.color]};
+  color: ${props => props.text && props.color};
   background: ${props => props.text && props.theme.bg};
   padding: ${props => props.text && '0'};
   border: ${props => props.text && 'none'};
   box-shadow: ${props => props.text && 'none'};
+  font-size: ${props => props.text && '1rem'};
 
-  // isLoading, icon
+  // isLoading, icon, text
   & > *:first-child {
     margin-right: ${props => (props.isLoading || props.icon) && '.5rem'};
+    margin-right: ${props => (props.icon || props.text) && '.2rem'};
   }
 `;
 
 export const Button = (props: ButtonProps) => {
   const iconFill = (props.bordered || props.text)
-    ? 'brand'
-    : 'white'
+    ? props.color
+    : theme.bg
 
   return (
     <StyledButton

@@ -10,6 +10,8 @@ import styled from 'styled-components'
 import { toShortAddress } from 'src/util/formatText'
 import { useEffect } from 'react';
 import EditForm from './EditForm';
+import { Button } from 'src/components/buttons';
+import { Link } from 'react-router-dom';
 
 interface EditProps {
   
@@ -33,12 +35,22 @@ const Edit = ({  }: EditProps) => {
   return (
     <DesktopContainer>
       <Container>
-        <Space margin='1rem 0' />
+        <Space margin='.5rem 0' />
+        <Link to='/profile/listings'>
+          <Button
+            label='My listings'
+            icon='left'
+            color={theme.brand}
+            text
+          />
+        </Link>
+        <Space margin='2rem 0' />
         <FlexRow ac>
           <Icon variant='place' fill={theme.text} />
           <Space margin='0 .5rem' />
           <Text variant='h3' fontWeight={500}>{toShortAddress(address)}</Text>
         </FlexRow>
+        <Space margin='3rem 0' />
         <EditForm />
       </Container>
     </DesktopContainer>

@@ -192,7 +192,7 @@ export const TextAreaContainer = styled.div`
 export const StyledTextArea = styled(Textarea)`
   width: 100%;
   background: ${props => props.theme.bg};
-  font-size: .9rem;
+  font-size: 1rem;
   font-family: inherit;
   border: 2px solid ${props => props.theme.borderDark};
   border-radius: 4px;

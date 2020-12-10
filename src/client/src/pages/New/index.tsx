@@ -79,12 +79,12 @@ const New = ({  }: NewProps) => {
                   data={data}
                   setData={setData}
                 />
-                <Space margin='1rem 0' />
+                {/* <Space margin='1rem 0' />
                 <FlexRow ac>
                   <Icon variant='lock' size='1.5rem' fill={theme.textLight} />
                   <Space margin='0 .3rem' />
                   <Text variant='h5' color={theme.textLight}>Your address will <Span fontWeight={500}>not</Span> be shown to the public.</Text>
-                </FlexRow>
+                </FlexRow> */}
               </>
             )}
           </BorderedCard>

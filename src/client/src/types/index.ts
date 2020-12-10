@@ -28,30 +28,48 @@ export interface ListingDoc {
   _id: string
   createdAt: Date
   updatedAt: Date
-  address: string
-  milesToCampus: number
-  lat: number
-  lng: number
   isComplete: boolean
   isActive: boolean
   userId: string | undefined
   views: number
-  regionCode: number | undefined
-  propertyTypeCode: 1 | 2 | 3 | 4 | undefined
-  furnishingCode: 1 | 2 | 3 | undefined
-  bedroomsCount: number | undefined
-  year: string | undefined
-  termCode: 1 | 2 | 3 | 4 | undefined
+
+  // init data
+  address: string
+  milesToCampus: number
+  lat: number
+  lng: number
+
+  // property
+  regionCode: string | undefined
+  propertyTypeCode: '1' | '2' | '3' | '4' | undefined
+  furnishingCode: '1' | '2' | '3' | undefined
+  bedroomsTotal: number | undefined
+  bedroomsAvailable: number | undefined
+  bathroomsTotal: number | undefined
+
+  // dates
+  year: '2021' | '2022' | '2023' | '2024' | undefined
+  termCode: '1' | '2' | '3' | '4' | undefined
   startDate: Date | undefined
   endDate: Date | undefined
+
+  // rent
   rent: number | undefined
   deposit: number | undefined
+
+  // utilities
   isUtilIncluded: boolean | undefined
   separateUtils: string[] | undefined
   utilCost: number | undefined
+
+  // roommates
   roommates: IRoommate[] | undefined
-  tenantGenderCode: 1 | 2 | 3 | undefined
+  tenantGenderCode: '1' | '2' | '3' | undefined
+
+  // photos
   photos: IPhoto[] | undefined
+
+  // description
   description: string | undefined
 }
 

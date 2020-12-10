@@ -7,11 +7,18 @@ import { Button } from 'src/components/buttons';
 import { FormikCheckbox, FormikDatePicker, FormikInput, FormikRadioGroup, FormikSelect, FormikTextArea } from 'src/components/formikElements';
 import EmbedAutosave from 'src/components/formikElements/EmbedAutosave';
 import { showToast } from 'src/util/toast';
+import Text from 'src/components/text';
+import Property from './Property';
+import Dates from './Dates';
+import { Space } from 'src/components/layout';
 
 const Form = styled.form`
-
   & > * {
     margin-bottom: 1rem;
+  }
+
+  @media (min-width: ${props => props.theme.medium}) {
+    width: 400px;
   }
 `;
 
@@ -21,28 +28,21 @@ const EditForm = () => {
     method: 'post'
   })
 
-  const radioGroupOptions = [
-    {
-      label: 'radio option A',
-      value: '1',
-    },
-  ]
-
-  const selectOptions = [
-    {
-      label: 'select option A',
-      value: '1'
-    },
-  ]
-
   const formik = useFormik({
     initialValues: {
-      input: 'init value',
-      textarea: 'textarea init value',
-      checkbox: true,
-      radioGroup: '1',
-      select: '1',
-      datePicker: new Date(),
+      // property
+      regionCode: null,
+      propertyTypeCode: null,
+      furnishingCode: null,
+      bedroomsTotal: 1,
+      bedroomsAvailable: 1,
+      bathroomsTotal: 1,
+
+      // dates
+      year: null,
+      termCode: null,
+      startDate: new Date(),
+      endDate: new Date(),
     },
     validationSchema: Yup.object({
       input: Yup.string()
@@ -56,10 +56,13 @@ const EditForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <EmbedAutosave 
+      {/* <EmbedAutosave
         formik={formik}
         debounceMs={1000}
-      />
+      /> */}
+      <Property formik={formik} />
+      <Space margin='3rem 0' />
+      <Dates formik={formik} />
       <FormikInput
         formik={formik}
         name='input'
@@ -78,17 +81,6 @@ const EditForm = () => {
         formik={formik}
         name='checkbox'
         label='test checkbox'
-      />
-      <FormikRadioGroup
-        formik={formik}
-        name='radioGroup'
-        options={radioGroupOptions}
-      />
-      <FormikSelect
-        formik={formik}
-        name='select'
-        options={selectOptions}
-        label='formik select'
       />
       <FormikDatePicker
         formik={formik}

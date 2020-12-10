@@ -17,6 +17,10 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
 import Label from '../text/Label';
+import { FlexRow, Space } from '../layout';
+import Text from '../text';
+import Icon from '../icon';
+import useIsMobile from 'src/hooks/useIsMobile';
 
 export interface InputProps {
   label?: string
@@ -121,6 +125,7 @@ export const Select = (props: SelectProps) => {
         {...props}
         value={valueObject}
         key={`select-key-${JSON.stringify(valueObject)}`}
+        isSearchable={false}
       />
     </div>
   );
@@ -185,3 +190,58 @@ export const DatePicker = (props: DatePickerProps) => {
     </StyledDateWrapper>
   );
 };
+
+interface IncrementorProps {
+  value: number
+  label: string
+  onChange: (newValue: number) => void
+  minValue?: number
+  maxValue?: number
+  step?: number
+}
+
+export const Incrementor = ({ value, label, onChange, minValue, maxValue, step = 1 }: IncrementorProps) => {
+  const isMobile = useIsMobile()
+  const handleMinusClick = () => {
+    const newValue = value - step
+    if (minValue !== undefined) {
+      onChange(Math.max(minValue, newValue))
+    } else {
+      onChange(newValue)
+    }
+  }
+
+  const handlePlusClick = () => {
+    const newValue = value + step
+    if (maxValue !== undefined) {
+      onChange(Math.min(maxValue, newValue))
+    } else {
+      onChange(newValue)
+    }
+  }
+
+  return (
+    <FlexRow ac jsb fullWidth>
+      <Text variant={isMobile ? 'h4' : 'p'} fontWeight={500}>{label}</Text>
+      <FlexRow ac>
+        <Icon
+          variant='remove-circle'
+          fill={theme.brand}
+          pointer
+          size='2rem'
+          onClick={handleMinusClick}
+        />
+        <FlexRow jc ac style={{ width: '40px' }}>
+          <Text variant='h4'>{value}</Text>
+        </FlexRow>
+        <Icon
+          variant='add-circle'
+          fill={theme.brand}
+          pointer
+          size='2rem'
+          onClick={handlePlusClick}
+        />
+      </FlexRow>
+    </FlexRow>
+  )
+}
