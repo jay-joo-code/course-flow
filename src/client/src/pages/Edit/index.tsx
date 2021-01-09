@@ -14,7 +14,7 @@ import { Button } from 'src/components/buttons';
 import { Link } from 'react-router-dom';
 
 interface EditProps {
-  
+
 }
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ const Edit = ({  }: EditProps) => {
   const {
     address,
   } = listing
-  
+
   return (
     <DesktopContainer>
       <Container>
@@ -51,7 +51,9 @@ const Edit = ({  }: EditProps) => {
           <Text variant='h3' fontWeight={500}>{toShortAddress(address)}</Text>
         </FlexRow>
         <Space margin='3rem 0' />
-        <EditForm />
+        <EditForm
+          listing={listing}
+        />
       </Container>
     </DesktopContainer>
   )

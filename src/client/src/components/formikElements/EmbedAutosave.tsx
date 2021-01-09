@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import debounce from 'just-debounce-it';
+import React from "react";
+import styled from "styled-components";
+import debounce from "just-debounce-it";
 
 interface EmbedAutosaveProps {
-  formik: any
-  debounceMs: number
+  formik: any;
+  debounceMs: number;
 }
 
 const EmbedAutosave = ({ formik, debounceMs }: EmbedAutosaveProps) => {
@@ -22,15 +22,17 @@ const EmbedAutosave = ({ formik, debounceMs }: EmbedAutosaveProps) => {
     debouncedSubmit();
   }, [debouncedSubmit, formik.values]);
 
-  return (
-    <>
-      {!!formik.isSubmitting
-        ? 'saving...'
-        : lastSaved !== null
-        ? `Last Saved: ${lastSaved}`
-        : null}
-    </>
-  );
-}
+  return <div />;
 
-export default EmbedAutosave
+  // return (
+  //   <>
+  //     {!!formik.isSubmitting
+  //       ? 'saving...'
+  //       : lastSaved !== null
+  //       ? `Last Saved: ${lastSaved}`
+  //       : null}
+  //   </>
+  // );
+};
+
+export default EmbedAutosave;

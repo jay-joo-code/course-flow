@@ -17,7 +17,7 @@ import AddressInput from './AdressInput';
 import { ListingDoc } from 'src/types'
 
 interface NewProps {
-  
+
 }
 
 const Container = styled.div`
@@ -55,7 +55,7 @@ const New = ({  }: NewProps) => {
   const { createListing } = useCreateListing()
   const handleStart = async () => {
     // TODO: handle not signed in
-    
+
     const listing: (ListingDoc | undefined) = await createListing(data)
     router.push(`/edit/${listing?._id}`)
   }

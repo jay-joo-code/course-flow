@@ -42,13 +42,13 @@ export const Input = (props: InputProps) => {
       props.onEnterPress()
     }
   }
-  
+
   return (
     <InputContainer>
       <Label {...props}>{props.label}</Label>
-      <StyledInput 
+      <StyledInput
         onKeyDown={handleKeyDown}
-        {...props} 
+        {...props}
       />
     </InputContainer>
   );

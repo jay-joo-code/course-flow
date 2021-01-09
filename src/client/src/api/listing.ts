@@ -41,7 +41,7 @@ export const useCreateListing = <T>() => {
   }
 }
 
-export const useUpdateListing = (_id: string) => {
+export const useUpdateListingById = (_id: string) => {
   const { mutate: updateListing, ...rest } = useCustomMutation<ListingDoc>({
     url: `/private/listing/${_id}`,
     method: 'put',
@@ -56,7 +56,7 @@ export const useUpdateListing = (_id: string) => {
   }
 }
 
-export const useDeleteListing = (_id: string) => {
+export const useDeleteListingById = (_id: string) => {
   const { mutate: deleteListing, ...rest } = useCustomMutation<ListingDoc>({
     url: `/private/task/${_id}`,
     method: 'delete',

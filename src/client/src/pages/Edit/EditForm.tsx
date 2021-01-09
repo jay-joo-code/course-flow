@@ -1,94 +1,131 @@
-import React from 'react'
-import { useFormik } from 'formik';
-import styled from 'styled-components'
-import * as Yup from 'yup';
-import useCustomMutation from 'src/hooks/useCustomMutation';
-import { Button } from 'src/components/buttons';
-import { FormikCheckbox, FormikDatePicker, FormikInput, FormikRadioGroup, FormikSelect, FormikTextArea } from 'src/components/formikElements';
-import EmbedAutosave from 'src/components/formikElements/EmbedAutosave';
-import { showToast } from 'src/util/toast';
-import Text from 'src/components/text';
-import Property from './Property';
-import Dates from './Dates';
-import { Space } from 'src/components/layout';
+import React from "react";
+import { useFormik } from "formik";
+import styled from "styled-components";
+import * as Yup from "yup";
+import { Button } from "src/components/buttons";
+import {
+  FormikCheckbox,
+  FormikDatePicker,
+  FormikInput,
+  FormikRadioGroup,
+  FormikSelect,
+  FormikTextArea,
+} from "src/components/formikElements";
+import EmbedAutosave from "src/components/formikElements/EmbedAutosave";
+import { showToast } from "src/util/toast";
+import Text from "src/components/text";
+import PropertyInputGroup from "./PropertyInputGroup";
+import DateInputGroup from "./DateInputGroup";
+import { FlexRow, Space } from "src/components/layout";
+import { useUpdateListingById } from "src/api/listing";
+import { ListingDoc } from "src/types";
+import { useState } from "react";
+import RentInputGroup from "./RentInputGroup";
+import UtilityInputGroup from "./UtilityInputGroup";
+import RoommateInputGroup from "./RoommateInputGroup";
+import PhotoInputGroup from "./PhotoInputGroup";
+import DescriptionInputGroup from "./DescriptionInputGroup";
 
 const Form = styled.form`
   & > * {
     margin-bottom: 1rem;
   }
 
-  @media (min-width: ${props => props.theme.medium}) {
+  @media (min-width: ${(props) => props.theme.medium}) {
     width: 400px;
   }
 `;
 
-const EditForm = () => {
-  const { mutate } = useCustomMutation({
-    url: '',
-    method: 'post'
-  })
+interface EditFormProps {
+  listing: ListingDoc;
+}
+
+const EditForm = ({ listing }: EditFormProps) => {
+  const {
+    _id,
+    isComplete,
+    isActive,
+    userId,
+    views,
+
+    // property
+    regionCode,
+    propertyTypeCode,
+    furnishingCode,
+    bedroomsTotal,
+    bedroomsAvailable,
+    bathroomsTotal,
+
+    // dates
+    year,
+    termCode,
+    startDate,
+    endDate,
+
+    // description
+    description,
+  } = listing;
+
+  const { updateListing } = useUpdateListingById(_id);
+
+  const [isSavedOnMount, setIsSavedOnMount] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       // property
-      regionCode: null,
-      propertyTypeCode: null,
-      furnishingCode: null,
-      bedroomsTotal: 1,
-      bedroomsAvailable: 1,
-      bathroomsTotal: 1,
+      regionCode: regionCode || null,
+      propertyTypeCode: propertyTypeCode || null,
+      furnishingCode: furnishingCode || null,
+      bedroomsTotal: bedroomsTotal || 1,
+      bedroomsAvailable: bedroomsAvailable || 1,
+      bathroomsTotal: bathroomsTotal || 1,
 
       // dates
-      year: null,
-      termCode: null,
-      startDate: new Date(),
-      endDate: new Date(),
+      year: year || null,
+      termCode: termCode || null,
+      startDate: startDate || new Date(),
+      endDate: endDate || new Date(),
+
+      // description
+      description: description || "",
     },
-    validationSchema: Yup.object({
-      input: Yup.string()
-        .required('Required'),
-    }),
+    validationSchema: Yup.object({}),
     onSubmit: async (values) => {
-      showToast('success', 'submitted', { toastId: 'submitted' })
-      await mutate(values)
+      if (isSavedOnMount) {
+        if (isComplete) {
+          showToast("success", "Your changes have been saved!", {
+            toastId: "submitted",
+          });
+        }
+        await updateListing(values);
+      } else {
+        setIsSavedOnMount(true);
+      }
     },
   });
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      {/* <EmbedAutosave
-        formik={formik}
-        debounceMs={1000}
-      /> */}
-      <Property formik={formik} />
-      <Space margin='3rem 0' />
-      <Dates formik={formik} />
-      <FormikInput
-        formik={formik}
-        name='input'
-        label='test input'
-        placeholder='input placeholder'
-      />
-      <FormikTextArea
-        formik={formik}
-        name='textarea'
-        label='test textarea'
-        placeholder='textarea placeholder'
-        minRows={3}
-        maxRows={5}
-      />
-      <FormikCheckbox
-        formik={formik}
-        name='checkbox'
-        label='test checkbox'
-      />
-      <FormikDatePicker
-        formik={formik}
-        name='datePicker'
-      />
-      <Button label='submit' type='submit' />
+      <EmbedAutosave formik={formik} debounceMs={1000} />
+      <PropertyInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <DateInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <RentInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <UtilityInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <RoommateInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <PhotoInputGroup formik={formik} />
+      <Space margin="3rem 0" />
+      <DescriptionInputGroup formik={formik} />
+      <Space margin="1rem 0" />
+      <FlexRow je>
+        <Button label={isComplete ? "Save" : "Publish"} type="submit" />
+      </FlexRow>
     </Form>
   );
 };
 
-export default EditForm
+export default EditForm;

@@ -14,8 +14,8 @@ const Logo = ({ variant }: LogoProps) => {
   }
   return (
     <Link to='/'>
-      <Text 
-        variant='h3' 
+      <Text
+        variant='h3'
         fontWeight={500}
         color={variantToColor[variant]}
       >

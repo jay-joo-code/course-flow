@@ -47,7 +47,7 @@ const SlideInMenu = ({ isOpen, setIsOpen }: SlideInMenuProps) => {
       <Container isOpen={isOpen}>
         <TopRow jsb>
           <div />
-          <Icon 
+          <Icon
             variant='close'
             onClick={() => setIsOpen(false)}
           />
