@@ -1,16 +1,16 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
-import theme from './theme';
+import theme from './theme'
 import './normalise.scss'
 import Routes from './Routes'
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import history from 'src/util/history'
 import Header from '../components/header'
-import styled from 'styled-components'
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import store from 'src/slices/store'
 import Footer from 'src/components/footer'
 import ScrollToTop from 'src/components/util/ScrollToTop'
@@ -29,7 +29,7 @@ const Container = styled.div`
     max-width: initial;
     overflow-x: initial;
   }
-`;
+`
 
 const FillHeight = styled.div`
   flex: 2;
@@ -39,9 +39,9 @@ const FillHeight = styled.div`
   & > div {
     flex: 2;
   }
-`;
+`
 
-const persistor = persistStore(store);
+const persistor = persistStore(store)
 
 export const queryCache = new QueryCache({
   // defaultConfig: {
@@ -54,7 +54,9 @@ export const queryCache = new QueryCache({
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
             <ReactQueryCacheProvider queryCache={queryCache}>
@@ -72,7 +74,7 @@ const App = () => {
         </ThemeProvider>
       </PersistGate>
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

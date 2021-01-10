@@ -1,7 +1,7 @@
 import express from 'express'
-import Listing from '../../models/Listing';
+import Listing from '../../models/Listing'
 
-const listingRouter = express.Router();
+const listingRouter = express.Router()
 
 listingRouter.get('/user', async (req, res) => {
   try {
@@ -10,7 +10,7 @@ listingRouter.get('/user', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 listingRouter.get('/:id', async (req, res) => {
   try {
@@ -19,7 +19,7 @@ listingRouter.get('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 // TODO: get listings for public view
 listingRouter.get('/', async (req, res) => {
@@ -29,6 +29,6 @@ listingRouter.get('/', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 export default listingRouter

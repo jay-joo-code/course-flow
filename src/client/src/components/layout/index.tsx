@@ -28,15 +28,15 @@ const FlexElement = styled.div`
   flex-wrap: ${props => props.wrap && 'wrap'};
 
   // fullWidth
-  width: ${props => props.fullWidth && '100%' };
+  width: ${props => props.fullWidth && '100%'};
 
   // fullHeight
-  height: ${props => props.fullHeight && '100%' };
-`;
+  height: ${props => props.fullHeight && '100%'};
+`
 
 export const FlexColumn = styled(FlexElement)`
   flex-direction: column;
-`;
+`
 
 export const FlexRow = styled(FlexElement)`
 `
@@ -44,4 +44,4 @@ export const FlexRow = styled(FlexElement)`
 export const Space = styled.div`
   margin: ${props => props.margin && props.margin};
   padding: ${props => props.padding && props.padding};
-`;
+`

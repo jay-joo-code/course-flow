@@ -1,4 +1,4 @@
-import palette from "src/util/palette";
+import palette from 'src/util/palette'
 
 export const theme = {
   ...palette,
@@ -35,15 +35,15 @@ export const theme = {
   shadow: '0 2px 4px rgba(0, 0, 0, .2)',
 
   // social
-  facebook:'#3B5998',
-  twitter:'#00ACED',
-  google:'#ea4335',
-  github:'#16171A',
+  facebook: '#3B5998',
+  twitter: '#00ACED',
+  google: '#ea4335',
+  github: '#16171A',
 
   // breakpoints
-  small: '576px',   // landscape phones
-  medium: '768px',  // tablets
-  large: '992px',   // desktops, laptops
-};
+  small: '576px', // landscape phones
+  medium: '768px', // tablets
+  large: '992px' // desktops, laptops
+}
 
-export default theme;
+export default theme

@@ -1,21 +1,21 @@
 import mongoose from 'mongoose'
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const taskSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   complete: {
     type: Boolean,
-    default: false,
+    default: false
   },
   userId: {
     type: Schema.Types.ObjectId,
-    required: true,
+    required: true
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
 export interface TaskDoc extends mongoose.Document {
   _id: string

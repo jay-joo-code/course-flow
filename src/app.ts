@@ -6,14 +6,14 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import compression from 'compression'
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import PassportJwt from 'passport-jwt'
 import passport from 'passport'
 import User, { UserDoc } from './models/User'
 
-dotenv.config({ path: __dirname + '/../.env' });
+dotenv.config({ path: __dirname + '/../.env' })
 
 // MONGODB
 const isProdDb = (process.env.NODE_ENV === 'production' && process.env.DB_PROD)
@@ -57,19 +57,19 @@ app.use(passport.initialize())
 const { Strategy: JwtStrategy, ExtractJwt } = PassportJwt
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.AUTH_SECRET,
+  secretOrKey: process.env.AUTH_SECRET
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
   User.findById(jwtPayload._id, (err, user: UserDoc) => {
     if (err) {
-      return done(err, false);
+      return done(err, false)
     }
     if (user) {
-      return done(null, user);
+      return done(null, user)
     }
-    return done(null, false);
-  });
-}));
+    return done(null, false)
+  })
+}))
 
 // ROUTING
 app.use(express.static(path.join(__dirname, '/client/build/')))

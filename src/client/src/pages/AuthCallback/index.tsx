@@ -13,7 +13,7 @@ const AuthCallback = () => {
       dispatch(setAccessToken(token))
     }
     router.push('/')
-  }, [token])
+  }, [dispatch, router, token])
 
   return null
 }

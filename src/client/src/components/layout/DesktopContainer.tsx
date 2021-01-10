@@ -15,7 +15,7 @@ export const Container = styled.div`
       width: 65%;
     }
   }
-`;
+`
 
 interface DesktopContainerProps {
   children: React.ReactNode

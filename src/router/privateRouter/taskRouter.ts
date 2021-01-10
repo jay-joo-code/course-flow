@@ -1,7 +1,7 @@
 import express from 'express'
-import Task from '../../models/Task';
+import Task from '../../models/Task'
 
-const taskRouter = express.Router();
+const taskRouter = express.Router()
 
 taskRouter.post('/', async (req, res) => {
   try {
@@ -10,7 +10,7 @@ taskRouter.post('/', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 taskRouter.get('/user', async (req, res) => {
   try {
@@ -19,7 +19,7 @@ taskRouter.get('/user', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 taskRouter.get('/:id', async (req, res) => {
   try {
@@ -28,7 +28,7 @@ taskRouter.get('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 taskRouter.put('/:id', async (req, res) => {
   try {
@@ -37,7 +37,7 @@ taskRouter.put('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 taskRouter.delete('/:id', async (req, res) => {
   try {
@@ -46,6 +46,6 @@ taskRouter.delete('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 export default taskRouter

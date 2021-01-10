@@ -1,9 +1,9 @@
 import passport from 'passport'
 import { Strategy as FacebookStrategy } from 'passport-facebook'
-import User from '../models/User'
 import dotenv from 'dotenv'
+import User from '../models/User'
 
-dotenv.config({ path: __dirname + '/../../.env' });
+dotenv.config({ path: `${__dirname}/../../.env` })
 
 /*
 https://developers.facebook.com/apps/
@@ -23,27 +23,25 @@ bc localhost is not registered as an accepted redirect url
 */
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.ID_FACEBOOK,
-    clientSecret: process.env.SECRET_FACEBOOK,
-    callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/facebook/callback`,
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await User.findOne({ providerId: profile.id })
-      if (user) {
-        // update providerData
-        await User.findByIdAndUpdate(user._id, { providerData: profile })
+  clientID: process.env.ID_FACEBOOK,
+  clientSecret: process.env.SECRET_FACEBOOK,
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/facebook/callback`
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    const user = await User.findOne({ providerId: profile.id })
+    if (user) {
+      // update providerData
+      await User.findByIdAndUpdate(user._id, { providerData: profile })
 
-        return done(null, user)
-      } else {
-        const userData = { authProvider: 'facebook', providerId: profile.id, providerData: profile }
-        const newUser = await new User(userData).save()
-        return done(null, newUser)
-      }
-    } catch (error) {
-      return done(error, null)
+      return done(null, user)
     }
+    const userData = { authProvider: 'facebook', providerId: profile.id, providerData: profile }
+    const newUser = await new User(userData).save()
+    return done(null, newUser)
+  } catch (error) {
+    return done(error, null)
   }
-));
+}))
 
 export default passport

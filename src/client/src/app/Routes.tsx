@@ -1,16 +1,16 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { RootState } from 'src/types';
+import { Switch, Route, Redirect } from 'react-router-dom'
+import { RootState } from 'src/types'
 import { useSelector } from 'react-redux'
-import useCurrentUser from 'src/hooks/useCurrentUser';
-import useRouter from 'src/hooks/useRouter';
+import useCurrentUser from 'src/hooks/useCurrentUser'
+import useRouter from 'src/hooks/useRouter'
 
 import Home from 'src/pages/Home'
-import Login from 'src/pages/Login';
-import LogOut from 'src/pages/Logout';
-import AuthCallback from 'src/pages/AuthCallback';
-import New from 'src/pages/New';
-import Edit from 'src/pages/Edit';
+import Login from 'src/pages/Login'
+import LogOut from 'src/pages/Logout'
+import AuthCallback from 'src/pages/AuthCallback'
+import New from 'src/pages/New'
+import Edit from 'src/pages/Edit'
 
 interface IRoute {
   path: string
@@ -30,7 +30,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: true,
     isPrivateRoute: true,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
   {
     path: '/edit/:lid',
@@ -39,7 +39,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
   {
     path: '/new',
@@ -48,7 +48,7 @@ export const routes: IRoute[] = [
     isPublicNav: true,
     isPrivateNav: true,
     isPrivateRoute: false,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
 
   // auth
@@ -59,7 +59,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: true,
     isPrivateRoute: false,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
   {
     path: '/login',
@@ -68,7 +68,7 @@ export const routes: IRoute[] = [
     isPublicNav: true,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
   {
     path: '/auth/callback',
@@ -77,7 +77,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false,
+    isDesktopOnly: false
   },
 
   // display
@@ -88,16 +88,22 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false,
-  },
+    isDesktopOnly: false
+  }
 ]
 
 const Routes = () => {
   return (
     <Switch>
       {routes.map(({ path, component, isPrivateRoute }) => isPrivateRoute
-        ? <PrivateRoute key={path} path={path} component={component} />
-        : <Route key={path} path={path} component={component} />
+        ? <PrivateRoute
+            key={path}
+            path={path}
+            component={component} />
+        : <Route
+            key={path}
+            path={path}
+            component={component} />
       )}
     </Switch>
   )
@@ -119,7 +125,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         <Component {...props} />
       )}
     />
-  );
-};
+  )
+}
 
 export default Routes

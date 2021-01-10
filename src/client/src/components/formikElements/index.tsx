@@ -1,13 +1,13 @@
-import React from 'react';
-import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker, Incrementor } from 'src/components/formElements';
-import { Space } from '../layout';
+import React from 'react'
+import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker, Incrementor } from 'src/components/formElements'
+import { Space } from '../layout'
 import styled from 'styled-components'
-import Text from '../text';
-import theme from 'src/app/theme';
+import Text from '../text'
+import theme from 'src/app/theme'
 
 const FullWidth = styled.div`
   width: 100%;
-`;
+`
 
 interface FormikInputProps extends InputProps {
   formik: any
@@ -27,10 +27,13 @@ export const FormikInput = ({ formik, name, ...rest }: FormikInputProps) => {
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikTextAreaProps extends TextAreaProps {
   formik: any
@@ -50,10 +53,13 @@ export const FormikTextArea = ({ formik, name, ...rest }: FormikTextAreaProps) =
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikCheckboxProps {
   formik: any
@@ -77,10 +83,13 @@ export const FormikCheckbox = ({ formik, name, ...rest }: FormikCheckboxProps) =
         onChange={handleChange}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikRadioGroupProps {
   formik: any
@@ -105,10 +114,13 @@ export const FormikRadioGroup = ({ formik, name, options, ...rest }: FormikRadio
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikSelectProps {
   formik: any
@@ -135,10 +147,13 @@ export const FormikSelect = ({ formik, name, ...rest }: FormikSelectProps) => {
         onChange={handleChange}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikDatePickerProps {
   formik: any
@@ -160,10 +175,13 @@ export const FormikDatePicker = ({ formik, name, ...rest }: FormikDatePickerProp
         setDate={handleSetDate}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}
 
 interface FormikIncrementorProps {
   formik: any
@@ -190,7 +208,10 @@ export const FormikIncrementor = ({ formik, name, ...rest }: FormikIncrementorPr
         {...rest}
       />
       <Space margin='.2rem 0' />
-      {error && <Text variant='h5' fontWeight={500} color={theme.danger}>{error}</Text>}
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}>{error}</Text>}
     </FullWidth>
-  );
-};
+  )
+}

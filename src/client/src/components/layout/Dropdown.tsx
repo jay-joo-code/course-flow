@@ -7,7 +7,7 @@ interface DropdownProps {
 
 const DropdownWrapper = styled.div`
   position: relative;
-`;
+`
 
 const DropdownContainer = styled.div`
   border-radius: 8px;
@@ -17,7 +17,7 @@ const DropdownContainer = styled.div`
   top: 0;
   left: 0;
   max-width: 100%;
-`;
+`
 
 const Dropdown = ({ children }: DropdownProps) => {
   return (

@@ -9,8 +9,8 @@ interface LogoProps {
 
 const Logo = ({ variant }: LogoProps) => {
   const variantToColor = {
-    'brand': theme.brand,
-    'black': theme.text,
+    brand: theme.brand,
+    black: theme.text
   }
   return (
     <Link to='/'>

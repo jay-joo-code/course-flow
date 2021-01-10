@@ -13,7 +13,7 @@ const StyledSpan = styled.span`
 
   // color
   color: ${props => props.color && props.color};
-`;
+`
 
 const Span = ({ children, ...rest }: SpanProps) => {
   return (

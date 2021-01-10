@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Space } from '.';
+import { Space } from '.'
 
 const TriggerContainer = styled.div`
   cursor: pointer;
-`;
+`
 
 const HoverDropdownContainer = styled.div`
-`;
+`
 
 const DropdownWrapper = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ const DropdownWrapper = styled.div`
   ${HoverDropdownContainer}:hover & {
     display: block;
   }
-`;
+`
 
 const DropdownContainer = styled.div`
   border-radius: 8px;
@@ -25,7 +25,7 @@ const DropdownContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-`;
+`
 
 interface HoverDropdownProps {
   triggerComponent: React.ReactNode

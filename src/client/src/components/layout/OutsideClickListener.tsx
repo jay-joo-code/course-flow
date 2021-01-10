@@ -7,17 +7,17 @@ interface OutsideClickListenerProps {
 
 const useOutsideAlerter = (ref, onOutsideClick) => {
   useEffect(() => {
-    function handleClickOutside(event) {
+    function handleClickOutside (event) {
       if (ref.current && !ref.current.contains(event.target)) {
         onOutsideClick()
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref, onOutsideClick]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [ref, onOutsideClick])
 }
 
 const OutsideClickListener = ({ onOutsideClick, children }: OutsideClickListenerProps) => {

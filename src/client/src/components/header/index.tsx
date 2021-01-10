@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { routes } from '../../app/Routes'
 import { Link, NavLink } from 'react-router-dom'
@@ -10,7 +10,7 @@ import Logo from '../logo'
 import Icon from '../icon'
 import theme from 'src/app/theme'
 import SlideInMenu from './SlideInMenu'
-import { useState } from 'react'
+
 import DesktopContainer from '../layout/DesktopContainer'
 import Text from '../text'
 
@@ -21,13 +21,13 @@ const MobileContainer = styled(FlexRow)`
 
 const Container = styled.div`
   border-bottom: 1px solid ${props => props.theme.border};
-`;
+`
 
 const NavList = styled(FlexRow)`
   & > * {
     margin-right: 1rem;
   }
-`;
+`
 
 const Header = () => {
   const navs = useNavs()
@@ -37,7 +37,9 @@ const Header = () => {
   if (isMobile) {
     return (
       <>
-        <MobileContainer jsb ac>
+        <MobileContainer
+          jsb
+          ac>
           <Logo variant='brand' />
           <Icon
             variant='menu'
@@ -57,13 +59,19 @@ const Header = () => {
   return (
     <Container>
       <DesktopContainer>
-        <FlexRow ac jsb fullWidth style={{ padding: '.5rem' }}>
+        <FlexRow
+          ac
+          jsb
+          fullWidth
+          style={{ padding: '.5rem' }}>
           <Logo variant='brand' />
           <NavList ac>
             {navs.map((nav) => (
               <div key={nav.path}>
                 <Link to={nav.path}>
-                  <Text variant='h5' fontWeight={500}>{nav.label}</Text>
+                  <Text
+                    variant='h5'
+                    fontWeight={500}>{nav.label}</Text>
                 </Link>
               </div>
             ))}

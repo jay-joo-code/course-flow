@@ -1,9 +1,9 @@
 import passport from 'passport'
 import { Strategy as KakaoStrategy } from 'passport-kakao'
-import User from '../models/User'
 import dotenv from 'dotenv'
+import User from '../models/User'
 
-dotenv.config({ path: __dirname + '/../../.env' });
+dotenv.config({ path: `${__dirname}/../../.env` })
 
 /*
 https://developers.kakao.com/console/app
@@ -17,27 +17,25 @@ https://developers.kakao.com/console/app
 */
 
 passport.use(new KakaoStrategy({
-    clientID: process.env.ID_KAKAO,
-    callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/kakao/callback`
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await User.findOne({ providerId: profile.id })
+  clientID: process.env.ID_KAKAO,
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/kakao/callback`
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    const user = await User.findOne({ providerId: profile.id })
 
-      if (user) {
-        // update providerData
-        await User.findByIdAndUpdate(user._id, { providerData: profile })
+    if (user) {
+      // update providerData
+      await User.findByIdAndUpdate(user._id, { providerData: profile })
 
-        return done(null, user)
-      } else {
-        const userData = { authProvider: 'kakao', providerId: profile.id, providerData: profile }
-        const newUser = await new User(userData).save()
-        return done(null, newUser)
-      }
-    } catch (error) {
-      return done(error, null)
+      return done(null, user)
     }
+    const userData = { authProvider: 'kakao', providerId: profile.id, providerData: profile }
+    const newUser = await new User(userData).save()
+    return done(null, newUser)
+  } catch (error) {
+    return done(error, null)
   }
-));
+}))
 
 export default passport

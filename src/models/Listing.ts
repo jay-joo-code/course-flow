@@ -1,91 +1,91 @@
 import mongoose from 'mongoose'
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const listingSchema = new Schema({
   // metadata
   isComplete: {
     type: Boolean,
-    default: false,
+    default: false
   },
   isActive: {
     type: Boolean,
-    default: false,
+    default: false
   },
   userId: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId
   },
   views: {
     type: Number,
-    default: 0,
+    default: 0
   },
 
   // init data
   address: {
     type: String,
-    required: true,
+    required: true
   },
   milesToCampus: {
     type: Number,
-    required: true,
+    required: true
   },
   lat: {
     type: Number,
-    required: true,
+    required: true
   },
   lng: {
     type: Number,
-    required: true,
+    required: true
   },
 
   // property
   regionCode: {
-    type: String,
+    type: String
   },
   propertyTypeCode: {
     // 1: apartment, 2: house, 3: townhouse, 4: condo
-    type: String,
+    type: String
   },
   furnishingCode: {
     // 1: unfurnished, 2: partially, 3: fully
-    type: String,
+    type: String
   },
   bedroomsTotal: {
-    type: Number,
+    type: Number
   },
   bedroomsAvailable: {
-    type: Number,
+    type: Number
   },
   bathroomsTotal: {
-    type: Number,
+    type: Number
   },
 
   // dates
   year: {
-    type: String,
+    type: String
   },
   termCode: {
     // 1: winter, 2: spring, 3: summer, 4: fall
-    type: Number,
+    type: Number
   },
   startDate: {
-    type: Date,
+    type: Date
   },
   endDate: {
-    type: Date,
+    type: Date
   },
 
   // rent
   rent: {
-    type: Number,
+    type: Number
   },
   deposit: {
-    type: Number,
+    type: Number
   },
 
   // utilities
   isUtilIncluded: {
-    type: Boolean,
+    type: Boolean
   },
   separateUtils: {
     type: [String]
@@ -99,13 +99,13 @@ const listingSchema = new Schema({
     type: [{
       gender: {
         // 'Male' | 'Female' | String
-        type: String,
-      },
-    }],
+        type: String
+      }
+    }]
   },
   tenantGenderCode: {
     // 1: female, 2: male, 3: I don't mind
-    type: Number,
+    type: Number
   },
 
   // photos
@@ -114,18 +114,17 @@ const listingSchema = new Schema({
     type: [{
       src: {
         type: String,
-        required: true,
+        required: true
       }
-    }],
+    }]
   },
-
 
   // description
   description: {
-    type: String,
-  },
+    type: String
+  }
 
-}, { timestamps: true });
+}, { timestamps: true })
 
 export interface ListingDoc extends mongoose.Document {
   _id: string

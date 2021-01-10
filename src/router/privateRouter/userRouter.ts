@@ -1,8 +1,8 @@
 import express from 'express'
-import User from '../../models/User';
-import substringQuery from '../../util/substringQuery';
+import User from '../../models/User'
+import substringQuery from '../../util/substringQuery'
 
-const userRouter = express.Router();
+const userRouter = express.Router()
 
 userRouter.post('/', async (req, res) => {
   try {
@@ -11,7 +11,7 @@ userRouter.post('/', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 userRouter.get('/', async (req, res) => {
   try {
@@ -20,7 +20,7 @@ userRouter.get('/', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 userRouter.get('/current', async (req, res) => {
   try {
@@ -28,7 +28,7 @@ userRouter.get('/current', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 userRouter.get('/:id', async (req, res) => {
   try {
@@ -37,7 +37,7 @@ userRouter.get('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 userRouter.put('/:id', async (req, res) => {
   try {
@@ -46,7 +46,7 @@ userRouter.put('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 userRouter.delete('/:id', async (req, res) => {
   try {
@@ -55,6 +55,6 @@ userRouter.delete('/:id', async (req, res) => {
   } catch (e) {
     res.status(500).send(e)
   }
-});
+})
 
 export default userRouter

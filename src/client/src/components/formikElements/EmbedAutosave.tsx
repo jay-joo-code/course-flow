@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import debounce from "just-debounce-it";
+import React from 'react'
+import styled from 'styled-components'
+import debounce from 'just-debounce-it'
 
 interface EmbedAutosaveProps {
   formik: any;
@@ -8,7 +8,7 @@ interface EmbedAutosaveProps {
 }
 
 const EmbedAutosave = ({ formik, debounceMs }: EmbedAutosaveProps) => {
-  const [lastSaved, setLastSaved] = React.useState<string | null>(null);
+  const [lastSaved, setLastSaved] = React.useState<string | null>(null)
   const debouncedSubmit = React.useCallback(
     debounce(
       () =>
@@ -16,13 +16,13 @@ const EmbedAutosave = ({ formik, debounceMs }: EmbedAutosaveProps) => {
       debounceMs
     ),
     [debounceMs, formik.submitForm]
-  );
+  )
 
   React.useEffect(() => {
-    debouncedSubmit();
-  }, [debouncedSubmit, formik.values]);
+    debouncedSubmit()
+  }, [debouncedSubmit, formik.values])
 
-  return <div />;
+  return <div />
 
   // return (
   //   <>
@@ -33,6 +33,6 @@ const EmbedAutosave = ({ formik, debounceMs }: EmbedAutosaveProps) => {
   //       : null}
   //   </>
   // );
-};
+}
 
-export default EmbedAutosave;
+export default EmbedAutosave

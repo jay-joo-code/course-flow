@@ -2,20 +2,20 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import autopopulate from 'mongoose-autopopulate'
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const userSchema = new Schema({
   authProvider: {
     // 'google'
-    type: String,
+    type: String
   },
   providerId: {
-    type: String,
+    type: String
   },
   providerData: {
-    type: Schema.Types.Mixed,
+    type: Schema.Types.Mixed
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
 export interface UserDoc extends mongoose.Document {
   _id: string
@@ -27,6 +27,6 @@ export interface UserDoc extends mongoose.Document {
   validatePassword: (candidate: string) => boolean
 }
 
-userSchema.plugin(autopopulate);
+userSchema.plugin(autopopulate)
 
-export default mongoose.model<UserDoc>('User', userSchema);
+export default mongoose.model<UserDoc>('User', userSchema)

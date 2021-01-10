@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'
 import {
   StyledInput,
   InputContainer,
@@ -10,31 +10,38 @@ import {
   RadioLabel,
   RadioGroupContainer,
   StyledDateWrapper,
-} from './styles';
-import theme from 'src/app/theme';
-import { isInclusivelyAfterDay, DayPickerSingleDateController } from 'react-dates'
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+  StyledDateRangeWrapper
+} from './styles'
+import theme from 'src/app/theme'
+import {
+  isInclusivelyAfterDay,
+  DayPickerSingleDateController,
+  DateRangePicker as DateRangePickerAirbnb
+} from 'react-dates'
+import 'react-dates/initialize'
+import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
-import Label from '../text/Label';
-import { FlexRow, Space } from '../layout';
-import Text from '../text';
-import Icon from '../icon';
-import useIsMobile from 'src/hooks/useIsMobile';
+import Label from '../text/Label'
+import { FlexRow, Space } from '../layout'
+import Text from '../text'
+import Icon from '../icon'
+import useIsMobile from 'src/hooks/useIsMobile'
 
 export interface InputProps {
   label?: string
   value?: any
   placeholder?: string
   onChange?: React.FormEventHandler<HTMLInputElement>
-  onBlur?: React.FormEventHandler<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
+  onBlur?:
+    | React.FormEventHandler<HTMLInputElement>
+    | React.ChangeEvent<HTMLInputElement>
   onEnterPress?: () => void
   autoFocus?: boolean
   disabled?: boolean
   width?: number
   error?: boolean
   type?: string
-};
+}
 
 export const Input = (props: InputProps) => {
   const handleKeyDown = (e) => {
@@ -48,11 +55,10 @@ export const Input = (props: InputProps) => {
       <Label {...props}>{props.label}</Label>
       <StyledInput
         onKeyDown={handleKeyDown}
-        {...props}
-      />
+        {...props} />
     </InputContainer>
-  );
-};
+  )
+}
 
 export interface CheckboxProps {
   label: string
@@ -65,16 +71,20 @@ export const Checkbox = (props: CheckboxProps) => {
     <CheckboxContainer>
       <StyledCheckbox>
         <input
-          type='checkbox'
+          type="checkbox"
           onChange={props.onChange}
           checked={props.checked}
         />
         <span />
       </StyledCheckbox>
-      <Label noMargin {...props}>{props.label}</Label>
+      <Label
+        noMargin={true}
+        {...props}>
+        {props.label}
+      </Label>
     </CheckboxContainer>
-  );
-};
+  )
+}
 
 export interface TextAreaProps extends InputProps {
   maxRows?: number
@@ -89,15 +99,15 @@ export const TextArea = (props: TextAreaProps) => {
         <StyledTextArea {...props} />
       </div>
     </TextAreaContainer>
-  );
-};
+  )
+}
 
 export interface IOption {
   label: string
   value: string
 }
 
-export interface SelectProps  {
+export interface SelectProps {
   options: IOption[]
   value: string
   onChange: React.FormEventHandler<HTMLInputElement>
@@ -107,20 +117,22 @@ export interface SelectProps  {
 }
 
 export const Select = (props: SelectProps) => {
-  const valueObject = props.options.find((option) => option.value === props.value)
+  const valueObject = props.options.find(
+    (option) => option.value === props.value
+  )
   return (
     <div>
       <Label {...props}>{props.label}</Label>
       <StyledSelect
         isDisabled={props.disabled}
-        theme={defaultStyles => ({
+        theme={(defaultStyles) => ({
           ...defaultStyles,
           colors: {
             ...defaultStyles.colors,
             primary25: theme.brandLight,
             primary50: theme.bgWash2,
-            primary: theme.brand,
-          },
+            primary: theme.brand
+          }
         })}
         {...props}
         value={valueObject}
@@ -128,8 +140,8 @@ export const Select = (props: SelectProps) => {
         isSearchable={false}
       />
     </div>
-  );
-};
+  )
+}
 
 interface RadioGroupProps extends InputProps {
   value: any
@@ -155,7 +167,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
       {props.options.map(({ value, label }) => (
         <RadioLabel key={value}>
           <input
-            type='radio'
+            type="radio"
             value={value}
             checked={props.value === value}
             onClick={(e) => handleRadioClick(e, value)}
@@ -164,8 +176,8 @@ export const RadioGroup = (props: RadioGroupProps) => {
         </RadioLabel>
       ))}
     </RadioGroupContainer>
-  );
-};
+  )
+}
 
 export interface DatePickerProps {
   date: Date | undefined
@@ -184,12 +196,42 @@ export const DatePicker = (props: DatePickerProps) => {
         onDateChange={handleDateChange}
         focused={true}
         date={props.date && moment(props.date)}
-        hideKeyboardShortcutsPanel
-        isOutsideRange={day => !isInclusivelyAfterDay(day, moment())}
+        hideKeyboardShortcutsPanel={true}
+        isOutsideRange={(day) => !isInclusivelyAfterDay(day, moment())}
       />
     </StyledDateWrapper>
-  );
-};
+  )
+}
+
+export interface DateRangePickerProps {
+  startDate: Date | undefined
+  endDate: Date | undefined
+  setStartDate: (newDate: any) => void
+  setEndDate: (newDate: any) => void
+}
+
+export const DateRangePicker = ({ startDate, endDate, setStartDate, setEndDate }: DateRangePickerProps) => {
+  const [focusedInput, setFocusedInput] = useState(null)
+  const handleDateChange = ({ startDate: startDateAirbnb, endDate: endDateAirbnb }) => {
+    setStartDate(startDateAirbnb.toDate())
+    setEndDate(endDateAirbnb.toDate())
+  }
+
+  return (
+    <StyledDateRangeWrapper>
+      <DateRangePickerAirbnb
+        startDate={null} // momentPropTypes.momentObj or null,
+        startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+        endDate={null} // momentPropTypes.momentObj or null,
+        endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+        onDatesChange={handleDateChange} // PropTypes.func.isRequired,
+        focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+        onFocusChange={(focusedInput) => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+        readOnly={true}
+      />
+    </StyledDateRangeWrapper>
+  )
+}
 
 interface IncrementorProps {
   value: number
@@ -200,7 +242,14 @@ interface IncrementorProps {
   step?: number
 }
 
-export const Incrementor = ({ value, label, onChange, minValue, maxValue, step = 1 }: IncrementorProps) => {
+export const Incrementor = ({
+  value,
+  label,
+  onChange,
+  minValue,
+  maxValue,
+  step = 1
+}: IncrementorProps) => {
   const isMobile = useIsMobile()
   const handleMinusClick = () => {
     const newValue = value - step
@@ -221,24 +270,34 @@ export const Incrementor = ({ value, label, onChange, minValue, maxValue, step =
   }
 
   return (
-    <FlexRow ac jsb fullWidth>
-      <Text variant={isMobile ? 'h4' : 'p'} fontWeight={500}>{label}</Text>
+    <FlexRow
+      ac
+      jsb
+      fullWidth>
+      <Text
+        variant={isMobile ? 'h4' : 'p'}
+        fontWeight={500}>
+        {label}
+      </Text>
       <FlexRow ac>
         <Icon
-          variant='remove-circle'
+          variant="remove-circle"
           fill={theme.brand}
           pointer
-          size='2rem'
+          size="2rem"
           onClick={handleMinusClick}
         />
-        <FlexRow jc ac style={{ width: '40px' }}>
-          <Text variant='h4'>{value}</Text>
+        <FlexRow
+          jc
+          ac
+          style={{ width: '40px' }}>
+          <Text variant="h4">{value}</Text>
         </FlexRow>
         <Icon
-          variant='add-circle'
+          variant="add-circle"
           fill={theme.brand}
           pointer
-          size='2rem'
+          size="2rem"
           onClick={handlePlusClick}
         />
       </FlexRow>

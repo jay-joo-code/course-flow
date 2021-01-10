@@ -7,9 +7,9 @@ interface HomeProps {
 
 const Container = styled.div`
 
-`;
+`
 
-const Home = ({  }: HomeProps) => {
+const Home = ({ }: HomeProps) => {
   return (
     <Container>
       Home

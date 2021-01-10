@@ -1,11 +1,11 @@
 import React from 'react'
 import Text from '../text'
 import styled from 'styled-components'
-import OutsideClickListener from '../layout/OutsideClickListener';
-import { FlexRow } from '../layout';
-import Icon from '../icon';
-import useNavs from 'src/hooks/useNavs';
-import { Link } from 'react-router-dom';
+import OutsideClickListener from '../layout/OutsideClickListener'
+import { FlexRow } from '../layout'
+import Icon from '../icon'
+import useNavs from 'src/hooks/useNavs'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
   width: 240px;
@@ -20,11 +20,11 @@ const Container = styled.div`
 
   // isOpen
   transform: ${props => props.isOpen && 'translate3d(-250px, 0, 0)'};
-`;
+`
 
 const TopRow = styled(FlexRow)`
   padding: 1rem;
-`;
+`
 
 const List = styled.div`
   padding: 0 2rem;
@@ -32,7 +32,7 @@ const List = styled.div`
   & > * {
     margin-bottom: 1rem;
   }
-`;
+`
 
 interface SlideInMenuProps {
   isOpen: boolean
@@ -55,8 +55,12 @@ const SlideInMenu = ({ isOpen, setIsOpen }: SlideInMenuProps) => {
         <List>
           {navs.map((nav) => (
             <div key={nav.path}>
-              <Link to={nav.path} onClick={() => setIsOpen(false)}>
-                <Text variant='h4' fontWeight={500}>{nav.label}</Text>
+              <Link
+                to={nav.path}
+                onClick={() => setIsOpen(false)}>
+                <Text
+                  variant='h4'
+                  fontWeight={500}>{nav.label}</Text>
               </Link>
             </div>
           ))}

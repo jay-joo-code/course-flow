@@ -1,11 +1,11 @@
-import React from 'react'
-import { Button } from 'src/components/buttons';
-import useCustomMutation from 'src/hooks/useCustomMutation';
-import useRouter from 'src/hooks/useRouter';
-import { Space } from 'src/components/layout';
-import { useEffect } from 'react';
-import { setAccessToken } from 'src/slices/auth';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { Button } from 'src/components/buttons'
+import useCustomMutation from 'src/hooks/useCustomMutation'
+import useRouter from 'src/hooks/useRouter'
+import { Space } from 'src/components/layout'
+
+import { setAccessToken } from 'src/slices/auth'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
   const dispatch = useDispatch()

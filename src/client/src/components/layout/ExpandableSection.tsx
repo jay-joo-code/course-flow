@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { FlexRow, Space } from '.'
 import Icon from '../icon'
 import styled from 'styled-components'
-import Text from '../text';
+import Text from '../text'
 
 const Container = styled.div`
   margin-bottom: 1rem;
-`;
+`
 
 interface ExpandableSectionProps {
   heading: string
@@ -24,11 +24,19 @@ const ExpandableSection = ({ heading, expandedDefault, children }: ExpandableSec
         onClick={() => setIsExpanded(!isExpanded)}
         style={{ cursor: 'pointer' }}
       >
-        <Text variant='p' fontWeight={500}>{heading}</Text>
+        <Text
+          variant='p'
+          fontWeight={500}>{heading}</Text>
         <Space margin='0 .2rem' />
         {isExpanded
-          ? <Icon variant='up' pointer size='1.5rem' />
-          : <Icon variant='down' pointer size='1.5rem' />
+          ? <Icon
+              variant='up'
+              pointer
+              size='1.5rem' />
+          : <Icon
+              variant='down'
+              pointer
+              size='1.5rem' />
         }
       </FlexRow>
       {isExpanded && children}

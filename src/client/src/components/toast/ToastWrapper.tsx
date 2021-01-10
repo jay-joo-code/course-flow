@@ -11,13 +11,13 @@ const ZoomCustom = cssTransition({
   appendPosition: false,
   collapse: true,
   collapseDuration: 300
-});
+})
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: 'toast-container',
   toastClassName: 'toast',
   bodyClassName: 'body',
-  progressClassName: 'progress',
+  progressClassName: 'progress'
 })`
   /* .toast-container */
   /* width: 100%; */
@@ -59,7 +59,7 @@ const StyledToastContainer = styled(ToastContainer).attrs({
 
   /* .progress is passed to progressClassName */
   .progress {}
-`;
+`
 
 const ToastWrapper = () => {
   return <StyledToastContainer

@@ -8,7 +8,7 @@ const CoreText = styled.p`
   line-height: 1.2;
 
   // ellipsis
-  text-overflow: ${(props) => (props.ellipsis ? 'ellipsis' : '')};
+  text-overflow: ${props => (props.ellipsis ? 'ellipsis' : '')};
   overflow: ${(props) => (props.ellipsis ? 'hidden' : '')};
   white-space: ${(props) => (props.ellipsis ? 'nowrap' : '')};
 
@@ -26,7 +26,7 @@ const CoreText = styled.p`
 
   // margin
   margin: ${props => props.margin ? props.margin : ''};
-`;
+`
 
 export const H1 = styled(CoreText)`
   font-size: 42px;
@@ -35,7 +35,7 @@ export const H1 = styled(CoreText)`
   @media (min-width: ${props => props.theme.medium}) {
     font-size: 48px;
   }
-`;
+`
 
 export const H2 = styled(CoreText)`
   font-size: 30px;
@@ -44,7 +44,7 @@ export const H2 = styled(CoreText)`
   @media (min-width: ${props => props.theme.medium}) {
     font-size: 36px;
   }
-`;
+`
 
 export const H3 = styled(CoreText)`
   font-size: 24px;
@@ -53,7 +53,7 @@ export const H3 = styled(CoreText)`
   @media (min-width: ${props => props.theme.medium}) {
     font-size: 30px;
   }
-`;
+`
 
 export const H4 = styled(CoreText)`
   font-size: 16px;
@@ -62,17 +62,17 @@ export const H4 = styled(CoreText)`
   @media (min-width: ${props => props.theme.medium}) {
     font-size: 20px;
   }
-`;
+`
 
 export const P = styled(CoreText)`
   font-size: 16px;
-`;
+`
 
 export const H5 = styled(CoreText)`
   font-size: 14px;
-`;
+`
 
 export const H6 = styled(CoreText)`
   font-size: 12px;
   text-transform: uppercase;
-`;
+`

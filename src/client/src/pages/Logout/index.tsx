@@ -12,7 +12,7 @@ const LogOut = () => {
     dispatch(logout())
     queryCache.clear()
     router.push('/')
-  }, [])
+  }, [dispatch, router])
 
   return null
 }

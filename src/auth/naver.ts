@@ -1,9 +1,9 @@
 import passport from 'passport'
 import { Strategy as NaverStrategy } from 'passport-naver'
-import User from '../models/User'
 import dotenv from 'dotenv'
+import User from '../models/User'
 
-dotenv.config({ path: __dirname + '/../../.env' });
+dotenv.config({ path: `${__dirname}/../../.env` })
 
 /*
 https://developers.naver.com/main/
@@ -17,29 +17,27 @@ callback url 은 `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`
 */
 
 passport.use(new NaverStrategy({
-    clientID: process.env.ID_NAVER,
-    clientSecret: process.env.SECRET_NAVER,
-    callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`,
-    // authType: 'reauthenticate', // reauthenticate previously signed in users (optional)
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-      const user = await User.findOne({ providerId: profile.id })
+  clientID: process.env.ID_NAVER,
+  clientSecret: process.env.SECRET_NAVER,
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`
+  // authType: 'reauthenticate', // reauthenticate previously signed in users (optional)
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    const user = await User.findOne({ providerId: profile.id })
 
-      if (user) {
-        // update providerData
-        await User.findByIdAndUpdate(user._id, { providerData: profile })
+    if (user) {
+      // update providerData
+      await User.findByIdAndUpdate(user._id, { providerData: profile })
 
-        return done(null, user)
-      } else {
-        const userData = { authProvider: 'naver', providerId: profile.id, providerData: profile }
-        const newUser = await new User(userData).save()
-        return done(null, newUser)
-      }
-    } catch (error) {
-      return done(error, null)
+      return done(null, user)
     }
+    const userData = { authProvider: 'naver', providerId: profile.id, providerData: profile }
+    const newUser = await new User(userData).save()
+    return done(null, newUser)
+  } catch (error) {
+    return done(error, null)
   }
-));
+}))
 
 export default passport

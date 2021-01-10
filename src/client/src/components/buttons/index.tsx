@@ -1,8 +1,8 @@
 import React from 'react'
-import theme from 'src/app/theme';
+import theme from 'src/app/theme'
 import styled from 'styled-components'
-import Icon from '../icon';
-import Loading from '../loading';
+import Icon from '../icon'
+import Loading from '../loading'
 
 export interface ButtonProps {
   label: string
@@ -50,7 +50,7 @@ const StyledButton = styled.button`
     margin-right: ${props => (props.isLoading || props.icon) && '.5rem'};
     margin-right: ${props => (props.icon || props.text) && '.2rem'};
   }
-`;
+`
 
 export const Button = (props: ButtonProps) => {
   const iconFill = (props.bordered || props.text)
@@ -63,10 +63,11 @@ export const Button = (props: ButtonProps) => {
       color={props.color || 'brand'}
       {...props}
     >
-      {props.icon && <Icon variant={props.icon} fill={iconFill} />}
+      {props.icon && <Icon
+        variant={props.icon}
+        fill={iconFill} />}
       {props.isLoading && <Loading />}
       {props.label}
     </StyledButton>
   )
 }
-

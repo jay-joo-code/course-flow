@@ -1,19 +1,19 @@
-import React from 'react'
-import { useState } from 'react';
-import { useCreateListing } from 'src/api/listing';
-import theme from 'src/app/theme';
-import { Button } from 'src/components/buttons';
-import { Input } from 'src/components/formElements';
-import Icon from 'src/components/icon';
-import { FlexColumn, FlexRow, Space } from 'src/components/layout';
-import DesktopContainer from 'src/components/layout/DesktopContainer';
-import OutsideClickListener from 'src/components/layout/OutsideClickListener';
-import Text from 'src/components/text';
-import Span from 'src/components/text/Span';
-import useMergeState from 'src/hooks/useMergeState';
-import useRouter from 'src/hooks/useRouter';
+import React, { useState } from 'react'
+
+import { useCreateListing } from 'src/api/listing'
+import theme from 'src/app/theme'
+import { Button } from 'src/components/buttons'
+import { Input } from 'src/components/formElements'
+import Icon from 'src/components/icon'
+import { FlexColumn, FlexRow, Space } from 'src/components/layout'
+import DesktopContainer from 'src/components/layout/DesktopContainer'
+import OutsideClickListener from 'src/components/layout/OutsideClickListener'
+import Text from 'src/components/text'
+import Span from 'src/components/text/Span'
+import useMergeState from 'src/hooks/useMergeState'
+import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
-import AddressInput from './AdressInput';
+import AddressInput from './AdressInput'
 import { ListingDoc } from 'src/types'
 
 interface NewProps {
@@ -22,7 +22,7 @@ interface NewProps {
 
 const Container = styled.div`
   padding: 1rem;
-`;
+`
 
 const BorderedCard = styled.div`
   border: 1px solid ${props => props.theme.border};
@@ -33,9 +33,9 @@ const BorderedCard = styled.div`
 
   // isSelected
   border-color: ${props => props.isSelected && props.theme.brand};
-`;
+`
 
-const New = ({  }: NewProps) => {
+const New = ({ }: NewProps) => {
   // TODO: has previous listing handing
 
   const [selected, setSelected] = useState<'new' | string>()
@@ -43,7 +43,7 @@ const New = ({  }: NewProps) => {
     address: '',
     milesToCampus: null,
     lat: null,
-    lng: null,
+    lng: null
   })
   const { address, milesToCampus } = data
 
@@ -89,14 +89,16 @@ const New = ({  }: NewProps) => {
             )}
           </BorderedCard>
           <Space margin='1.5rem 0' />
-          {readyToStart ? (
+          {readyToStart
+            ? (
             <FlexRow jc>
               <Button
                 label='Get started!'
                 onClick={handleStart}
               />
             </FlexRow>
-          ) : <div />}
+              )
+            : <div />}
         </FlexColumn>
       </Container>
     </DesktopContainer>
