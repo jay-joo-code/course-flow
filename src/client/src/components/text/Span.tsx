@@ -5,6 +5,7 @@ interface SpanProps {
   children: React.ReactNode
   fontWeight?: number
   color?: string
+  underline?: boolean
 }
 
 const StyledSpan = styled.span`
@@ -13,6 +14,9 @@ const StyledSpan = styled.span`
 
   // color
   color: ${props => props.color && props.color};
+
+  // underline
+  text-decoration: ${props => props.underline && 'underline'};
 `
 
 const Span = ({ children, ...rest }: SpanProps) => {

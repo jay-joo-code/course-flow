@@ -1,9 +1,9 @@
 import React from 'react'
-import { Checkbox, CheckboxProps, Input, InputProps, TextAreaProps, RadioGroup, IOption, SelectProps, TextArea, Select, DatePicker, Incrementor } from 'src/components/formElements'
-import { Space } from '../layout'
-import styled from 'styled-components'
-import Text from '../text'
 import theme from 'src/app/theme'
+import { Checkbox, DatePicker, DateRangePicker, Incrementor, Input, InputProps, IOption, RadioGroup, Select, TextArea, TextAreaProps } from 'src/components/formElements'
+import styled from 'styled-components'
+import { Space } from '../layout'
+import Text from '../text'
 
 const FullWidth = styled.div`
   width: 100%;
@@ -30,7 +30,11 @@ export const FormikInput = ({ formik, name, ...rest }: FormikInputProps) => {
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >
+        {error}
+      </Text>
+      }
     </FullWidth>
   )
 }
@@ -56,7 +60,9 @@ export const FormikTextArea = ({ formik, name, ...rest }: FormikTextAreaProps) =
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}
+                </Text>}
     </FullWidth>
   )
 }
@@ -86,30 +92,62 @@ export const FormikCheckbox = ({ formik, name, ...rest }: FormikCheckboxProps) =
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}
+                </Text>}
     </FullWidth>
   )
+}
+
+interface IFormikRadioGroupOption {
+  label: string
+  value: string | number | boolean
 }
 
 interface FormikRadioGroupProps {
   formik: any
   name: string
-  options: IOption[]
+  options: IFormikRadioGroupOption[]
+  convertValueToString?: boolean
 }
 
-export const FormikRadioGroup = ({ formik, name, options, ...rest }: FormikRadioGroupProps) => {
+export const FormikRadioGroup = ({ formik, name, options, convertValueToString, ...rest }: FormikRadioGroupProps) => {
   const hasError = formik.touched[name] && formik.errors[name]
   const error = hasError ? formik.errors[name] : ''
+  const booleanToString = (bool: boolean) => {
+    return bool === true
+      ? 'true'
+      : bool === false
+        ? 'false'
+        : null
+  }
+  const stringToBoolean = (str: string) => {
+    return str === 'true'
+      ? true
+      : str === 'false'
+        ? false
+        : null
+  }
+  const convertedValue = !convertValueToString
+    ? formik.values[name]
+    : booleanToString(formik.values[name])
+  const convertedOptions:IOption[] = !convertValueToString
+    ? [...options]
+    : options.map((option) => ({ ...option, value: option.value ? 'true' : 'false' }))
 
   const handleSetValue = (newValue) => {
-    formik.setFieldValue(name, newValue)
+    if (convertValueToString) {
+      formik.setFieldValue(name, stringToBoolean(newValue))
+    } else {
+      formik.setFieldValue(name, newValue)
+    }
   }
 
   return (
     <FullWidth>
       <RadioGroup
-        options={options}
-        value={formik.values[name]}
+        options={convertedOptions}
+        value={convertedValue}
         setValue={handleSetValue}
         {...rest}
       />
@@ -117,7 +155,9 @@ export const FormikRadioGroup = ({ formik, name, options, ...rest }: FormikRadio
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}
+                </Text>}
     </FullWidth>
   )
 }
@@ -150,7 +190,8 @@ export const FormikSelect = ({ formik, name, ...rest }: FormikSelectProps) => {
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}</Text>}
     </FullWidth>
   )
 }
@@ -178,7 +219,48 @@ export const FormikDatePicker = ({ formik, name, ...rest }: FormikDatePickerProp
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}
+                </Text>}
+    </FullWidth>
+  )
+}
+
+interface FormikDateRangePickerProps {
+  formik: any
+  startDateName: string
+  endDateName: string
+  label: string
+}
+
+export const FormikDateRangePicker = ({ formik, startDateName, endDateName, label, ...rest }: FormikDateRangePickerProps) => {
+  const hasError = formik.touched[startDateName] && formik.errors[startDateName] && formik.touched[endDateName] && formik.errors[endDateName]
+  const error = hasError ? (formik.errors[startDateName] || formik.errors[endDateName]) : ''
+
+  const handleSetStartDate = (date) => {
+    formik.setFieldValue(startDateName, date)
+  }
+
+  const handleSetEndDate = (date) => {
+    formik.setFieldValue(endDateName, date)
+  }
+
+  return (
+    <FullWidth>
+      <DateRangePicker
+        label={label}
+        startDate={formik.values[startDateName]}
+        endDate={formik.values[endDateName]}
+        setStartDate={handleSetStartDate}
+        setEndDate={handleSetEndDate}
+      />
+      <Space margin='.2rem 0' />
+      {error && <Text
+        variant='h5'
+        fontWeight={500}
+        color={theme.danger}
+      >{error}
+                </Text>}
     </FullWidth>
   )
 }
@@ -211,7 +293,9 @@ export const FormikIncrementor = ({ formik, name, ...rest }: FormikIncrementorPr
       {error && <Text
         variant='h5'
         fontWeight={500}
-        color={theme.danger}>{error}</Text>}
+        color={theme.danger}
+      >{error}
+                </Text>}
     </FullWidth>
   )
 }

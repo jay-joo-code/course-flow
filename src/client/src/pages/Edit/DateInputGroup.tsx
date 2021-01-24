@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { DateRangePicker } from 'src/components/formElements'
-import { FormikSelect } from 'src/components/formikElements'
+import { FormikDateRangePicker, FormikSelect } from 'src/components/formikElements'
 import { FlexColumn, Space } from 'src/components/layout'
 import Text from 'src/components/text'
-import styled from 'styled-components'
 
 interface DateInputGroupProps{
   formik: any
@@ -48,9 +46,6 @@ const DateInputGroup = ({ formik }: DateInputGroupProps) => {
     }
   ]
 
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
-
   return (
     <FlexColumn>
       <Text variant="h3">Dates</Text>
@@ -69,11 +64,11 @@ const DateInputGroup = ({ formik }: DateInputGroupProps) => {
         label="Term"
       />
       <Space margin="1rem 0" />
-      <DateRangePicker
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
+      <FormikDateRangePicker
+        formik={formik}
+        label='Sublet dates'
+        startDateName='startDate'
+        endDateName='endDate'
       />
     </FlexColumn>
   )

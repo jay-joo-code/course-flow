@@ -22,10 +22,21 @@ import { ReactComponent as LockIcon } from 'src/assets/icons/lock.svg'
 import { ReactComponent as PlaceIcon } from 'src/assets/icons/place.svg'
 import { ReactComponent as AddCircleIcon } from 'src/assets/icons/add-circle.svg'
 import { ReactComponent as RemoveCircleIcon } from 'src/assets/icons/remove-circle.svg'
+import { ReactComponent as WarningIcon } from 'src/assets/icons/warning.svg'
+
+interface IconProps {
+  variant: string
+  fill?: string
+  size?: string
+  onClick?: () => void
+  pointer?: boolean
+  interactiveHover?: boolean
+}
 
 const IconContainer = styled.div`
   height: 2rem;
   width: 2rem;
+  flex-shrink: 0;
 
   // size
   height: ${props => props.size && props.size};
@@ -52,6 +63,7 @@ const IconContainer = styled.div`
   display: ${props => props.interactiveHover && 'flex'};
   justify-content: ${props => props.interactiveHover && 'center'};
   align-items: ${props => props.interactiveHover && 'center'};
+  cursor: ${props => props.interactiveHover && 'pointer'};
 
   @media (min-width: ${props => props.theme.medium}) {
     &:hover {
@@ -59,15 +71,6 @@ const IconContainer = styled.div`
     }
   }
 `
-
-interface IconProps {
-  variant: string
-  fill?: string
-  size?: string
-  onClick?: () => void
-  pointer?: boolean
-  interactiveHover?: boolean
-}
 
 const Icon = (props: IconProps) => {
   const variantToComponent = {
@@ -92,7 +95,8 @@ const Icon = (props: IconProps) => {
     lock: <LockIcon />,
     place: <PlaceIcon />,
     'add-circle': <AddCircleIcon />,
-    'remove-circle': <RemoveCircleIcon />
+    'remove-circle': <RemoveCircleIcon />,
+    warning: <WarningIcon />,
   }
 
   return (

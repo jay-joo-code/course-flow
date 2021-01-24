@@ -8,6 +8,42 @@ export const InputContainer = styled.div`
   width: 100%;
 `
 
+export const InputArea = styled.div`
+  
+`
+
+export const StyledInput = styled.input`
+  flex: 1 0 auto;
+  background: ${(props) => props.theme.bg};
+  font-weight: 500;
+  font-size: 1rem;
+  border: 2px solid ${(props) => props.theme.borderDark};
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: border 0.1s ease-in-out;
+  box-shadow: none;
+
+  // disabled
+  background: ${(props) => props.disabled && props.theme.bgWash};
+
+  // width
+  width: ${(props) => props.width && `${props.width}px`};
+
+  // fullWidth
+  width: ${(props) => props.fullWidth && '100%'};
+
+  // error
+  border-color: ${(props) => props.error && props.theme.danger};
+
+  &:focus {
+    border-color: ${(props) => props.theme.brand};
+  }
+
+  &::placeholder {
+    color: ${(props) => props.theme.textPlaceholder};
+  }
+`
+
 export const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
@@ -161,36 +197,6 @@ export const StyledCheckbox = styled.label`
   }
 `
 
-export const StyledInput = styled.input`
-  flex: 1 0 auto;
-  background: ${(props) => props.theme.bg};
-  font-weight: 500;
-  font-size: 1rem;
-  border: 2px solid ${(props) => props.theme.borderDark};
-  border-radius: 4px;
-  padding: 8px 12px;
-  transition: border 0.1s ease-in-out;
-  box-shadow: none;
-  -webkit-appearance: none;
-
-  // disabled
-  background: ${(props) => props.disabled && props.theme.bgWash};
-
-  // width
-  width: ${(props) => props.width && `${props.width}px`};
-
-  // error
-  border-color: ${(props) => props.error && props.theme.danger};
-
-  &:focus {
-    border-color: ${(props) => props.theme.brand};
-  }
-
-  &::placeholder {
-    color: ${(props) => props.theme.textPlaceholder};
-  }
-`
-
 export const TextAreaContainer = styled.div``
 
 export const StyledTextArea = styled(Textarea)`
@@ -326,7 +332,7 @@ export const RadioLabel = styled.label`
 
   /* Hover, Focus */
   &:hover > input {
-    opacity: 0.04;
+    /* opacity: 0.04; */
   }
 
   & > input:focus {
@@ -334,7 +340,7 @@ export const RadioLabel = styled.label`
   }
 
   &:hover > input:focus {
-    opacity: 0.1;
+    /* opacity: 0.1; */
   }
 
   /* Active */
@@ -387,33 +393,6 @@ export const StyledDateWrapper = styled.div`
 export const StyledDateRangeWrapper = styled.div`
   & input {
     cursor: pointer !important;
-  }
-
-  & .DateRangePickerInput__withBorder {
-    border: 1px solid ${(props) => props.theme.borderDark};
-  }
-
-  & .DateInput_input__focused {
-    border-color: ${(props) => props.theme.brand};
-  }
-
-  & .DayPickerKeyboardShortcuts_buttonReset {
-    display: none;
-  }
-
-  & .CalendarMonth_caption {
-    padding-bottom: 50px !important;
-  }
-
-  & .CalendarMonth_table {
-    td {
-      vertical-align: middle;
-    }
-  }
-
-  & .CalendarDay__selected {
-    background: ${(props) => props.theme.brand};
-    border-color: ${(props) => props.theme.brand};
   }
 `
 

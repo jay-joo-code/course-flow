@@ -87,6 +87,9 @@
     "prettier": "2.2.1",
     "ts-node": "^9.0.0"
   },
+  "peerDependencies": {
+    "eslint": ">= 7"
+  },
   "scripts": {
     "lint": "eslint --fix src/**/*.{ts,tsx}",
     "start": "HTTPS=true && NODE_ENV=production && node app",

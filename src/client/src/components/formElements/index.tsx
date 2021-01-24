@@ -1,49 +1,47 @@
-import React, { useState } from 'react'
+import moment from 'moment'
+import React, { useState, InputHTMLAttributes, forwardRef } from 'react'
+
 import {
-  StyledInput,
-  InputContainer,
-  StyledCheckbox,
-  CheckboxContainer,
-  StyledTextArea,
-  TextAreaContainer,
-  StyledSelect,
-  RadioLabel,
-  RadioGroupContainer,
-  StyledDateWrapper,
-  StyledDateRangeWrapper
-} from './styles'
-import theme from 'src/app/theme'
-import {
-  isInclusivelyAfterDay,
-  DayPickerSingleDateController,
-  DateRangePicker as DateRangePickerAirbnb
+  DateRangePicker as DateRangePickerAirbnb, DayPickerSingleDateController, isInclusivelyAfterDay
 } from 'react-dates'
 import 'react-dates/initialize'
 import 'react-dates/lib/css/_datepicker.css'
-import moment from 'moment'
-import Label from '../text/Label'
-import { FlexRow, Space } from '../layout'
-import Text from '../text'
-import Icon from '../icon'
+import theme from 'src/app/theme'
 import useIsMobile from 'src/hooks/useIsMobile'
+import Icon from '../icon'
+import { FlexRow } from '../layout'
+import Text from '../text'
+import Label from '../text/Label'
+import './datepicker.scss'
+import {
+  CheckboxContainer,
+  InputArea,
+  InputContainer,
+  RadioGroupContainer,
+  RadioLabel,
+  StyledCheckbox,
+  StyledDateRangeWrapper,
+  StyledDateWrapper,
+  StyledInput,
+  StyledSelect, StyledTextArea,
+  TextAreaContainer
+} from './styles'
 
-export interface InputProps {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name?: string
   label?: string
   value?: any
   placeholder?: string
-  onChange?: React.FormEventHandler<HTMLInputElement>
-  onBlur?:
-    | React.FormEventHandler<HTMLInputElement>
-    | React.ChangeEvent<HTMLInputElement>
   onEnterPress?: () => void
   autoFocus?: boolean
   disabled?: boolean
   width?: number
-  error?: boolean
+  fullWidth?: boolean
+  error?: boolean | string
   type?: string
 }
 
-export const Input = (props: InputProps) => {
+export const Input = forwardRef((props: InputProps, ref) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && props.onEnterPress) {
       props.onEnterPress()
@@ -53,12 +51,20 @@ export const Input = (props: InputProps) => {
   return (
     <InputContainer>
       <Label {...props}>{props.label}</Label>
-      <StyledInput
-        onKeyDown={handleKeyDown}
-        {...props} />
+      <InputArea>
+        <StyledInput
+          onKeyDown={handleKeyDown}
+          ref={ref}
+          {...props}
+        />
+      </InputArea>
+      {props.error && <Text
+        variant='h5'
+        color={theme.danger}
+      >{props.error}</Text>}
     </InputContainer>
   )
-}
+})
 
 export interface CheckboxProps {
   label: string
@@ -71,7 +77,7 @@ export const Checkbox = (props: CheckboxProps) => {
     <CheckboxContainer>
       <StyledCheckbox>
         <input
-          type="checkbox"
+          type='checkbox'
           onChange={props.onChange}
           checked={props.checked}
         />
@@ -79,7 +85,8 @@ export const Checkbox = (props: CheckboxProps) => {
       </StyledCheckbox>
       <Label
         noMargin={true}
-        {...props}>
+        {...props}
+      >
         {props.label}
       </Label>
     </CheckboxContainer>
@@ -104,7 +111,7 @@ export const TextArea = (props: TextAreaProps) => {
 
 export interface IOption {
   label: string
-  value: string
+  value: any
 }
 
 export interface SelectProps {
@@ -114,6 +121,10 @@ export interface SelectProps {
   label?: string
   disabled?: boolean
   maxMenuHeight?: number
+
+  // react-hook-props
+  name: string
+
 }
 
 export const Select = (props: SelectProps) => {
@@ -131,8 +142,8 @@ export const Select = (props: SelectProps) => {
             ...defaultStyles.colors,
             primary25: theme.brandLight,
             primary50: theme.bgWash2,
-            primary: theme.brand
-          }
+            primary: theme.brand,
+          },
         })}
         {...props}
         value={valueObject}
@@ -167,7 +178,7 @@ export const RadioGroup = (props: RadioGroupProps) => {
       {props.options.map(({ value, label }) => (
         <RadioLabel key={value}>
           <input
-            type="radio"
+            type='radio'
             value={value}
             checked={props.value === value}
             onClick={(e) => handleRadioClick(e, value)}
@@ -204,30 +215,52 @@ export const DatePicker = (props: DatePickerProps) => {
 }
 
 export interface DateRangePickerProps {
+  label: string
   startDate: Date | undefined
   endDate: Date | undefined
   setStartDate: (newDate: any) => void
   setEndDate: (newDate: any) => void
 }
 
-export const DateRangePicker = ({ startDate, endDate, setStartDate, setEndDate }: DateRangePickerProps) => {
-  const [focusedInput, setFocusedInput] = useState(null)
+export const DateRangePicker = ({ label, startDate, endDate, setStartDate, setEndDate }: DateRangePickerProps) => {
+  const [previousFocus, setPreviousFocus] = useState<string | null>(null)
+  const [focusedInput, setFocusedInput] = useState<string | null>(null)
+
+  const handleFocusChange = (newFocus) => {
+    if (newFocus === 'startDate' && !focusedInput) {
+      setFocusedInput('startDate')
+    } else if (newFocus === 'endDate' && focusedInput === 'endDate' && previousFocus === 'endDate') {
+      setFocusedInput('startDate')
+    } else if (!focusedInput && newFocus === 'endDate') {
+      setFocusedInput('startDate')
+    } else {
+      setFocusedInput(newFocus)
+    }
+    setPreviousFocus(focusedInput)
+  }
+
+  const isMobile = useIsMobile()
+
   const handleDateChange = ({ startDate: startDateAirbnb, endDate: endDateAirbnb }) => {
-    setStartDate(startDateAirbnb.toDate())
-    setEndDate(endDateAirbnb.toDate())
+    if (startDateAirbnb) setStartDate(startDateAirbnb.toDate())
+    if (endDateAirbnb) setEndDate(endDateAirbnb.toDate())
   }
 
   return (
     <StyledDateRangeWrapper>
+      <Label>{label}</Label>
       <DateRangePickerAirbnb
-        startDate={null} // momentPropTypes.momentObj or null,
-        startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-        endDate={null} // momentPropTypes.momentObj or null,
-        endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-        onDatesChange={handleDateChange} // PropTypes.func.isRequired,
-        focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-        onFocusChange={(focusedInput) => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
-        readOnly={true}
+        startDate={startDate ? moment(startDate) : null}
+        startDateId='start-date-id'
+        endDate={endDate ? moment(endDate) : null}
+        endDateId='end-date-id'
+        onDatesChange={handleDateChange}
+        focusedInput={focusedInput}
+        onFocusChange={handleFocusChange}
+        withPortal={isMobile}
+        orientation={isMobile ? 'vertical' : 'horizontal'}
+        keepOpenOnDateSelect
+        readOnly
       />
     </StyledDateRangeWrapper>
   )
@@ -248,7 +281,7 @@ export const Incrementor = ({
   onChange,
   minValue,
   maxValue,
-  step = 1
+  step = 1,
 }: IncrementorProps) => {
   const isMobile = useIsMobile()
   const handleMinusClick = () => {
@@ -273,31 +306,34 @@ export const Incrementor = ({
     <FlexRow
       ac
       jsb
-      fullWidth>
+      fullWidth
+    >
       <Text
         variant={isMobile ? 'h4' : 'p'}
-        fontWeight={500}>
+        fontWeight={500}
+      >
         {label}
       </Text>
       <FlexRow ac>
         <Icon
-          variant="remove-circle"
+          variant='remove-circle'
           fill={theme.brand}
           pointer
-          size="2rem"
+          size='2rem'
           onClick={handleMinusClick}
         />
         <FlexRow
           jc
           ac
-          style={{ width: '40px' }}>
-          <Text variant="h4">{value}</Text>
+          style={{ width: '40px' }}
+        >
+          <Text variant='h4'>{value}</Text>
         </FlexRow>
         <Icon
-          variant="add-circle"
+          variant='add-circle'
           fill={theme.brand}
           pointer
-          size="2rem"
+          size='2rem'
           onClick={handlePlusClick}
         />
       </FlexRow>

@@ -7,6 +7,7 @@ export const theme = {
   success: '#66c088',
   info: '#0275d8',
   warning: '#f0ad4e',
+  warningLight: '#FDF1E2',
   danger: '#de6362',
 
   // bg
@@ -43,7 +44,7 @@ export const theme = {
   // breakpoints
   small: '576px', // landscape phones
   medium: '768px', // tablets
-  large: '992px' // desktops, laptops
+  large: '992px', // desktops, laptops
 }
 
 export default theme

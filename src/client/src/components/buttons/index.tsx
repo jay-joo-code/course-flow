@@ -44,6 +44,7 @@ const StyledButton = styled.button`
   border: ${props => props.text && 'none'};
   box-shadow: ${props => props.text && 'none'};
   font-size: ${props => props.text && '1rem'};
+  font-weight: ${props => props.text && 700};
 
   // isLoading, icon, text
   & > *:first-child {
@@ -60,12 +61,13 @@ export const Button = (props: ButtonProps) => {
   return (
     <StyledButton
       type={props.type || 'button'}
-      color={props.color || 'brand'}
+      color={props.color || theme.brand}
       {...props}
     >
       {props.icon && <Icon
         variant={props.icon}
-        fill={iconFill} />}
+        fill={iconFill}
+      />}
       {props.isLoading && <Loading />}
       {props.label}
     </StyledButton>

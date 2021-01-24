@@ -78,5 +78,6 @@ export interface IPhoto {
 }
 
 export interface IRoommate {
-  gender: 'Male' | 'Female' | string
+  gender: 'Male' | 'Female' | 'Other'
+  genderOther: string
 }

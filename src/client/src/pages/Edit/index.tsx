@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { useListingById } from 'src/api/listing'
 import theme from 'src/app/theme'
+import { Button } from 'src/components/buttons'
 import Icon from 'src/components/icon'
 import { FlexRow, Space } from 'src/components/layout'
 import DesktopContainer from 'src/components/layout/DesktopContainer'
 import Text from 'src/components/text'
 import useRouter from 'src/hooks/useRouter'
-import styled from 'styled-components'
 import { toShortAddress } from 'src/util/formatText'
-
+import styled from 'styled-components'
 import EditForm from './EditForm'
-import { Button } from 'src/components/buttons'
-import { Link } from 'react-router-dom'
-
-interface EditProps {
-
-}
 
 const Container = styled.div`
   padding: 1rem;
 `
 
-const Edit = ({ }: EditProps) => {
+const Edit = () => {
   const router = useRouter()
   const lid = router.pathname.split('/')[2]
   const { listing } = useListingById(lid)
@@ -29,7 +24,7 @@ const Edit = ({ }: EditProps) => {
   if (!listing) return null
 
   const {
-    address
+    address,
   } = listing
 
   return (
@@ -48,11 +43,13 @@ const Edit = ({ }: EditProps) => {
         <FlexRow ac>
           <Icon
             variant='place'
-            fill={theme.text} />
+            fill={theme.text}
+          />
           <Space margin='0 .5rem' />
           <Text
             variant='h3'
-            fontWeight={500}>{toShortAddress(address)}</Text>
+            fontWeight={500}
+          >{toShortAddress(address)}</Text>
         </FlexRow>
         <Space margin='3rem 0' />
         <EditForm
