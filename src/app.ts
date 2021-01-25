@@ -58,10 +58,7 @@ const opts = {
   secretOrKey: process.env.AUTH_SECRET,
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
-  console.log('jwtPayload', jwtPayload)
-  User.find().then((res) => console.log('res', res[0]._id))
   User.findById(jwtPayload._id, (err, user: UserDoc) => {
-    console.log('err, user', err, user)
     if (err) {
       return done(err, false)
     }
