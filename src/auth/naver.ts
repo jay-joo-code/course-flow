@@ -19,7 +19,7 @@ callback url 은 `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`
 passport.use(new NaverStrategy({
   clientID: process.env.ID_NAVER,
   clientSecret: process.env.SECRET_NAVER,
-  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/naver/callback`,
   // authType: 'reauthenticate', // reauthenticate previously signed in users (optional)
 },
 async (accessToken, refreshToken, profile, done) => {

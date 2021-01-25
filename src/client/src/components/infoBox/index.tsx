@@ -13,8 +13,8 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   border-radius: 8px;
-  background: ${props => props.theme.warningLight};
-  color: ${props => props.theme.warning};
+  background: ${(props) => props.theme.warningLight};
+  color: ${(props) => props.theme.warning};
   padding: 1rem;
 `
 

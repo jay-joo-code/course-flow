@@ -1,19 +1,18 @@
-import router from './router'
-import path from 'path'
-import express, { Request, Response, Router, NextFunction } from 'express'
-import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
-import cors from 'cors'
-import helmet from 'helmet'
 import compression from 'compression'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
 import dotenv from 'dotenv'
+import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
-import PassportJwt from 'passport-jwt'
 import passport from 'passport'
+import PassportJwt from 'passport-jwt'
+import path from 'path'
 import User, { UserDoc } from './models/User'
+import router from './router'
 
-dotenv.config({ path: __dirname + '/../.env' })
+dotenv.config({ path: path.resolve(__dirname, '/../.env') })
 
 // MONGODB
 const isProdDb = (process.env.NODE_ENV === 'production' && process.env.DB_PROD)
@@ -21,12 +20,12 @@ const dbType = isProdDb ? 'prod' : 'dev'
 const URI = isProdDb ? process.env.DB_PROD : process.env.DB_DEV
 mongoose.connect(URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
 const db = mongoose.connection
 db.once('open', () => {
   // tslint:disable-next-line
-  console.log('DB Type:', dbType)
+  console.log('Databse connection:', dbType)
 })
 
 // INIT
@@ -43,7 +42,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(cors())
-app.use(helmet())
 app.use(compression())
 
 // PASSPORT
@@ -57,10 +55,13 @@ app.use(passport.initialize())
 const { Strategy: JwtStrategy, ExtractJwt } = PassportJwt
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.AUTH_SECRET
+  secretOrKey: process.env.AUTH_SECRET,
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
+  console.log('jwtPayload', jwtPayload)
+  User.find().then((res) => console.log('res', res[0]._id))
   User.findById(jwtPayload._id, (err, user: UserDoc) => {
+    console.log('err, user', err, user)
     if (err) {
       return done(err, false)
     }

@@ -1,16 +1,13 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
-import { RootState } from 'src/types'
 import { useSelector } from 'react-redux'
-import useCurrentUser from 'src/hooks/useCurrentUser'
-import useRouter from 'src/hooks/useRouter'
-
+import { Redirect, Route, Switch } from 'react-router-dom'
+import useIsMobile from 'src/hooks/useIsMobile'
+import AuthCallback from 'src/pages/AuthCallback'
 import Home from 'src/pages/Home'
 import Login from 'src/pages/Login'
 import LogOut from 'src/pages/Logout'
-import AuthCallback from 'src/pages/AuthCallback'
-import New from 'src/pages/New'
-import Edit from 'src/pages/Edit'
+import MobileBlock from 'src/pages/MobileBlock'
+import { RootState } from 'src/types'
 
 interface IRoute {
   path: string
@@ -23,52 +20,24 @@ interface IRoute {
 }
 
 export const routes: IRoute[] = [
-  {
-    path: '/edit/5fd0b76361d5d548d6ae96b8',
-    component: Edit,
-    label: 'Test Listing',
-    isPublicNav: false,
-    isPrivateNav: true,
-    isPrivateRoute: true,
-    isDesktopOnly: false
-  },
-  {
-    path: '/edit/:lid',
-    component: Edit,
-    label: 'Edit Listing',
-    isPublicNav: false,
-    isPrivateNav: false,
-    isPrivateRoute: true,
-    isDesktopOnly: false
-  },
-  {
-    path: '/new',
-    component: New,
-    label: 'Create Listing',
-    isPublicNav: true,
-    isPrivateNav: true,
-    isPrivateRoute: false,
-    isDesktopOnly: false
-  },
-
   // auth
   {
     path: '/logout',
     component: LogOut,
     label: 'Sign out',
     isPublicNav: false,
-    isPrivateNav: true,
+    isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false
+    isDesktopOnly: true,
   },
   {
     path: '/login',
     component: Login,
     label: 'Sign in',
-    isPublicNav: true,
+    isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false
+    isDesktopOnly: true,
   },
   {
     path: '/auth/callback',
@@ -77,10 +46,19 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false
+    isDesktopOnly: true,
   },
 
   // display
+  {
+    path: '/mobile-block',
+    component: MobileBlock,
+    label: 'MobileBlock',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
   {
     path: '/',
     component: Home,
@@ -88,31 +66,12 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false
-  }
+    isDesktopOnly: true,
+  },
 ]
 
-const Routes = () => {
-  return (
-    <Switch>
-      {routes.map(({ path, component, isPrivateRoute }) => isPrivateRoute
-        ? <PrivateRoute
-            key={path}
-            path={path}
-            component={component} />
-        : <Route
-            key={path}
-            path={path}
-            component={component} />
-      )}
-    </Switch>
-  )
-}
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const router = useRouter()
   const { accessToken } = useSelector((state: RootState) => state.authState)
-  const user = useCurrentUser()
 
   if (!accessToken || accessToken.length === 0) {
     return <Redirect to='/login' />
@@ -125,6 +84,50 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         <Component {...props} />
       )}
     />
+  )
+}
+
+const DesktopRoute = ({ component: Component, ...rest }) => {
+  const isMobile = useIsMobile()
+
+  if (isMobile) {
+    return <Redirect to='/mobile-block' />
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <Component {...props} />
+      )}
+    />
+  )
+}
+
+const Routes = () => {
+  return (
+    <Switch>
+      {routes.map(({ path, component, isPrivateRoute, isDesktopOnly, ...rest }) => isPrivateRoute
+        ? <PrivateRoute
+            key={path}
+            path={path}
+            component={component}
+            {...rest}
+        />
+        : isDesktopOnly
+          ? <DesktopRoute
+              key={path}
+              path={path}
+              component={component}
+              {...rest}
+          />
+          : <Route
+              key={path}
+              path={path}
+              component={component}
+          />
+      )}
+    </Switch>
   )
 }
 

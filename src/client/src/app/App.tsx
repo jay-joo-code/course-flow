@@ -1,20 +1,19 @@
 import React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import { QueryCache, QueryClient, QueryClientProvider, useQueryClient } from 'react-query'
 import { Provider } from 'react-redux'
-import theme from './theme'
-import './normalise.scss'
-import Routes from './Routes'
 import { Router } from 'react-router-dom'
-import { QueryCache, ReactQueryCacheProvider } from 'react-query'
-import history from 'src/util/history'
-import Header from '../components/header'
-
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-import store from 'src/slices/store'
 import Footer from 'src/components/footer'
-import ScrollToTop from 'src/components/util/ScrollToTop'
 import ToastWrapper from 'src/components/toast/ToastWrapper'
+import ScrollToTop from 'src/components/util/ScrollToTop'
+import store from 'src/slices/store'
+import history from 'src/util/history'
+import styled, { ThemeProvider } from 'styled-components'
+import Header from '../components/header'
+import './normalise.scss'
+import Routes from './Routes'
+import theme from './theme'
 
 const Container = styled.div`
   width: 100vw;
@@ -24,7 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: ${props => props.theme.medium}) {
+  @media (min-width: ${(props) => props.theme.medium}) {
     width: initial;
     max-width: initial;
     overflow-x: initial;
@@ -52,14 +51,16 @@ export const queryCache = new QueryCache({
 })
 
 const App = () => {
+  const queryClient = new QueryClient()
   return (
     <Provider store={store}>
       <PersistGate
         loading={null}
-        persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <Router history={history}>
-            <ReactQueryCacheProvider queryCache={queryCache}>
+        persistor={persistor}
+      >
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <Router history={history}>
               <Container>
                 <Header />
                 <FillHeight>
@@ -69,9 +70,9 @@ const App = () => {
               </Container>
               <ToastWrapper />
               <ScrollToTop />
-            </ReactQueryCacheProvider>
-          </Router>
-        </ThemeProvider>
+            </Router>
+          </ThemeProvider>
+        </QueryClientProvider>
       </PersistGate>
     </Provider>
   )

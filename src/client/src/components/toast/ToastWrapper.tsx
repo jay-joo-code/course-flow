@@ -10,36 +10,36 @@ const ZoomCustom = cssTransition({
   duration: [300, 500],
   appendPosition: false,
   collapse: true,
-  collapseDuration: 300
+  collapseDuration: 300,
 })
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: 'toast-container',
   toastClassName: 'toast',
   bodyClassName: 'body',
-  progressClassName: 'progress'
+  progressClassName: 'progress',
 })`
   /* .toast-container */
   /* width: 100%; */
 
   & .Toastify__toast--success {
-    background: ${props => props.theme.success}
+    background: ${(props) => props.theme.success}
   }
   & .Toastify__toast--info {
-    background: ${props => props.theme.info}
+    background: ${(props) => props.theme.info}
   }
   & .Toastify__toast--warning {
-    background: ${props => props.theme.warning}
+    background: ${(props) => props.theme.warning}
   }
   & .Toastify__toast--error {
-    background: ${props => props.theme.danger}
+    background: ${(props) => props.theme.danger}
   }
 
    /* .toast is passed to toastClassName */
   .toast {
     min-height: 0;
     border-radius: 4px;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     display: flex;
     align-items: center;
   }
@@ -54,7 +54,7 @@ const StyledToastContainer = styled(ToastContainer).attrs({
     margin: 0;
     padding: .2rem .5rem;
     font-size: .9rem;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
   }
 
   /* .progress is passed to progressClassName */
@@ -63,7 +63,7 @@ const StyledToastContainer = styled(ToastContainer).attrs({
 
 const ToastWrapper = () => {
   return <StyledToastContainer
-    position="top-center"
+    position='top-center'
     autoClose={2500}
     hideProgressBar={true}
     newestOnTop={false}

@@ -18,7 +18,7 @@ https://developers.kakao.com/console/app
 
 passport.use(new KakaoStrategy({
   clientID: process.env.ID_KAKAO,
-  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/kakao/callback`
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/kakao/callback`,
 },
 async (accessToken, refreshToken, profile, done) => {
   try {

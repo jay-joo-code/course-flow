@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { AuthState } from "src/types";
+import { AuthState } from 'src/types'
 
 const initialState: AuthState = {
   accessToken: null,
@@ -18,7 +18,7 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.accessToken = null
-    }
+    },
   },
 })
 

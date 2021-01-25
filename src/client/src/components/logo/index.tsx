@@ -10,16 +10,16 @@ interface LogoProps {
 const Logo = ({ variant }: LogoProps) => {
   const variantToColor = {
     brand: theme.brand,
-    black: theme.text
+    black: theme.text,
   }
   return (
     <Link to='/'>
       <Text
-        variant='h3'
+        variant='h4'
         fontWeight={500}
         color={variantToColor[variant]}
       >
-        cornlet
+        Course Flow
       </Text>
     </Link>
   )

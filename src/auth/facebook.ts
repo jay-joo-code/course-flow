@@ -25,7 +25,7 @@ bc localhost is not registered as an accepted redirect url
 passport.use(new FacebookStrategy({
   clientID: process.env.ID_FACEBOOK,
   clientSecret: process.env.SECRET_FACEBOOK,
-  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/facebook/callback`
+  callbackURL: `${process.env.SERVER_DOMAIN}/api/public/auth/facebook/callback`,
 },
 async (accessToken, refreshToken, profile, done) => {
   try {

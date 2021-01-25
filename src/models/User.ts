@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
 import autopopulate from 'mongoose-autopopulate'
 
 const { Schema } = mongoose
@@ -7,14 +6,14 @@ const { Schema } = mongoose
 const userSchema = new Schema({
   authProvider: {
     // 'google'
-    type: String
+    type: String,
   },
   providerId: {
-    type: String
+    type: String,
   },
   providerData: {
-    type: Schema.Types.Mixed
-  }
+    type: Schema.Types.Mixed,
+  },
 }, { timestamps: true })
 
 export interface UserDoc extends mongoose.Document {

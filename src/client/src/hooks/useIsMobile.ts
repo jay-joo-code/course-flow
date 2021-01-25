@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import theme from 'src/app/theme'
 import useWindowSize from './useWindowSize'
 
-function useIsMobile() {
+const useIsMobile = () => {
   const [width] = useWindowSize()
   const [isMobile, setIsMobile] = useState(width <= Number(theme.small.split('p')[0]))
 

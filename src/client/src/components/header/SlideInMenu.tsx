@@ -15,11 +15,11 @@ const Container = styled.div`
   height: 100vh;
   z-index: 100;
   background: white;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   transition: .3s ease-in-out;
 
   // isOpen
-  transform: ${props => props.isOpen && 'translate3d(-250px, 0, 0)'};
+  transform: ${(props) => props.isOpen && 'translate3d(-250px, 0, 0)'};
 `
 
 const TopRow = styled(FlexRow)`
@@ -57,10 +57,12 @@ const SlideInMenu = ({ isOpen, setIsOpen }: SlideInMenuProps) => {
             <div key={nav.path}>
               <Link
                 to={nav.path}
-                onClick={() => setIsOpen(false)}>
+                onClick={() => setIsOpen(false)}
+              >
                 <Text
                   variant='h4'
-                  fontWeight={500}>{nav.label}</Text>
+                  fontWeight={500}
+                >{nav.label}</Text>
               </Link>
             </div>
           ))}

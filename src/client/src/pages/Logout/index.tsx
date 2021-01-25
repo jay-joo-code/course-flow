@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { queryCache } from 'src/app/App'
 import useRouter from 'src/hooks/useRouter'

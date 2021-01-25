@@ -10,13 +10,13 @@ interface SpanProps {
 
 const StyledSpan = styled.span`
   // fontWeight
-  font-weight: ${props => props.fontWeight && props.fontWeight};
+  font-weight: ${(props) => props.fontWeight && props.fontWeight};
 
   // color
-  color: ${props => props.color && props.color};
+  color: ${(props) => props.color && props.color};
 
   // underline
-  text-decoration: ${props => props.underline && 'underline'};
+  text-decoration: ${(props) => props.underline && 'underline'};
 `
 
 const Span = ({ children, ...rest }: SpanProps) => {

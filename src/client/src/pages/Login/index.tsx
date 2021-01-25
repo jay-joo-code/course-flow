@@ -5,6 +5,7 @@ import { setAccessToken } from 'src/slices/auth'
 const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+
   const handleGoogleLogin = () => {
     if (process.env.NODE_ENV === 'development') {
       dispatch(setAccessToken(process.env.REACT_APP_TEST_ACCESS_TOKEN))

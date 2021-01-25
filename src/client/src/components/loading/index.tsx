@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const Loading = styled.div`
-  border-top: 3px solid ${props => props.theme.borderDark};
-  border-right: 3px solid ${props => props.theme.borderDark};
-  border-bottom: 3px solid ${props => props.theme.borderDark};
-  border-left: 3px solid ${props => props.theme.brand};
+  border-top: 3px solid ${(props) => props.theme.borderDark};
+  border-right: 3px solid ${(props) => props.theme.borderDark};
+  border-bottom: 3px solid ${(props) => props.theme.borderDark};
+  border-left: 3px solid ${(props) => props.theme.brand};
 
   transform: translateZ(0);
   animation: load8 1.1s infinite linear;

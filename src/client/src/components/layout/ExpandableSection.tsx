@@ -26,17 +26,20 @@ const ExpandableSection = ({ heading, expandedDefault, children }: ExpandableSec
       >
         <Text
           variant='p'
-          fontWeight={500}>{heading}</Text>
+          fontWeight={500}
+        >{heading}</Text>
         <Space margin='0 .2rem' />
         {isExpanded
           ? <Icon
               variant='up'
               pointer
-              size='1.5rem' />
+              size='1.5rem'
+          />
           : <Icon
               variant='down'
               pointer
-              size='1.5rem' />
+              size='1.5rem'
+          />
         }
       </FlexRow>
       {isExpanded && children}

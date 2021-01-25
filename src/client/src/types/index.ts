@@ -24,60 +24,29 @@ export interface UserDoc {
   validatePassword: (candidate: string) => boolean
 }
 
-export interface ListingDoc {
+export interface IRequirement {
   _id: string
   createdAt: Date
   updatedAt: Date
-  isComplete: boolean
-  isActive: boolean
-  userId: string | undefined
-  views: number
 
-  // init data
-  address: string
-  milesToCampus: number
-  lat: number
-  lng: number
+  // preset data
+  tag: string
+  label: string
+  user: string
+  major: string
+  credits?: number
 
-  // property
-  regionCode: string | undefined
-  propertyTypeCode: '1' | '2' | '3' | '4' | undefined
-  furnishingCode: '1' | '2' | '3' | undefined
-  bedroomsTotal: number | undefined
-  bedroomsAvailable: number | undefined
-  bathroomsTotal: number | undefined
-
-  // dates
-  year: '2021' | '2022' | '2023' | '2024' | undefined
-  termCode: '1' | '2' | '3' | '4' | undefined
-  startDate: Date | undefined
-  endDate: Date | undefined
-
-  // rent
-  rent: number | undefined
-  deposit: number | undefined
-
-  // utilities
-  isUtilIncluded: boolean | undefined
-  separateUtils: string[] | undefined
-  utilCost: number | undefined
-
-  // roommates
-  roommates: IRoommate[] | undefined
-  tenantGenderCode: '1' | '2' | '3' | undefined
-
-  // photos
-  photos: IPhoto[] | undefined
-
-  // description
-  description: string | undefined
+  // configurable data
+  options: IOption[]
+  chosenCourse?: string
+  notes?: string
+  isCustomCourse: boolean
+  customCourse?: string
+  isDone: boolean
+  semester: number
+  row: number
 }
 
-export interface IPhoto {
-  src: string
-}
-
-export interface IRoommate {
-  gender: 'Male' | 'Female' | 'Other'
-  genderOther: string
+interface IOption {
+  label: string
 }

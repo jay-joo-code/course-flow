@@ -11,7 +11,7 @@ const DropdownWrapper = styled.div`
 
 const DropdownContainer = styled.div`
   border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   background: white;
   position: absolute;
   top: 0;

@@ -39,35 +39,35 @@ const IconContainer = styled.div`
   flex-shrink: 0;
 
   // size
-  height: ${props => props.size && props.size};
-  width: ${props => props.size && props.size};
+  height: ${(props) => props.size && props.size};
+  width: ${(props) => props.size && props.size};
 
   // pointer
-  cursor: ${props => props.pointer && 'pointer'};
+  cursor: ${(props) => props.pointer && 'pointer'};
 
   & svg {
     height: 100%;
     width: 100%;
-    fill: ${props => props.theme.text};
+    fill: ${(props) => props.theme.text};
 
     // fill
-    fill: ${props => props.fill && props.fill};
+    fill: ${(props) => props.fill && props.fill};
 
     // interactiveHover
-    height: ${props => props.interactiveHover && '70%'};
-    width: ${props => props.interactiveHover && '70%'};
+    height: ${(props) => props.interactiveHover && '70%'};
+    width: ${(props) => props.interactiveHover && '70%'};
   }
 
   // interactiveHover
-  border-radius: ${props => props.interactiveHover && '50%'};
-  display: ${props => props.interactiveHover && 'flex'};
-  justify-content: ${props => props.interactiveHover && 'center'};
-  align-items: ${props => props.interactiveHover && 'center'};
-  cursor: ${props => props.interactiveHover && 'pointer'};
+  border-radius: ${(props) => props.interactiveHover && '50%'};
+  display: ${(props) => props.interactiveHover && 'flex'};
+  justify-content: ${(props) => props.interactiveHover && 'center'};
+  align-items: ${(props) => props.interactiveHover && 'center'};
+  cursor: ${(props) => props.interactiveHover && 'pointer'};
 
-  @media (min-width: ${props => props.theme.medium}) {
+  @media (min-width: ${(props) => props.theme.medium}) {
     &:hover {
-      background: ${props => props.interactiveHover && props.theme.grey[50]};
+      background: ${(props) => props.interactiveHover && props.theme.grey[50]};
     }
   }
 `

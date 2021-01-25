@@ -17,18 +17,18 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     padding: '0',
     border: `1px solid ${theme.border}`,
-    maxWidth: '95vw'
+    maxWidth: '95vw',
   },
   overlay: {
-    background: hexToRGBA('#000000', 0.3)
-  }
+    background: hexToRGBA('#000000', 0.3),
+  },
 }
 
 ReactModal.setAppElement('#root')
 
 const TopRow = styled(FlexRow)`
   padding: .5rem 1rem;
-  border-bottom: 1px solid ${props => props.theme.border};
+  border-bottom: 1px solid ${(props) => props.theme.border};
 
   & > *:first-child {
     margin-right: 1rem;
@@ -68,12 +68,14 @@ const Modal = (props: ModalProps) => {
     >
       <TopRow
         justifySpaceBetween
-        alignCenter>
+        alignCenter
+      >
         <Text variant='h4'>{props.heading}</Text>
         <Icon
           variant='close'
           onClick={props.onRequestClose}
-          pointer />
+          pointer
+        />
       </TopRow>
       <ContentContainer>
         {props.children}

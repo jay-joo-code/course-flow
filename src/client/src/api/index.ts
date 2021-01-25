@@ -1,9 +1,9 @@
-import axios from 'axios';
-import history from 'src/util/history';
-import { objectToQueryString } from 'src/util/url';
-import store from 'src/slices/store';
-import { logout } from 'src/slices/auth';
-import { showToast } from 'src/util/toast';
+import axios from 'axios'
+import history from 'src/util/history'
+import { objectToQueryString } from 'src/util/url'
+import store from 'src/slices/store'
+import { logout } from 'src/slices/auth'
+import { showToast } from 'src/util/toast'
 
 const defaults = {
   baseURL: '/api',
@@ -16,7 +16,7 @@ const defaults = {
     status: 503,
     data: {},
   },
-};
+}
 
 const listener = () => {
   const { accessToken } = store.getState().authState
@@ -43,29 +43,28 @@ const api = (
       paramsSerializer: objectToQueryString,
     })
       .then((response) => {
-        resolve(response.data);
+        resolve(response.data)
       },
-      error => {
+      (error) => {
         // TOOD: auth error handling
         if (error.response) {
           const { code, message } = error.response.data
           if (code === 404) {
             if (message === '접속 토큰이 유효하지 않습니다. msg : jwt expired') {
-              history.push('/refresh-token');
+              history.push('/refresh-token')
             } else {
               showToast('error', '세션이 만료되었습니다')
               store.dispatch(logout())
-              history.push('/login');
+              history.push('/login')
             }
           } else {
-            reject(error);
+            reject(error)
           }
         } else {
-          reject(error);
+          reject(error)
         }
-      },
-    );
-  });
-
+      }
+      )
+  })
 
 export default api
