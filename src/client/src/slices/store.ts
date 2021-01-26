@@ -1,13 +1,13 @@
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'
-import rootReducer from 'src/slices';
-import logger from 'redux-logger'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import logger from 'redux-logger'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import rootReducer from 'src/slices'
 
-const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : [];
+const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : []
 const persistBlacklist = process.env.NODE_ENV === 'development'
-  ? []
-  : [];
+  ? ['planState']
+  : []
 const persistConfig = {
   key: 'root',
   storage,

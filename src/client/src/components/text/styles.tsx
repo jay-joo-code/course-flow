@@ -5,7 +5,8 @@ const CoreText = styled.p`
   white-space: pre-line;
   word-break: break-word;
   font-weight: 300;
-  line-height: 1.2;
+  line-height: 1.5;
+  letter-spacing: .5px;
 
   // ellipsis
   text-overflow: ${(props) => (props.ellipsis ? 'ellipsis' : '')};
@@ -26,6 +27,9 @@ const CoreText = styled.p`
 
   // margin
   margin: ${(props) => props.margin ? props.margin : ''};
+
+  // uppercase
+  text-transform: ${(props) => props.uppercase && 'uppercase'};
 `
 
 export const H1 = styled(CoreText)`
@@ -74,5 +78,8 @@ export const H5 = styled(CoreText)`
 
 export const H6 = styled(CoreText)`
   font-size: 12px;
-  text-transform: uppercase;
+`
+
+export const H7 = styled(CoreText)`
+  font-size: 10px;
 `
