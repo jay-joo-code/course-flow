@@ -5,10 +5,12 @@ export interface AuthState {
 
 export interface PlanState {
   semesters: ISemesters
+  idToRequirement: any
+  isInit: boolean
 }
 
 // nth index represents nth semester
-// index 0 is an empty array because there is no 0th semester
+// index 0 is transfer credits
 export type ISemesters = (IRequirements)[]
 
 // sorted in order of rows
@@ -39,10 +41,13 @@ export interface UserDoc {
 
 export interface IRequirement {
   // preset data
+  _id: string
   tag: string
   label: string
   major: string
   credits?: number
+  initSemester: number
+  initRow: number
 
   // configurable data
   options: IOption[]
@@ -54,7 +59,6 @@ export interface IRequirement {
 }
 
 export interface RequirementDoc extends IRequirement {
-  _id: string
   createdAt: Date
   updatedAt: Date
   user: string

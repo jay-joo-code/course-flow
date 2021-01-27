@@ -1,5 +1,5 @@
 import React from 'react'
-import { QueryCache, QueryClient, QueryClientProvider, useQueryClient } from 'react-query'
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import { persistStore } from 'redux-persist'
@@ -19,7 +19,7 @@ const Container = styled.div`
   width: 100vw;
   max-width: 100vw;
   overflow-x: hidden;
-  min-height: 101vh;
+  min-height: 97vh;
   display: flex;
   flex-direction: column;
 
