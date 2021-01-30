@@ -5,13 +5,19 @@ export const theme = {
 
   // feedback
   success: '#66c088',
+  success500: '#66c088',
+  success300: '#8DD0A6',
+  success100: '#B3E0C4',
   info: '#0275d8',
+  info500: '#0275d8',
+  info300: '#4298E2',
+  info100: '#81BAEC',
   warning: '#f0ad4e',
-  warningLight: '#FDF1E2',
+  warning100: '#FDF1E2',
   danger: '#de6362',
 
   // bg
-  bg: '#FFFFFF',
+  bg: '#ffffff',
   bgWash1: palette.grey[50],
   bgWash2: palette.grey[200],
 

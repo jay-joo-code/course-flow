@@ -6,6 +6,7 @@ import { IRequirement, RootState } from 'src/types'
 const emptyRequirement: IRequirement = {
   // preset data
   _id: '',
+  isPlaceholder: false,
   tag: '',
   label: '',
   major: 'cs',

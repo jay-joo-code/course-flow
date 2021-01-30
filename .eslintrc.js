@@ -40,5 +40,6 @@ module.exports = {
     'react/jsx-closing-bracket-location': [1, 'line-aligned'],
     'arrow-parens': ['error', 'always'],
     'jsx-quotes': ['error', 'prefer-single'],
+    'space-before-function-paren': 'off',
   },
 }

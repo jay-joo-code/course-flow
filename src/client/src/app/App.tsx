@@ -22,6 +22,7 @@ const Container = styled.div`
   min-height: 97vh;
   display: flex;
   flex-direction: column;
+  background: ${(props) => props.theme.bg};
 
   @media (min-width: ${(props) => props.theme.medium}) {
     width: initial;

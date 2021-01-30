@@ -9,14 +9,6 @@ export interface PlanState {
   isInit: boolean
 }
 
-// nth index represents nth semester
-// index 0 is transfer credits
-export type ISemesters = (IRequirements)[]
-
-// sorted in order of rows
-// null for empty space
-export type IRequirements = (IRequirement | RequirementDoc | null)[]
-
 export interface RootState {
   authState: AuthState
   planState: PlanState
@@ -39,9 +31,26 @@ export interface UserDoc {
   validatePassword: (candidate: string) => boolean
 }
 
+// nth index represents nth semester
+// index 0 is transfer credits
+export type ISemesters = (IRequirements)[]
+
+// sorted in order of rows
+// null for empty space
+export type IRequirements = IDynRequirement[]
+
+export type IDynRequirement = IRequirement | RequirementDoc | IPlaceholder
+
+export interface IPlaceholder {
+  _id: string
+  isPlaceholder: boolean
+  isRemoveOnRender: boolean
+}
+
 export interface IRequirement {
   // preset data
   _id: string
+  isPlaceholder: boolean
   tag: string
   label: string
   major: string

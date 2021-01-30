@@ -23,6 +23,8 @@ import { ReactComponent as PlaceIcon } from 'src/assets/icons/place.svg'
 import { ReactComponent as AddCircleIcon } from 'src/assets/icons/add-circle.svg'
 import { ReactComponent as RemoveCircleIcon } from 'src/assets/icons/remove-circle.svg'
 import { ReactComponent as WarningIcon } from 'src/assets/icons/warning.svg'
+import { ReactComponent as MoreHoriIcon } from 'src/assets/icons/more-hori.svg'
+import { ReactComponent as MoreVertIcon } from 'src/assets/icons/more-vert.svg'
 
 interface IconProps {
   variant: string
@@ -97,6 +99,8 @@ const Icon = (props: IconProps) => {
     'add-circle': <AddCircleIcon />,
     'remove-circle': <RemoveCircleIcon />,
     warning: <WarningIcon />,
+    'more-hori': <MoreHoriIcon />,
+    'more-vert': <MoreVertIcon />,
   }
 
   return (

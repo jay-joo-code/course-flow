@@ -15,15 +15,19 @@ export const Container = styled.div`
       width: 90%;
     }
   }
+
+  // height
+  height: ${(props) => props.height && props.height};
 `
 
 interface DesktopContainerProps {
   children: React.ReactNode
+  height?: string
 }
 
-const DesktopContainer = ({ children }: DesktopContainerProps) => {
+const DesktopContainer = ({ children, height }: DesktopContainerProps) => {
   return (
-    <Container>
+    <Container height={height}>
       <div>
         {children}
       </div>
