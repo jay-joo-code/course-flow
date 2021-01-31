@@ -1,6 +1,6 @@
-
 import axios from 'axios'
 import { ISemesterSlug, ISubjectSlug } from 'src/client/src/types/roster'
+import Course from './../models/Course'
 
 const BASE_URL = 'https://classes.cornell.edu/api/2.0'
 
@@ -30,7 +30,7 @@ export const fetchClasses = async (semester: ISemesterSlug, subjectSlug: ISubjec
   }
 }
 
-export const fetchAllClasses = (subjectSlug: ISubjectSlug): Promise<any[]> => new Promise((resolve, reject) => {
+export const fetchAllClassesBySubject = (subjectSlug: ISubjectSlug): Promise<any[]> => new Promise((resolve, reject) => {
   (async () => {
     const slugs = ['FA19', 'SP20', 'FA20', 'SP21']
 
@@ -39,7 +39,7 @@ export const fetchAllClasses = (subjectSlug: ISubjectSlug): Promise<any[]> => ne
         try {
           resolve((await axios.get(`${BASE_URL}/search/classes.json?roster=${slug}&subject=${subjectSlug}`)).data.data.classes)
         } catch (error) {
-          reject(error.response)
+          resolve([])
         }
       })()
     }))
@@ -61,3 +61,50 @@ export const fetchAllClasses = (subjectSlug: ISubjectSlug): Promise<any[]> => ne
       .catch((e) => reject(e))
   })()
 })
+
+export const fetchAllClasses = (): Promise<any[]> => new Promise((resolve) => {
+  (async () => {
+    const subjects = await fetchSubjects('SP21')
+    let allClasses = []
+    const promises = subjects.map(({ value }, idx): Promise<void> => new Promise((resolve) => {
+      setTimeout(() => {
+        (async () => {
+          const classes = await fetchAllClassesBySubject(value)
+          allClasses = allClasses.concat(classes)
+          console.log(`Fetched ${classes.length} ${value} courses`)
+          resolve()
+        })()
+      }, 1000 * idx)
+    }))
+    await Promise.all(promises)
+    resolve(allClasses)
+  })()
+})
+
+export const initDatabase = async () => {
+  try {
+    const classes = await fetchAllClasses()
+    console.log(`Saving ${classes.length} courses to the database ...`)
+
+    try {
+      Course.collection.drop()
+    } catch (error) {
+    }
+    const promises = classes.map((classData, idx): Promise<void> => new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          await new Course({ data: classData }).save()
+          console.log(`${idx} Saved ${classData.subject} ${classData.catalogNbr}`)
+          resolve()
+        } catch (error) {
+          reject(error)
+        }
+      })()
+    }))
+    await Promise.all(promises)
+    const courses = await Course.find()
+    console.log(`Saved ${courses.length} courses to the database!`)
+  } catch (error) {
+    return error
+  }
+}
