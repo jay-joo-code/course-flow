@@ -14,7 +14,7 @@ courseRouter.get('/query', async (req, res) => {
       ...subjectFilter,
       ...catalogNbrFilter,
     }, ['data.subject', 'data.catalogNbr'])
-    const docs = await Course.find(filter).limit(10)
+    const docs = await Course.find(filter).limit(6)
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

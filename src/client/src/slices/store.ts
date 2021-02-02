@@ -6,7 +6,8 @@ import rootReducer from 'src/slices'
 
 const loggerMiddleware = process.env.NODE_ENV === 'development' ? [logger] : []
 const persistBlacklist = process.env.NODE_ENV === 'development'
-  ? ['planState']
+  // ? ['planState']
+  ? []
   : []
 const persistConfig = {
   key: 'root',

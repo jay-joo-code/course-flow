@@ -43,13 +43,18 @@ const StyledButton = styled.button`
   // text
   color: ${(props) => props.text && props.color};
   background: ${(props) => props.text && props.theme.bg};
-  padding: ${(props) => props.text && '0'};
+  padding: ${(props) => props.text && '.4rem .2rem'};
   border: ${(props) => props.text && 'none'};
+  border-radius: ${(props) => props.text && '4px'};
   box-shadow: ${(props) => props.text && 'none'};
   font-size: ${(props) => props.text && '0.7rem'};
   font-weight: ${(props) => props.text && 500};
   text-transform: ${(props) => props.text && 'uppercase'};
   letter-spacing: ${(props) => props.text && '1px'};
+
+  &:hover {
+    background: ${(props) => props.text && props.theme.brandBg};
+  }
 
   // isLoading, icon, text
   & > *:first-child {

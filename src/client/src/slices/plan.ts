@@ -70,9 +70,21 @@ const planSlice = createSlice({
         state.semesters[destSemesterNumber] = result[destSemesterNumber]
       }
     },
+
+    assignCourse: (state, { payload }) => {
+      const { requirementId, courseData } = payload
+      state.idToRequirement[requirementId].assignedCourse = courseData
+      state.idToRequirement[requirementId].assignedCourseId = courseData.crseId
+    },
+
+    unassignCourse: (state, { payload }) => {
+      const { requirementId } = payload
+      state.idToRequirement[requirementId].assignedCourse = null
+      state.idToRequirement[requirementId].assignedCourseId = null
+    },
   },
 })
 
-export const { addRequirement, initPlan, removeRequirement, dragEnd } = planSlice.actions
+export const { unassignCourse, addRequirement, initPlan, removeRequirement, dragEnd, assignCourse } = planSlice.actions
 
 export default planSlice.reducer

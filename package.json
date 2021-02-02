@@ -19,7 +19,6 @@
     "helmet": "^4.1.1",
     "history": "^4.10.1",
     "jsonwebtoken": "^8.5.1",
-    "just-debounce-it": "^1.1.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "mongoose": "^5.10.9",

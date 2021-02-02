@@ -7,6 +7,7 @@ import { FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
 import { RootState } from 'src/types/redux'
 import { ISemester } from 'src/types/requirement'
+import { requirementCredits } from 'src/util/roster'
 import styled from 'styled-components'
 import RequirementListItem from './RequirementListItem'
 
@@ -38,7 +39,7 @@ const RequirementList = ({ provided, isDraggingOver, semester, semesterNumber }:
   let totalCredits = 0
   semester
     .forEach((requirementId: string) => {
-      totalCredits += idToRequirement[requirementId]?.credits
+      totalCredits += requirementCredits(idToRequirement[requirementId])
     })
 
   return (
@@ -61,6 +62,7 @@ const RequirementList = ({ provided, isDraggingOver, semester, semesterNumber }:
           <Text
             variant='h6'
             color={theme.textMuted}
+            fontWeight={400}
           >{totalCredits} credits</Text>
         </div>
         <Icon

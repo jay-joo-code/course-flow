@@ -17,6 +17,7 @@ const DropdownContainer = styled.div`
   top: 0;
   left: 0;
   max-width: 100%;
+  width: 100%;
 `
 
 const Dropdown = ({ children }: DropdownProps) => {

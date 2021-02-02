@@ -26,6 +26,7 @@
     "react-toastify": "^6.2.0",
     "styled-components": "^5.2.1",
     "typescript": "^3.7.5",
+    "use-debounce": "^5.2.0",
     "yup": "^0.32.8"
   },
   "peerDependencies": {
