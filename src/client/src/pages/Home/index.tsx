@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import InitRequirements from './InitRequirements'
 import SemesterList from './SemesterList'
+import InitRequirements from './InitRequirements'
 
 const Container = styled.div`
   display: flex;

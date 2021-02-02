@@ -12,6 +12,8 @@ export interface ButtonProps {
   onClick?: () => void
   isLoading?: boolean
   icon?: string
+  isIconRightSide?: boolean
+  iconSize?: string
   type?: 'submit'
 }
 
@@ -23,6 +25,7 @@ const StyledButton = styled.button`
   flex-shrink: 0;
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 8px;
+  font-family: inherit;
 
   font-size: .9rem;
   white-space: nowrap;
@@ -43,8 +46,10 @@ const StyledButton = styled.button`
   padding: ${(props) => props.text && '0'};
   border: ${(props) => props.text && 'none'};
   box-shadow: ${(props) => props.text && 'none'};
-  font-size: ${(props) => props.text && '1rem'};
-  font-weight: ${(props) => props.text && 700};
+  font-size: ${(props) => props.text && '0.7rem'};
+  font-weight: ${(props) => props.text && 500};
+  text-transform: ${(props) => props.text && 'uppercase'};
+  letter-spacing: ${(props) => props.text && '1px'};
 
   // isLoading, icon, text
   & > *:first-child {
@@ -54,22 +59,29 @@ const StyledButton = styled.button`
 `
 
 export const Button = (props: ButtonProps) => {
+  const color = props.color || theme.brand
   const iconFill = (props.bordered || props.text)
-    ? props.color
+    ? color
     : theme.bg
 
   return (
     <StyledButton
       type={props.type || 'button'}
-      color={props.color || theme.brand}
+      color={color}
       {...props}
     >
-      {props.icon && <Icon
+      {(props.icon && !props.isIconRightSide) && <Icon
         variant={props.icon}
         fill={iconFill}
+        size={props.iconSize}
       />}
       {props.isLoading && <Loading />}
       {props.label}
+      {(props.icon && props.isIconRightSide) && <Icon
+        variant={props.icon}
+        fill={iconFill}
+        size={props.iconSize}
+      />}
     </StyledButton>
   )
 }

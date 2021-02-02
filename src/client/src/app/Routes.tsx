@@ -7,7 +7,7 @@ import Home from 'src/pages/Home'
 import Login from 'src/pages/Login'
 import LogOut from 'src/pages/Logout'
 import MobileBlock from 'src/pages/MobileBlock'
-import { RootState } from 'src/types'
+import { RootState } from 'src/types/redux'
 
 interface IRoute {
   path: string

@@ -4,8 +4,8 @@ import theme from 'src/app/theme'
 import Icon from 'src/components/icon'
 import { FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
-import { RootState } from 'src/types'
 import { isRequirement } from 'src/types/guards'
+import { RootState } from 'src/types/redux'
 import styled from 'styled-components'
 import RequirementsListItem from './RequirementsListItem'
 
@@ -62,7 +62,7 @@ const RequirementsList = ({ semesterNumber }: RequirementsListProps) => {
       </FlexRow>
       {semesters[semesterNumber].map((requirement, row) => (
         <RequirementsListItem
-          key={requirement?._id}
+          key={requirement}
           requirement={requirement}
           semesterNumber={semesterNumber}
           row={row}

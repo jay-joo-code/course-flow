@@ -1,4 +1,5 @@
-import { Document, model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
+import { IRequirementDoc } from 'src/client/src/types/requirement'
 
 const requirementSchema = new Schema({
   // preset data
@@ -23,66 +24,15 @@ const requirementSchema = new Schema({
   },
 
   // configurable data
-  options: {
-    type: [{
-      label: {
-        type: String,
-        required: true,
-      },
-    }],
-  },
-  chosenCourse: {
-    type: String,
-  },
-  notes: {
-    type: String,
-  },
-  isCustomCourse: {
-    type: Boolean,
-    default: false,
-  },
-  customCourse: {
-    type: String,
-  },
-  isDone: {
-    type: Boolean,
-    default: false,
-  },
-  semester: {
+  assignedCourseId: {
     type: Number,
-    required: true,
-  },
-  row: {
-    type: Number,
-    required: true,
   },
 }, { timestamps: true })
 
-export interface IRequirement extends Document {
-  _id: string
-  createdAt: Date
-  updatedAt: Date
+requirementSchema.virtual('assignedCourse', {
+  ref: 'Course',
+  localField: 'assignedCourseId',
+  foreignField: 'data.crseId',
+})
 
-  // preset data
-  tag: string
-  label: string
-  user: string
-  major: string
-  credits?: number
-
-  // configurable data
-  options: IOption[]
-  chosenCourse?: string
-  notes?: string
-  isCustomCourse: boolean
-  customCourse?: string
-  isDone: boolean
-  semester: number
-  row: number
-}
-
-interface IOption {
-  label: string
-}
-
-export default model<IRequirement>('Requirement', requirementSchema)
+export default model<IRequirementDoc>('Requirement', requirementSchema)

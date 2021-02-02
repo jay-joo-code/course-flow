@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux'
-import { RootState, UserDoc } from 'src/types'
+import { RootState } from 'src/types/redux'
+import { IUserDoc } from 'src/types/user'
 import useCustomQuery from './useCustomQuery'
 
 const useCurrentUser = () => {
-  const { data } = useCustomQuery<UserDoc>({
+  const { data } = useCustomQuery<IUserDoc>({
     url: '/private/user/current',
   })
 

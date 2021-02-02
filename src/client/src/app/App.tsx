@@ -19,7 +19,7 @@ const Container = styled.div`
   width: 100vw;
   max-width: 100vw;
   overflow-x: hidden;
-  min-height: 97vh;
+  min-height: 101vh;
   display: flex;
   flex-direction: column;
   background: ${(props) => props.theme.bg};

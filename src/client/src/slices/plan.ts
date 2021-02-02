@@ -1,19 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IDynRequirement, PlanState } from 'src/types'
-import { IPlaceholder } from './../types/index'
-
-const generatePlaceholder = () => ({
-  _id: `${Math.random()}`,
-  isPlaceholder: true,
-  isRemoveOnRender: false,
-})
-
-const emptySemesters: IPlaceholder[][] = [...Array(11)].map(() => [generatePlaceholder(), generatePlaceholder(), generatePlaceholder(), generatePlaceholder(), generatePlaceholder()])
+import { PlanState } from 'src/types/redux'
 
 const initialState: PlanState = {
-  semesters: emptySemesters,
+  semesters: [],
   idToRequirement: {},
   isInit: false,
+}
+
+const reorder = (list: string[], startIndex: number, endIndex: number) => {
+  const result = [...list]
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+  return result
+}
+
+const moveBetweenLists = (source: string[], destination: string[], droppableSource: any, droppableDestination: any) => {
+  const sourceClone = [...source]
+  const destClone = [...destination]
+  const [removed] = sourceClone.splice(droppableSource.index, 1)
+
+  destClone.splice(droppableDestination.index, 0, removed)
+
+  const result = {}
+  result[droppableSource.droppableId] = sourceClone
+  result[droppableDestination.droppableId] = destClone
+
+  return result
 }
 
 const planSlice = createSlice({
@@ -21,6 +33,11 @@ const planSlice = createSlice({
   initialState,
   reducers: {
     addRequirement: (state, { payload }) => {
+      const { semesterNumber, row, requirement } = payload
+      state.semesters[semesterNumber].splice(row, 0, requirement)
+    },
+
+    replaceRequirement: (state, { payload }) => {
       const { semesterNumber, row, requirement } = payload
       state.semesters[semesterNumber].splice(row, 1, requirement)
     },
@@ -31,62 +48,31 @@ const planSlice = createSlice({
     },
 
     initPlan: (state, { payload }) => {
-      const { requirements, idToRequirement } = payload
+      const { semesters, idToRequirement } = payload
       state.idToRequirement = idToRequirement
-      requirements.forEach((requirement) => {
-        const { initSemester, initRow } = requirement
-        state.semesters[initSemester].splice(initRow, 1, requirement)
-      })
-
-      // remove null (placeholder) requirements
-      // state.semesters = state.semesters.map((semester) => semester.filter((requirement) => requirement !== null))
-
+      state.semesters = semesters
       state.isInit = true
     },
 
-    moveRequirement: (state, { payload }) => {
-      const { destSemesterNumber, destRow, requirementId } = payload
-      const draggedRequirement: IDynRequirement = state.idToRequirement[requirementId]
+    dragEnd: (state, { payload }) => {
+      const { source, destination } = payload
 
-      const newSemesters = state.semesters.map((semester, semesterNumber) => {
-        // replace dragged requirement with a placeholder requirement
-        let newSemester = semester.map((requirement) => {
-          if (requirement?._id === requirementId) {
-            return {
-              _id: `${Math.random()}`,
-              isPlaceholder: true,
-              isRemoveOnRender: false,
-            }
-          }
-          return requirement
-        })
+      const sourceSemesterNumber = +source.droppableId
+      const destSemesterNumber = +destination.droppableId
 
-        // if this is destination semester, insert requirement
-        if (semesterNumber === destSemesterNumber) {
-          if (newSemester[destRow]?.isPlaceholder) {
-            // destRow is a placeholder, set isRemoveOnRender to true
-            // @ts-ignore
-            newSemester[destRow].isRemoveOnRender = true
-            newSemester = [...newSemester.slice(0, destRow), draggedRequirement, ...newSemester.slice(destRow)]
-          } else if (destRow > 0 && newSemester[destRow - 1]?.isPlaceholder) {
-            // the requirement 1 row below is a placeholder, set its isRemoveOnRender to true
-            // @ts-ignore
-            newSemester[destRow - 1].isRemoveOnRender = true
-
-            // insert draggedRequirement to 1 after destRow
-            newSemester = [...newSemester.slice(0, destRow + 1), draggedRequirement, ...newSemester.slice(destRow + 1)]
-          } else {
-            newSemester = [...newSemester.slice(0, destRow), draggedRequirement, ...newSemester.slice(destRow)]
-          }
-        }
-        return newSemester
-      })
-
-      state.semesters = newSemesters
+      if (sourceSemesterNumber === destSemesterNumber) {
+        // movement within the same list
+        state.semesters[sourceSemesterNumber] = reorder(state.semesters[sourceSemesterNumber], source.index, destination.index)
+      } else {
+        // movement between different lists
+        const result = moveBetweenLists(state.semesters[sourceSemesterNumber], state.semesters[destSemesterNumber], source, destination)
+        state.semesters[sourceSemesterNumber] = result[sourceSemesterNumber]
+        state.semesters[destSemesterNumber] = result[destSemesterNumber]
+      }
     },
   },
 })
 
-export const { addRequirement, initPlan, moveRequirement, removeRequirement } = planSlice.actions
+export const { addRequirement, initPlan, removeRequirement, dragEnd } = planSlice.actions
 
 export default planSlice.reducer

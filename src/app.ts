@@ -9,7 +9,8 @@ import morgan from 'morgan'
 import passport from 'passport'
 import PassportJwt from 'passport-jwt'
 import path from 'path'
-import User, { UserDoc } from './models/User'
+import { IUserDoc } from './client/src/types/user'
+import User from './models/User'
 import router from './router'
 
 dotenv.config({ path: path.resolve(__dirname, '/../.env') })
@@ -47,7 +48,7 @@ app.use(compression())
 // PASSPORT
 declare global {
   namespace Express {
-      interface User extends UserDoc {}
+      interface User extends IUserDoc {}
   }
 }
 
@@ -58,7 +59,7 @@ const opts = {
   secretOrKey: process.env.AUTH_SECRET,
 }
 passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
-  User.findById(jwtPayload._id, (err, user: UserDoc) => {
+  User.findById(jwtPayload._id, (err, user: IUserDoc) => {
     if (err) {
       return done(err, false)
     }

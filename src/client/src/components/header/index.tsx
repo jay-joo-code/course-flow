@@ -1,7 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import useIsMobile from 'src/hooks/useIsMobile'
-import { resetAccessToken } from 'src/slices/auth'
 import styled from 'styled-components'
 import Auth from '../auth'
 import { FlexRow } from '../layout'

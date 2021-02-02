@@ -1,7 +1,6 @@
-import mongoose from 'mongoose'
+import { model, Schema } from 'mongoose'
 import autopopulate from 'mongoose-autopopulate'
-
-const { Schema } = mongoose
+import { IUserDoc } from 'src/client/src/types/user'
 
 const userSchema = new Schema({
   authProvider: {
@@ -16,16 +15,6 @@ const userSchema = new Schema({
   },
 }, { timestamps: true })
 
-export interface UserDoc extends mongoose.Document {
-  _id: string
-  authProvider: 'google'
-  providerId?: string
-  providerData?: any
-  createdAt: Date
-  updatedAt: Date
-  validatePassword: (candidate: string) => boolean
-}
-
 userSchema.plugin(autopopulate)
 
-export default mongoose.model<UserDoc>('User', userSchema)
+export default model<IUserDoc>('User', userSchema)

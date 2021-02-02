@@ -1,6 +1,4 @@
-import { initDatabase } from './../util/roster'
 import express from 'express'
-import Course from './../models/Course'
 import privateRouter from './privateRouter'
 import publicRouter from './publicRouter'
 

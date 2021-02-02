@@ -1,35 +1,62 @@
 import React from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { useDispatch, useSelector } from 'react-redux'
 import { FlexRow } from 'src/components/layout'
+import { dragEnd } from 'src/slices/plan'
+import { RootState } from 'src/types/redux'
+import RequirementList from './RequirementList'
 import styled from 'styled-components'
-import RequirementsList from './RequirementsList'
 
 const WashBackground = styled.div`
-  background: ${(props) => props.theme.bgWash1};
+  /* background: ${(props) => props.theme.grey[100]}; */
+  background: white;
   overflow: auto;
 `
 
 const Container = styled(FlexRow)`
   padding: 1rem 2rem;
-  height: 100%;
+  align-items: flex-start;
 `
 
 const SemesterList = () => {
-  const SEMESTER_COUNT = 10
+  const dispatch = useDispatch()
+  const { semesters } = useSelector((state: RootState) => state.planState)
+
+  const handleDragEnd = (result) => {
+    const { source, destination } = result
+
+    // dropped outside the list
+    if (!destination) {
+      return
+    }
+
+    dispatch(dragEnd({
+      source,
+      destination,
+    }))
+  }
 
   return (
     <WashBackground>
-      <DndProvider backend={HTML5Backend}>
-        <Container>
-          {[...Array(SEMESTER_COUNT + 1)].map((_, idx) => (
-            <RequirementsList
-              key={Math.random()}
-              semesterNumber={idx}
-            />
+      <Container>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          {semesters.map((semester, semesterNumber) => (
+            <Droppable
+              key={semesterNumber}
+              droppableId={semesterNumber.toString()}
+            >
+              {(provided, snapshot) => (
+                <RequirementList
+                  provided={provided}
+                  isDraggingOver={snapshot.isDraggingOver}
+                  semester={semester}
+                  semesterNumber={semesterNumber}
+                />
+              )}
+            </Droppable>
           ))}
-        </Container>
-      </DndProvider>
+        </DragDropContext>
+      </Container>
     </WashBackground>
   )
 }

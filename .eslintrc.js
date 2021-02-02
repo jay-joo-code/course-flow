@@ -41,5 +41,6 @@ module.exports = {
     'arrow-parens': ['error', 'always'],
     'jsx-quotes': ['error', 'prefer-single'],
     'space-before-function-paren': 'off',
+    'jsx-a11y/alt-text': 'off',
   },
 }

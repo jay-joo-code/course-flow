@@ -69,7 +69,7 @@ const IconContainer = styled.div`
 
   @media (min-width: ${(props) => props.theme.medium}) {
     &:hover {
-      background: ${(props) => props.interactiveHover && props.theme.grey[50]};
+      background: ${(props) => props.interactiveHover && props.theme.grey[100]};
     }
   }
 `

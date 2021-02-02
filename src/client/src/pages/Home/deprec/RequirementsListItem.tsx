@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
-
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 import theme from 'src/app/theme'
 import Text from 'src/components/text'
 import Span from 'src/components/text/Span'
-import { moveRequirement, removeRequirement } from 'src/slices/plan'
-import { IDynRequirement } from 'src/types'
+import { removeRequirement } from 'src/slices/plan'
 import styled from 'styled-components'
 
 interface RequirementsListItemProps {
@@ -72,11 +70,11 @@ const RequirementsListItem = ({ requirement, semesterNumber, row, isEndPlacehold
     accept: 'requirement',
     hover: (item: any) => {
       if (item._id !== _id) {
-        dispatch(moveRequirement({
-          requirementId: item._id,
-          destSemesterNumber: semesterNumber,
-          destRow: row,
-        }))
+        // dispatch(moveRequirement({
+        //   requirementId: item._id,
+        //   destSemesterNumber: semesterNumber,
+        //   destRow: row,
+        // }))
       }
     },
   })
