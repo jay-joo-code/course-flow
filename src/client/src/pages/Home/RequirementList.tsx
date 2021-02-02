@@ -65,13 +65,13 @@ const RequirementList = ({ provided, isDraggingOver, semester, semesterNumber }:
             fontWeight={400}
           >{totalCredits} credits</Text>
         </div>
-        <Icon
+        {/* <Icon
           variant='more-hori'
           size='1.75rem'
           fill={theme.textMuted}
           interactiveHover
           pointer
-        />
+        /> */}
       </FlexRow>
       <Space margin='1rem 0' />
       {semester.map((requirementId, row) => (

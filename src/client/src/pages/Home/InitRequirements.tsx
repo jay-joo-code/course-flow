@@ -13,6 +13,8 @@ const emptyRequirement: IRequirement = {
 
   // assign course
   isDefaultAssigned: false,
+  assignedCourseId: null,
+  assignedCourse: null,
 
   // information (optional)
   description: 'test description',

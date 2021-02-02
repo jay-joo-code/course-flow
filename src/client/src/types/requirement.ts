@@ -14,8 +14,8 @@ export interface IRequirement {
 
   // assign course
   isDefaultAssigned: boolean
-  assignedCourseId?: number
-  assignedCourse?: any
+  assignedCourseId: number | null
+  assignedCourse: any | null
 
   // information (optional)
   description?: string

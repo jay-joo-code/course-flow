@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import Text from 'src/components/text'
 import styled from 'styled-components'
 import { assignCourse } from 'src/slices/plan'
+import theme from 'src/app/theme'
 
 interface DropdownItemProps {
   courseData: any
@@ -32,6 +33,8 @@ const DropdownItem = ({ courseData, requirementId }: DropdownItemProps) => {
     <Container onClick={handleClick}>
       <Text
         variant='h5'
+        fontWeight={400}
+        color={theme.textLight}
       >{courseData.subject} {courseData.catalogNbr}</Text>
     </Container>
   )
