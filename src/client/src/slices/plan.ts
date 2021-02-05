@@ -3,8 +3,7 @@ import { PlanState } from 'src/types/redux'
 
 const initialState: PlanState = {
   semesters: [],
-  idToRequirement: {},
-  isInit: false,
+  major: null,
 }
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {

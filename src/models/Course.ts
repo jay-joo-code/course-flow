@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose'
-import { ICourseDoc } from 'src/client/src/types/roster'
+import { ICourseDoc } from 'src/client/src/types/course'
 
 const courseSchema = new Schema({
   data: {

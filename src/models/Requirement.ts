@@ -1,38 +1,50 @@
 import { model, Schema } from 'mongoose'
 import { IRequirementDoc } from 'src/client/src/types/requirement'
+import Major from './Major'
 
 const requirementSchema = new Schema({
   // preset data
-  tag: {
+  name: {
     type: String,
     required: true,
   },
-  label: {
+  majorId: {
     type: String,
-    required: true,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
     required: true,
   },
   major: {
-    type: String,
-    default: 'cs',
+    type: Schema.Types.ObjectId,
+    ref: Major,
+    autopopulate: true,
+    required: true,
   },
   credits: {
     type: Number,
+    required: true,
+  },
+  isFixedAssignment: {
+    type: Boolean,
+    required: true,
   },
 
-  // configurable data
-  assignedCourseId: {
-    type: Number,
+  // requirement information (optional)
+  description: {
+    type: String,
+  },
+  links: {
+    type: [{
+      label: {
+        type: String,
+        required: true,
+      },
+      href: {
+        type: String,
+        required: true,
+      },
+    }],
   },
 }, { timestamps: true })
 
-requirementSchema.virtual('assignedCourse', {
-  ref: 'Course',
-  localField: 'assignedCourseId',
-  foreignField: 'data.crseId',
-})
+requirementSchema.plugin(require('mongoose-autopopulate'))
 
 export default model<IRequirementDoc>('Requirement', requirementSchema)

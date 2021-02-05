@@ -1,26 +1,8 @@
 import { Document } from 'mongoose'
+import { IMajorDoc } from './major'
 
 export type ISemesters = string[][]
 export type ISemester = string[]
-export type IDynRequirements = IDynRequirement[]
-export type IDynRequirement = IRequirement | IRequirementDoc
-
-export interface IRequirement {
-  // preset data
-  _id: string
-  label: string
-  major: string
-  credits?: number
-
-  // assign course
-  isDefaultAssigned: boolean
-  assignedCourseId: number | null
-  assignedCourse: any | null
-
-  // information (optional)
-  description?: string
-  links?: ILink[]
-}
 
 interface ILink {
   label: string
@@ -28,9 +10,13 @@ interface ILink {
 }
 
 export interface IRequirementDoc extends Document {
-  // TODO: implement after sign in feature
-  isPlaceholder: boolean
-  createdAt: Date
-  updatedAt: Date
-  user: string
+  name: string
+  majorId: string
+  major: IMajorDoc
+  credits: number
+  isFixedAssignment: boolean
+
+  // requirement information (optional)
+  description?: string
+  links?: ILink[]
 }

@@ -6,8 +6,7 @@ export interface AuthState {
 
 export interface PlanState {
   semesters: ISemesters
-  idToRequirement: any
-  isInit: boolean
+  major: string | null
 }
 
 export interface RootState {

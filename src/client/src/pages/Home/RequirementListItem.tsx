@@ -34,8 +34,10 @@ const Container = styled(FlexColumn)`
   transition: box-shadow .2s ease-in-out;
   align-items: flex-start;
 
-  &:hover {
-    box-shadow: ${(props) => props.theme.shadow};
+  @media (min-width: ${(props) => props.theme.large}) { 
+    &:hover {
+      box-shadow: ${(props) => props.theme.shadow};
+    }
   }
 
   // isDragging
@@ -63,8 +65,10 @@ const AssignButton = styled.div`
   text-transform: uppercase;
   letter-spacing: 1px;
 
-  &:hover {
-    background: ${(props) => props.isAssigned ? props.theme.grey[200] : props.theme.brandBg};
+  @media (min-width: ${(props) => props.theme.large}) {
+    &:hover {
+      background: ${(props) => props.isAssigned ? props.theme.grey[200] : props.theme.brandBg};
+    }
   }
 `
 

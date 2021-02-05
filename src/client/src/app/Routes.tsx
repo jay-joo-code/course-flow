@@ -28,7 +28,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: true,
+    isDesktopOnly: false,
   },
   {
     path: '/login',
@@ -37,7 +37,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: true,
+    isDesktopOnly: false,
   },
   {
     path: '/auth/callback',
@@ -46,7 +46,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: true,
+    isDesktopOnly: false,
   },
 
   // display
@@ -66,7 +66,7 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: true,
+    isDesktopOnly: false,
   },
 ]
 

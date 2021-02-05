@@ -80,31 +80,3 @@ export const fetchAllClasses = (): Promise<any[]> => new Promise((resolve) => {
     resolve(allClasses)
   })()
 })
-
-export const initDatabase = async () => {
-  try {
-    const classes = await fetchAllClasses()
-    console.log(`Saving ${classes.length} courses to the database ...`)
-
-    try {
-      Course.collection.drop()
-    } catch (error) {
-    }
-    const promises = classes.map((classData, idx): Promise<void> => new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          await new Course({ data: classData }).save()
-          console.log(`${idx} Saved ${classData.subject} ${classData.catalogNbr}`)
-          resolve()
-        } catch (error) {
-          reject(error)
-        }
-      })()
-    }))
-    await Promise.all(promises)
-    const courses = await Course.find()
-    console.log(`Saved ${courses.length} courses to the database!`)
-  } catch (error) {
-    return error
-  }
-}
