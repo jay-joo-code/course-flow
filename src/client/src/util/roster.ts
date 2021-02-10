@@ -1,6 +1,6 @@
-export const courseName = (courseData: any): string => {
-  if (!courseData) return ''
-  return `${courseData.subject} ${courseData.catalogNbr}`
+export const courseName = (course: any): string => {
+  if (!course) return ''
+  return `${course.data.subject} ${course.data.catalogNbr}`
 }
 
 export const requirementCredits = (requirement: any): number => {

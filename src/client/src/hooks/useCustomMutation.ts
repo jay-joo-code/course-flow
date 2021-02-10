@@ -5,7 +5,8 @@ import { IQueryConfig } from './useCustomQuery'
 
 interface IUpdateLocal {
   queryConfigs: IQueryConfig[];
-  type: 'create' | 'update' | 'delete';
+  type?: 'create' | 'update' | 'delete';
+  mutationFn?: Function
 }
 
 interface IMutationOptions {
@@ -43,6 +44,11 @@ const useCustomMutation = <T>({
 
               // Optimistically update to the new value
               queryClient.setQueryData(queryKey, (old: any) => {
+                // custom mutationFn
+                if (updateLocal.mutationFn) {
+                  return updateLocal.mutationFn(old, newVariables)
+                }
+
                 // create
                 if (updateLocal.type === 'create') {
                   if (old) return [...old, newVariables]

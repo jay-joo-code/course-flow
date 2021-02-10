@@ -8,12 +8,6 @@ const templateSchema = new Schema({
     type: String,
     required: true,
   },
-  major: {
-    type: Schema.Types.ObjectId,
-    ref: Major,
-    autopopulate: true,
-    required: true,
-  },
   semesters: {
     type: [[{
       type: Schema.Types.ObjectId,
@@ -23,6 +17,16 @@ const templateSchema = new Schema({
   },
 }, {
   timestamps: true,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+})
+
+templateSchema.virtual('major', {
+  ref: Major,
+  localField: 'majorId',
+  foreignField: '_id',
+  justOne: true,
+  autopopulate: true,
 })
 
 templateSchema.plugin(require('mongoose-autopopulate'))

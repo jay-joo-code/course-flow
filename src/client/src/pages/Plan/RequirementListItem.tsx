@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useRequirementById } from 'src/api/requirement'
 import theme from 'src/app/theme'
 import { Button } from 'src/components/buttons'
 import Icon from 'src/components/icon'
@@ -18,6 +19,7 @@ interface RequirementListItemProps {
   row: number
   semesterNumber: number
 }
+
 const RelativeContainer = styled.div`
   position: relative;
 `
@@ -34,7 +36,7 @@ const Container = styled(FlexColumn)`
   transition: box-shadow .2s ease-in-out;
   align-items: flex-start;
 
-  @media (min-width: ${(props) => props.theme.large}) { 
+  @media (min-width: ${(props) => props.theme.large}) {
     &:hover {
       box-shadow: ${(props) => props.theme.shadow};
     }
@@ -82,9 +84,11 @@ const CourseName = styled.p`
 `
 
 const RequirementListItem = ({ provided, draggableStyle, isDragging, requirementId }: RequirementListItemProps) => {
-  const { idToRequirement } = useSelector((state: RootState) => state.planState)
-  const requirement = idToRequirement[requirementId]
-  const { credits, label, assignedCourse, assignedCourseId } = requirement
+  // const { idToRequirement } = useSelector((state: RootState) => state.planState)
+  // const requirement = idToRequirement[requirementId]
+  const { requirement } = useRequirementById(requirementId)
+  const { credits, name, course, courseId, isFixedAssignment } = requirement || {}
+
   const [windowType, setWindowType] = useState<string | null>(null)
 
   const handleClickOpenAssignWindow = () => {
@@ -106,21 +110,21 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
           fontWeight={500}
           uppercase
         >{credits && `${requirementCredits(requirement)} credits`}</Text>
-        <div onClick={() => console.log('click label')}>
+        <div>
           <Text
             variant='h5'
             fontWeight={500}
-          >{label}</Text>
+          >{name}</Text>
         </div>
-        <Space margin={assignedCourseId ? '.5rem 0' : '.8rem 0'} />
-        {assignedCourseId
+        <Space margin={courseId ? '.5rem 0' : '.8rem 0'} />
+        {courseId
           ? (
             <AssignButton
               onClick={handleClickOpenAssignWindow}
               isAssigned
             >
               <FlexRow ac>
-                <CourseName>{courseName(assignedCourse)}</CourseName>
+                <CourseName>{isFixedAssignment ? 'Course Info' : courseName(course)}</CourseName>
                 <Icon
                   variant='right'
                   size='1.3rem'
@@ -133,7 +137,7 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
           <AssignButton onClick={handleClickOpenAssignWindow}>Assign course</AssignButton>
             )}
       </Container>
-      <SideWindowContainer isAssigned={assignedCourseId}>
+      <SideWindowContainer isAssigned={courseId}>
         <SideWindow
           windowType={windowType}
           setWindowType={setWindowType}

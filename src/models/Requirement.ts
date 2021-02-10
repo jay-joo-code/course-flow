@@ -1,6 +1,7 @@
 import { model, Schema } from 'mongoose'
 import { IRequirementDoc } from 'src/client/src/types/requirement'
 import Major from './Major'
+import Course from './Course'
 
 const requirementSchema = new Schema({
   // preset data
@@ -26,6 +27,9 @@ const requirementSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  courseId: {
+    type: Number,
+  },
 
   // requirement information (optional)
   description: {
@@ -43,7 +47,20 @@ const requirementSchema = new Schema({
       },
     }],
   },
-}, { timestamps: true })
+}, {
+  timestamps: true,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+}
+)
+
+requirementSchema.virtual('course', {
+  ref: Course,
+  localField: 'courseId',
+  foreignField: 'data.crseId',
+  justOne: true,
+  autopopulate: true,
+})
 
 requirementSchema.plugin(require('mongoose-autopopulate'))
 

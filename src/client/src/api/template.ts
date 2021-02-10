@@ -1,16 +1,17 @@
-import { ICourseDoc } from 'src/types/course'
+import { ITemplateDoc } from 'src/types/template'
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 
-export const fetchCoursesByQueryConfg = (query) => ({
-  url: `/public/course/query?query=${query}`,
+export const fetchTemplateByMajorIdConfig = (majorId) => ({
+  url: `/public/template/major/${majorId}`,
+  enabled: false,
 })
 
-export const useCoursesByQuery = (query) => {
-  const { data: courses, ...rest } = useCustomQuery<ICourseDoc[]>(fetchCoursesByQueryConfg(query))
+export const useTemplateByMajorId = (majorId: (string | null)) => {
+  const { data: template, ...rest } = useCustomQuery<ITemplateDoc>(fetchTemplateByMajorIdConfig(majorId))
   return {
     ...rest,
-    courses,
+    template,
   }
 }
 

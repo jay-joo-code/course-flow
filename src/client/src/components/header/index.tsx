@@ -11,12 +11,6 @@ const Container = styled.div`
 `
 
 const Header = () => {
-  const isMobile = useIsMobile()
-
-  if (isMobile) {
-    return null
-  }
-
   return (
     <Container>
       <DesktopContainer>

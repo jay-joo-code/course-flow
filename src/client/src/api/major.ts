@@ -1,16 +1,16 @@
-import { ICourseDoc } from 'src/types/course'
+import { IMajorDoc } from 'src/types/major'
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 
-export const fetchCoursesByQueryConfg = (query) => ({
-  url: `/public/course/query?query=${query}`,
+export const fetchMajorsConfig = () => ({
+  url: '/public/major',
 })
 
-export const useCoursesByQuery = (query) => {
-  const { data: courses, ...rest } = useCustomQuery<ICourseDoc[]>(fetchCoursesByQueryConfg(query))
+export const useMajors = () => {
+  const { data: majors, ...rest } = useCustomQuery<IMajorDoc[]>(fetchMajorsConfig())
   return {
     ...rest,
-    courses,
+    majors,
   }
 }
 

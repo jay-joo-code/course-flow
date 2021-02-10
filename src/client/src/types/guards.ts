@@ -1,5 +1,5 @@
-import { IRequirement } from './requirement'
+import { IRequirementDoc } from './requirement'
 
-export function isRequirement(obj: any): obj is IRequirement {
+export function isRequirement(obj: any): obj is IRequirementDoc {
   return !obj.isPlaceholder
 }

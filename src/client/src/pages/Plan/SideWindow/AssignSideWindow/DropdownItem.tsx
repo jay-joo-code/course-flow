@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import Text from 'src/components/text'
 import styled from 'styled-components'
-import { assignCourse } from 'src/slices/plan'
 import theme from 'src/app/theme'
 
 interface DropdownItemProps {
@@ -23,10 +22,7 @@ const Container = styled.div`
 const DropdownItem = ({ courseData, requirementId }: DropdownItemProps) => {
   const dispatch = useDispatch()
   const handleClick = () => {
-    dispatch(assignCourse({
-      requirementId,
-      courseData,
-    }))
+    // TODO: handle assign on click
   }
 
   return (

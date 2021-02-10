@@ -53,10 +53,6 @@ export const H2 = styled(CoreText)`
 export const H3 = styled(CoreText)`
   font-size: 24px;
   font-weight: 500;
-
-  @media (min-width: ${(props) => props.theme.medium}) {
-    font-size: 30px;
-  }
 `
 
 export const H4 = styled(CoreText)`

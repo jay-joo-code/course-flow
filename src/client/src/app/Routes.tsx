@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import useIsMobile from 'src/hooks/useIsMobile'
 import AuthCallback from 'src/pages/AuthCallback'
 import Home from 'src/pages/Home'
+import Plan from 'src/pages/Plan'
 import Login from 'src/pages/Login'
 import LogOut from 'src/pages/Logout'
 import MobileBlock from 'src/pages/MobileBlock'
@@ -54,6 +55,15 @@ export const routes: IRoute[] = [
     path: '/mobile-block',
     component: MobileBlock,
     label: 'MobileBlock',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/plan/:psid',
+    component: Plan,
+    label: 'Plan',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,

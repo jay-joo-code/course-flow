@@ -6,7 +6,6 @@ import { Button } from 'src/components/buttons'
 import { FlexColumn, FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
 import Span from 'src/components/text/Span'
-import { unassignCourse } from 'src/slices/plan'
 import { courseName } from 'src/util/roster'
 import styled from 'styled-components'
 
@@ -46,9 +45,7 @@ const CourseInfo = ({ requirementId, assignedCourse }: CourseInfoProps) => {
   const dispatch = useDispatch()
 
   const handleUnassign = () => {
-    dispatch(unassignCourse({
-      requirementId,
-    }))
+    // TODO:
   }
 
   return (

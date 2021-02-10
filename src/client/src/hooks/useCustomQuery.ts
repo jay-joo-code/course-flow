@@ -4,9 +4,10 @@ import api from 'src/api'
 export interface IQueryConfig {
   url: string
   variables?: any
+  options?: any
 }
 
-const useCustomQuery = <T>({ url, variables }: IQueryConfig) => {
+const useCustomQuery = <T>({ url, variables, options }: IQueryConfig) => {
   return useQuery<T>({
     queryKey: [url, variables],
     queryFn: () => new Promise((resolve, reject) => {
@@ -19,6 +20,7 @@ const useCustomQuery = <T>({ url, variables }: IQueryConfig) => {
         }
       })()
     }),
+    ...options,
   })
 }
 

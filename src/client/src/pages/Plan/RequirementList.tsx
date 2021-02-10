@@ -30,16 +30,16 @@ const Container = styled.div`
 `
 
 const RequirementList = ({ provided, isDraggingOver, semester, semesterNumber }: RequirementListProps) => {
-  const { idToRequirement } = useSelector((state: RootState) => state.planState)
+  // const { idToRequirement } = useSelector((state: RootState) => state.planState)
 
   const heading = semesterNumber === 0
     ? 'Transfer Credits'
     : `Semester ${semesterNumber}`
 
-  let totalCredits = 0
+  const totalCredits = 0
   semester
     .forEach((requirementId: string) => {
-      totalCredits += requirementCredits(idToRequirement[requirementId])
+      // totalCredits += requirementCredits(idToRequirement[requirementId])
     })
 
   return (

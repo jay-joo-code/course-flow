@@ -1,16 +1,16 @@
-import { ICourseDoc } from 'src/types/course'
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
+import { IRequirementDoc } from 'src/types/requirement'
 
-export const fetchCoursesByQueryConfg = (query) => ({
-  url: `/public/course/query?query=${query}`,
+export const fetchRequirementByIdConfg = (id) => ({
+  url: `/public/requirement/${id}`,
 })
 
-export const useCoursesByQuery = (query) => {
-  const { data: courses, ...rest } = useCustomQuery<ICourseDoc[]>(fetchCoursesByQueryConfg(query))
+export const useRequirementById = (id) => {
+  const { data: requirement, ...rest } = useCustomQuery<IRequirementDoc>(fetchRequirementByIdConfg(id))
   return {
     ...rest,
-    courses,
+    requirement,
   }
 }
 
@@ -37,20 +37,23 @@ export const useCoursesByQuery = (query) => {
 //   }
 // }
 
-// export const useUpdateListingById = (_id: string) => {
-//   const { mutate: updateListing, ...rest } = useCustomMutation<ListingDoc>({
-//     url: `/private/listing/${_id}`,
-//     method: 'put',
-//     updateLocal: {
-//       queryConfigs: [fetchMyListingsConfig()],
-//       type: 'update',
-//     },
-//   })
-//   return {
-//     ...rest,
-//     updateListing,
-//   }
-// }
+export const useUpdateRequirementById = (_id: string) => {
+  const { mutate: updateRequirement, ...rest } = useCustomMutation<IRequirementDoc>({
+    url: `/public/requirement/${_id}`,
+    method: 'put',
+    updateLocal: {
+      queryConfigs: [fetchRequirementByIdConfg(_id)],
+      mutationFn: (old, newVariables) => {
+        // TODO:
+        console.log('old, newVariables', old, newVariables)
+      },
+    },
+  })
+  return {
+    ...rest,
+    updateRequirement,
+  }
+}
 
 // export const useDeleteListingById = (_id: string) => {
 //   const { mutate: deleteListing, ...rest } = useCustomMutation<ListingDoc>({
