@@ -61,6 +61,9 @@ const StyledButton = styled.button`
     margin-right: ${(props) => (props.isLoading || props.icon) && '.5rem'};
     margin-right: ${(props) => (props.icon || props.text) && '.2rem'};
   }
+
+  // isIconRightSide
+  padding-right: ${(props) => props.isIconRightSide && '.5rem'};
 `
 
 export const Button = (props: ButtonProps) => {

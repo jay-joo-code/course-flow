@@ -7,12 +7,13 @@ const Login = () => {
   const router = useRouter()
 
   const handleGoogleLogin = () => {
-    if (process.env.NODE_ENV === 'development') {
-      dispatch(setAccessToken(process.env.REACT_APP_TEST_ACCESS_TOKEN))
-      router.push('/')
-    } else {
-      window.location.replace(`${process.env.REACT_APP_SERVER_DOMAIN}/api/public/auth/google`)
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   dispatch(setAccessToken(process.env.REACT_APP_TEST_ACCESS_TOKEN))
+    //   router.push('/')
+    // } else {
+    //   window.location.replace(`${process.env.REACT_APP_SERVER_DOMAIN}/api/public/auth/google`)
+    // }
+    window.location.replace(`${process.env.REACT_APP_SERVER_DOMAIN}/api/public/auth/google`)
   }
 
   handleGoogleLogin()

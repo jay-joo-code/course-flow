@@ -33,8 +33,8 @@ export const useGeneratePlanByMajor = () => {
   }
 }
 
-export const useUpdatePlanById = (psid: string) => {
-  const { mutate: updatePlan, ...rest } = useCustomMutation<IPlanDoc>({
+export const useUpdatePlanById = (psid: string | null) => {
+  const { mutateAsync: updatePlan, ...rest } = useCustomMutation<IPlanDoc>({
     url: `/public/plan/${psid}`,
     method: 'put',
     updateLocal: {

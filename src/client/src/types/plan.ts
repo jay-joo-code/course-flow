@@ -10,4 +10,6 @@ export interface IPlanDoc extends Document {
   user?: IUserDoc
   semesters: string[][]
   shortId: string
+  createdAt: Date
+  updatedAt: Date
 }

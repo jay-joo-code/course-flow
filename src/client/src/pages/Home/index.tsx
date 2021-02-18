@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import { ReactComponent as IllustHome } from 'src/assets/illustrations/illust-home.svg'
 import useCurrentUser from 'src/hooks/useCurrentUser'
 import UnauthedHome from './UnauthedHome'
+import { useCurrentUserPlans } from 'src/api/user'
+import useRouter from 'src/hooks/useRouter'
+import SelectPlanHome from './SelectPlanHome'
 
 const Container = styled(FlexRow)`
 
@@ -34,11 +37,23 @@ const Illustration = styled(IllustHome)`
 const Home = () => {
   const isMobile = useIsMobile()
   const currentUser = useCurrentUser()
+  const { plans } = useCurrentUserPlans()
+  const router = useRouter()
 
   const getComponent = () => {
     if (!currentUser) return <UnauthedHome />
     else {
-
+      if (plans?.length === 0) {
+        // no plans on this account
+      } else if (plans?.length === 1) {
+        // only 1 plan on this account
+        // redirect to the single plan
+        router.push(`/plan/${plans[0].shortId}`)
+      } else {
+        // multiple plans on this account
+        // choose which plan to redirect to
+        return <SelectPlanHome />
+      }
     }
   }
 

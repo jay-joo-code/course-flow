@@ -9,6 +9,7 @@ import Login from 'src/pages/Login'
 import LogOut from 'src/pages/Logout'
 import MobileBlock from 'src/pages/MobileBlock'
 import { RootState } from 'src/types/redux'
+import New from 'src/pages/New'
 
 interface IRoute {
   path: string
@@ -67,7 +68,16 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
-    isDesktopOnly: false,
+    isDesktopOnly: true,
+  },
+  {
+    path: '/new',
+    component: New,
+    label: 'New',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: true,
   },
   {
     path: '/',

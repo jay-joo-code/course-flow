@@ -1,5 +1,6 @@
 import express from 'express'
 import Plan from '../../models/Plan'
+import Requirement from '../../models/Requirement'
 import Template from '../../models/Template'
 
 const planRouter = express.Router()
@@ -10,12 +11,26 @@ planRouter.post('/major', async (req, res) => {
     const { majorId, userId } = req.body
     const template = await Template.findOne({ majorId })
 
-    // TODO: duplicate template.semesters
+    const promises = template.semesters.map((semester) => semester.map((requirementId) => new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          const requirement = await Requirement.findById(requirementId)
+          const dupRequirement = await new Requirement(requirement).save()
+          resolve(dupRequirement._id)
+        } catch (error) {
+          reject(error)
+        }
+      })()
+    })))
+
+    const dupSemesters = await Promise.all(promises.map((innerPromiseArray) => {
+      return Promise.all(innerPromiseArray)
+    }))
 
     const plan = await new Plan({
       majorId,
       userId,
-      semesters: template.semesters,
+      semesters: dupSemesters,
     }).save()
     res.send(plan.shortId)
   } catch (e) {
