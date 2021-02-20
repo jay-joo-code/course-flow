@@ -1,12 +1,12 @@
 import React from 'react'
 import OutsideClickListener from 'src/components/layout/OutsideClickListener'
+import { IRequirementDoc } from 'src/types/requirement'
 import styled from 'styled-components'
 import AssignSideWindow from './AssignSideWindow'
 
 interface SideWindowProps {
-  windowType: string | null
-  setWindowType: (value: string | null) => void
-  requirementId: string
+  setIsWindowOpen: (state: boolean) => void
+  requirement: IRequirementDoc | undefined
 }
 
 const Container = styled.div`
@@ -17,17 +17,11 @@ const Container = styled.div`
   background: white;
 `
 
-const SideWindow = ({ requirementId, windowType, setWindowType }: SideWindowProps) => {
-  if (!windowType) return null
-
-  const typeToComponent = {
-    assign: <AssignSideWindow requirementId={requirementId} />,
-  }
-
+const SideWindow = ({ requirement, setIsWindowOpen }: SideWindowProps) => {
   return (
-    <OutsideClickListener onOutsideClick={() => setWindowType(null)}>
+    <OutsideClickListener onOutsideClick={() => setIsWindowOpen(false)}>
       <Container >
-        {typeToComponent[windowType]}
+        <AssignSideWindow requirement={requirement} />
       </Container>
     </OutsideClickListener>
   )

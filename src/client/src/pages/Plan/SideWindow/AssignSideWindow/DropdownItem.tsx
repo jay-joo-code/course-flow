@@ -1,8 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useUpdateRequirementById } from 'src/api/requirement'
+import theme from 'src/app/theme'
 import Text from 'src/components/text'
 import styled from 'styled-components'
-import theme from 'src/app/theme'
 
 interface DropdownItemProps {
   courseData: any
@@ -20,9 +21,13 @@ const Container = styled.div`
 `
 
 const DropdownItem = ({ courseData, requirementId }: DropdownItemProps) => {
-  const dispatch = useDispatch()
+  const { updateRequirement } = useUpdateRequirementById(requirementId)
+
   const handleClick = () => {
-    // TODO: handle assign on click
+    updateRequirement({
+      courseId: courseData.crseId,
+      course: { data: courseData },
+    })
   }
 
   return (

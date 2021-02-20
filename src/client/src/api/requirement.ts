@@ -43,9 +43,11 @@ export const useUpdateRequirementById = (_id: string) => {
     method: 'put',
     updateLocal: {
       queryConfigs: [fetchRequirementByIdConfg(_id)],
-      mutationFn: (old, newVariables) => {
-        // TODO:
-        console.log('old, newVariables', old, newVariables)
+      mutationFn: (oldVariables, newVariables) => {
+        return {
+          ...oldVariables,
+          ...newVariables,
+        }
       },
     },
   })

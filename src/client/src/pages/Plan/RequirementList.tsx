@@ -1,13 +1,9 @@
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { useSelector } from 'react-redux'
 import theme from 'src/app/theme'
-import Icon from 'src/components/icon'
 import { FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
-import { RootState } from 'src/types/redux'
 import { ISemester } from 'src/types/requirement'
-import { requirementCredits } from 'src/util/roster'
 import styled from 'styled-components'
 import RequirementListItem from './RequirementListItem'
 
@@ -21,7 +17,7 @@ interface RequirementListProps {
 const Container = styled.div`
   padding: 1rem;
   margin: 0 .5rem;
-  min-width: 200px;
+  min-width: 240px;
   background: ${(props) => props.theme.grey[100]};
   border-radius: 8px;
 

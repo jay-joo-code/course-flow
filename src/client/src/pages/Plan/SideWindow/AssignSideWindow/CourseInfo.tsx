@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-
+import { useUpdateRequirementById } from 'src/api/requirement'
 import theme from 'src/app/theme'
 import { Button } from 'src/components/buttons'
 import { FlexColumn, FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
 import Span from 'src/components/text/Span'
+import { ICourseDoc } from 'src/types/course'
+import { IRequirementDoc } from 'src/types/requirement'
 import { courseName } from 'src/util/roster'
 import styled from 'styled-components'
 
 interface CourseInfoProps {
-  requirementId: string
-  assignedCourse: any
+  requirement: IRequirementDoc | undefined
+  assignedCourse: ICourseDoc | undefined
 }
 
 const Container = styled(FlexColumn)`
@@ -39,13 +40,17 @@ const ReadMoreButton = styled.button`
   padding: 0;
 `
 
-const CourseInfo = ({ requirementId, assignedCourse }: CourseInfoProps) => {
-  const { titleShort, catalogWhenOffered, catalogPrereqCoreq, description, subject, catalogNbr } = assignedCourse
+const CourseInfo = ({ requirement, assignedCourse }: CourseInfoProps) => {
+  const { titleShort, catalogWhenOffered, catalogPrereqCoreq, description, subject, catalogNbr } = assignedCourse?.data || {}
+  const { isFixedAssignment } = requirement || {}
   const [isExpanded, setIsExpanded] = useState(false)
-  const dispatch = useDispatch()
+  const { updateRequirement } = useUpdateRequirementById(requirement?._id)
 
   const handleUnassign = () => {
-    // TODO:
+    updateRequirement({
+      courseId: null,
+      course: null,
+    })
   }
 
   return (
@@ -59,7 +64,7 @@ const CourseInfo = ({ requirementId, assignedCourse }: CourseInfoProps) => {
         fontWeight={400}
         color={theme.textMuted}
       >{titleShort}</Text>
-      <Space margin='.3rem 0' />
+      <Space margin='.5rem 0' />
       <Text variant='h6'>
         <a
           href={`https://classes.cornell.edu/browse/roster/SP20/class/${subject}/${catalogNbr}`}
@@ -92,7 +97,7 @@ const CourseInfo = ({ requirementId, assignedCourse }: CourseInfoProps) => {
           > Reviews</Span>
         </a>
       </Text>
-      <Space margin='.5rem 0' />
+      <Space margin='.8rem 0' />
       {catalogWhenOffered && (
         <>
           <Text
@@ -123,18 +128,22 @@ const CourseInfo = ({ requirementId, assignedCourse }: CourseInfoProps) => {
           <ReadMoreButton onClick={() => setIsExpanded(!isExpanded)}>Read {isExpanded ? 'less' : 'more'}</ReadMoreButton>
         </>
       )}
-      <Space margin='1.5rem 0' />
-      <FlexRow
-        je
-        fullWidth
-      >
-        <Button
-          label='unassign'
-          onClick={handleUnassign}
-          text
-
-        />
-      </FlexRow>
+      {isFixedAssignment && <Space margin='1rem 0' />}
+      {!isFixedAssignment && (
+        <>
+          <Space margin='1.5rem 0' />
+          <FlexRow
+            je
+            fullWidth
+          >
+            <Button
+              label='unassign'
+              onClick={handleUnassign}
+              text
+            />
+          </FlexRow>
+        </>
+      )}
     </Container>
   )
 }

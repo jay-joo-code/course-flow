@@ -6,7 +6,7 @@ import { IQueryConfig } from './useCustomQuery'
 interface IUpdateLocal {
   queryConfigs: IQueryConfig[];
   type?: 'create' | 'update' | 'delete';
-  mutationFn?: Function
+  mutationFn?: (oldVariables: any, newVariables: any) => any
 }
 
 interface IMutationOptions {

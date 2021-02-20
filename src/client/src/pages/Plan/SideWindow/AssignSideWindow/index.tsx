@@ -1,23 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from 'src/types/redux'
+import { IRequirementDoc } from 'src/types/requirement'
 import CourseInfo from './CourseInfo'
 import CourseSearch from './CourseSearch'
 
 interface AssignSideWindowProps {
-  requirementId: string
+  requirement: IRequirementDoc | undefined
 }
 
-const AssignSideWindow = ({ requirementId }: AssignSideWindowProps) => {
-  return null
-  // if (assignedCourseId) {
-  //   return <CourseInfo
-  //     assignedCourse={assignedCourse}
-  //     requirementId={requirementId}
-  //   />
-  // }
+const AssignSideWindow = ({ requirement }: AssignSideWindowProps) => {
+  const { course } = requirement || {}
 
-  // return <CourseSearch requirementId={requirementId} />
+  if (course) {
+    return <CourseInfo
+      assignedCourse={course}
+      requirement={requirement}
+    />
+  }
+
+  return <CourseSearch requirementId={requirement?._id} />
 }
 
 export default AssignSideWindow

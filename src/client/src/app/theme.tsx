@@ -15,6 +15,9 @@ export const theme = {
   warning: '#f0ad4e',
   warning100: '#FDF1E2',
   danger: '#de6362',
+  danger500: '#de6362',
+  danger300: '#EFB1B1',
+  danger100: '#F3C5C5',
 
   // bg
   bg: '#ffffff',

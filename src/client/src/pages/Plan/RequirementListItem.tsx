@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+
 import { useRequirementById } from 'src/api/requirement'
 import theme from 'src/app/theme'
-import { Button } from 'src/components/buttons'
 import Icon from 'src/components/icon'
-import { FlexColumn, FlexRow, Space } from 'src/components/layout'
+import { FlexRow, Space } from 'src/components/layout'
+import Pill from 'src/components/pill'
 import Text from 'src/components/text'
-import { RootState } from 'src/types/redux'
-import { courseName, requirementCredits } from 'src/util/roster'
 import styled from 'styled-components'
 import SideWindow from './SideWindow'
 
@@ -24,10 +22,14 @@ const RelativeContainer = styled.div`
   position: relative;
 `
 
-const Container = styled(FlexColumn)`
+const SVGOnHover = styled.div`
+  opacity: 0;
+`
+
+const Container = styled(FlexRow)`
   border: 1px solid ${(props) => props.theme.border};
   border-radius: 8px;
-  padding: 1rem 1rem .5rem 1rem;
+  padding: 1rem .5rem 1rem 1rem;
   margin: .5rem 0;
   cursor: move;
   cursor: grab;
@@ -35,6 +37,7 @@ const Container = styled(FlexColumn)`
   box-shadow: 0;
   transition: box-shadow .2s ease-in-out;
   align-items: flex-start;
+  justify-content: space-between;
 
   @media (min-width: ${(props) => props.theme.large}) {
     &:hover {
@@ -44,6 +47,10 @@ const Container = styled(FlexColumn)`
 
   // isDragging
   border: ${(props) => (props.isDragging) && `2px solid ${props.theme.grey[600]}`};
+
+  &:hover ${SVGOnHover} {
+    opacity: 1;
+  }
 `
 
 const SideWindowContainer = styled.div`
@@ -56,43 +63,16 @@ const SideWindowContainer = styled.div`
   right: ${(props) => props.isAssigned && '-305px'};
 `
 
-const AssignButton = styled.div`
-  cursor: pointer;
-  color: ${(props) => props.theme.brand};
-  padding: .4rem .2rem;
-  padding: ${(props) => props.isAssigned ? '.4rem .2rem' : '.6rem .2rem'};
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-
-  @media (min-width: ${(props) => props.theme.large}) {
-    &:hover {
-      background: ${(props) => props.isAssigned ? props.theme.grey[200] : props.theme.brandBg};
-    }
-  }
-`
-
-const CourseName = styled.p`
-  font-size: 0.8rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: ${(props) => props.theme.textLight};
-  line-height: 1.5;
-`
-
 const RequirementListItem = ({ provided, draggableStyle, isDragging, requirementId }: RequirementListItemProps) => {
-  // const { idToRequirement } = useSelector((state: RootState) => state.planState)
-  // const requirement = idToRequirement[requirementId]
   const { requirement } = useRequirementById(requirementId)
-  const { credits, name, course, courseId, isFixedAssignment } = requirement || {}
+  const { name, course, courseId, isFixedAssignment } = requirement || {}
+  const [isWindowOpen, setIsWindowOpen] = useState(false)
+  const title = (isFixedAssignment || !courseId)
+    ? name
+    : `${course?.data.subject} ${course?.data.catalogNbr}`
 
-  const [windowType, setWindowType] = useState<string | null>(null)
-
-  const handleClickOpenAssignWindow = () => {
-    setWindowType('assign')
+  const handleClick = () => {
+    setIsWindowOpen(true)
   }
 
   return (
@@ -103,46 +83,62 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
+        onClick={handleClick}
       >
-        <Text
-          variant='h7'
-          color={theme.textMuted}
-          fontWeight={500}
-          uppercase
-        >{credits && `${requirementCredits(requirement)} credits`}</Text>
         <div>
           <Text
-            variant='h5'
+            variant='p'
             fontWeight={500}
-          >{name}</Text>
+          >{title}</Text>
+
+          {/* has assigned course */}
+          {course && (
+            <Text
+              variant='h6'
+              fontWeight={400}
+              color={theme.textLight}
+            >{course.data.titleShort}</Text>
+          )}
+
+          {/* unassigned */}
+          {!course && (
+            <Text
+              variant='h6'
+              fontWeight={400}
+              color={theme.danger500}
+            >Unassigned</Text>
+          )}
+
+          {(!isFixedAssignment && courseId && name) && (
+            <>
+              <Space margin='.8rem 0' />
+              <Pill
+                label={name}
+                background={theme.brandBg}
+                color={theme.brand500}
+              />
+              {/* <Text
+                variant='h6'
+                fontWeight={400}
+                color={theme.textLight}
+              >{name}</Text> */}
+            </>
+          )}
         </div>
-        <Space margin={courseId ? '.5rem 0' : '.8rem 0'} />
-        {courseId
-          ? (
-            <AssignButton
-              onClick={handleClickOpenAssignWindow}
-              isAssigned
-            >
-              <FlexRow ac>
-                <CourseName>{isFixedAssignment ? 'Course Info' : courseName(course)}</CourseName>
-                <Icon
-                  variant='right'
-                  size='1.3rem'
-                  fill={theme.textLight}
-                />
-              </FlexRow>
-            </AssignButton>
-            )
-          : (
-          <AssignButton onClick={handleClickOpenAssignWindow}>Assign course</AssignButton>
-            )}
+        <SVGOnHover>
+          <Icon
+            variant='right'
+            interactiveHover
+          />
+        </SVGOnHover>
       </Container>
       <SideWindowContainer isAssigned={courseId}>
-        <SideWindow
-          windowType={windowType}
-          setWindowType={setWindowType}
-          requirementId={requirementId}
-        />
+        {isWindowOpen && (
+          <SideWindow
+            setIsWindowOpen={setIsWindowOpen}
+            requirement={requirement}
+          />
+        )}
       </SideWindowContainer>
     </RelativeContainer>
   )
