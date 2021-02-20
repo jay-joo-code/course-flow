@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMajors } from 'src/api/major'
 import { useGeneratePlanByMajor } from 'src/api/plan'
+import { useCurrentUser } from 'src/api/user'
 import theme from 'src/app/theme'
 import { ReactComponent as EngineeringIconRaw } from 'src/assets/svgs/departments/engineering.svg'
 import { FlexRow, Space } from 'src/components/layout'
+import Loading from 'src/components/loading'
 import Pill from 'src/components/pill'
 import Text from 'src/components/text'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
-
-interface MajorSelectorProps {
-
-}
 
 const Container = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
@@ -54,6 +52,7 @@ const MajorList = styled.div`
 const MajorListItem = styled(FlexRow)`
   padding: .5rem 1rem;
   align-items: center;
+  justify-content: space-between;
   
   // isComingSoon
   cursor: ${(props) => !props.isComingSoon && 'pointer'};
@@ -69,14 +68,20 @@ const TextContainer = styled.div`
   white-space: initial;
 `
 
-const MajorSelector = ({ }: MajorSelectorProps) => {
+const MajorSelector = () => {
   const { majors } = useMajors()
   const router = useRouter()
-  const { generatePlan } = useGeneratePlanByMajor()
+  const { generatePlan, isLoading } = useGeneratePlanByMajor()
+  const { currentUser } = useCurrentUser()
+
+  const [selectedMajorId, setSelectedMajorId] = useState<string | null>()
 
   const handleClickMajor = async (majorId) => {
-    const newPsid = await generatePlan({ majorId })
-    router.push(`/plan/${newPsid}`)
+    if (!selectedMajorId) {
+      setSelectedMajorId(majorId)
+      const newPsid = await generatePlan({ majorId, userId: currentUser?._id })
+      router.push(`/plan/${newPsid}`)
+    }
   }
 
   return (
@@ -105,6 +110,7 @@ const MajorSelector = ({ }: MajorSelectorProps) => {
                   >{major.name}</Text>
                 </TextContainer>
                 {major.isComingSoon && <Pill label='Coming soon' />}
+                {(isLoading && selectedMajorId === major._id) && <Loading />}
               </MajorListItem>
             ))}
           </MajorList>

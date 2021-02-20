@@ -9,16 +9,6 @@ const requirementSchema = new Schema({
     type: String,
     required: true,
   },
-  majorId: {
-    type: String,
-    required: true,
-  },
-  major: {
-    type: Schema.Types.ObjectId,
-    ref: Major,
-    autopopulate: true,
-    required: true,
-  },
   credits: {
     type: Number,
     required: true,

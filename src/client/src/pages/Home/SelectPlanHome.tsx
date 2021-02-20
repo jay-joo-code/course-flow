@@ -35,6 +35,8 @@ const SelectPlanHome = () => {
   const { plans } = useCurrentUserPlans()
   const router = useRouter()
 
+  console.log('plans :>> ', plans)
+
   return (
     <FlexColumn
       ac

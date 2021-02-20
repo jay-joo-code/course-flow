@@ -12,8 +12,6 @@ interface ILink {
 
 export interface IRequirementDoc extends Document {
   name: string
-  majorId: string
-  major: IMajorDoc
   credits: number
   isFixedAssignment: boolean
   courseId?: number

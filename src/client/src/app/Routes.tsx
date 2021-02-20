@@ -10,6 +10,7 @@ import LogOut from 'src/pages/Logout'
 import MobileBlock from 'src/pages/MobileBlock'
 import { RootState } from 'src/types/redux'
 import New from 'src/pages/New'
+import ResetPsid from 'src/pages/ResetPsid'
 
 interface IRoute {
   path: string
@@ -74,6 +75,15 @@ export const routes: IRoute[] = [
     path: '/new',
     component: New,
     label: 'New',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: true,
+  },
+  {
+    path: '/reset-psid',
+    component: ResetPsid,
+    label: 'ResetPsid',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,

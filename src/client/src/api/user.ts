@@ -1,11 +1,19 @@
-import { ICourseDoc } from 'src/types/course'
-import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IPlanDoc } from 'src/types/plan'
+import { IUserDoc } from 'src/types/user'
+
+export const fetchCurrentUserConfig = () => ({
+  url: '/private/user/current',
+})
 
 export const fetchCurrentUserPlansConfig = () => ({
   url: '/private/user/plans',
 })
+
+export const useCurrentUser = () => {
+  const { data: currentUser, ...rest } = useCustomQuery<IUserDoc>(fetchCurrentUserConfig())
+  return { ...rest, currentUser }
+}
 
 export const useCurrentUserPlans = () => {
   const { data: plans, ...rest } = useCustomQuery<IPlanDoc[]>(fetchCurrentUserPlansConfig())

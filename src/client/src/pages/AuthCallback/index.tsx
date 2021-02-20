@@ -1,20 +1,20 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { usePlanById, useUpdatePlanById } from 'src/api/plan'
+import { useCurrentUser } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
 import { setAccessToken } from 'src/slices/auth'
 import { RootState } from 'src/types/redux'
-import { usePlanById, useUpdatePlanById } from 'src/api/plan'
-import useCurrentUser from 'src/hooks/useCurrentUser'
-import { resetPsid } from 'src/slices/plan'
 
 const AuthCallback = () => {
   const router = useRouter()
   const { token } = router.query
   const dispatch = useDispatch()
   const { psid } = useSelector((state: RootState) => state.planState)
+  const { accessToken } = useSelector((state: RootState) => state.authState)
   const { refetch: refetchPlan } = usePlanById(psid)
   const { updatePlan } = useUpdatePlanById(psid)
-  const currentUser = useCurrentUser()
+  const { refetch: refetchUser } = useCurrentUser()
 
   // set access token
   useEffect(() => {
@@ -31,24 +31,30 @@ const AuthCallback = () => {
   // set it with current user id
   useEffect(() => {
     (async () => {
-      if (currentUser && psid) {
-        const { data: fetchedPlan } = await refetchPlan()
+      if (accessToken) {
+        const { data: currentUser } = await refetchUser()
+        console.log('currentUser, psid :>> ', currentUser, psid)
+        if (currentUser && psid) {
+          const { data: fetchedPlan } = await refetchPlan()
+          console.log('fetchedPlan :>> ', fetchedPlan)
 
-        if (!fetchedPlan?.userId) {
-          // current plan is an unauthed plan
-          await updatePlan({
-            userId: currentUser._id,
-          })
-          dispatch(resetPsid())
-          router.push(`/plan/${psid}`)
+          if (!fetchedPlan?.userId) {
+            // current plan is an unauthed plan
+            console.log('update plan')
+
+            await updatePlan({
+              userId: currentUser?._id,
+            })
+            router.push(`/plan/${psid}`)
+          } else {
+            router.push('/')
+          }
         } else {
           router.push('/')
         }
-      } else {
-        router.push('/')
       }
     })()
-  }, [currentUser])
+  }, [accessToken])
 
   return null
 }

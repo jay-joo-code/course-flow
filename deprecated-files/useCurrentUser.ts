@@ -5,16 +5,13 @@ import useCustomQuery from './useCustomQuery'
 
 const useCurrentUser = () => {
   const { accessToken } = useSelector((state: RootState) => state.authState)
-  const { data } = useCustomQuery<IUserDoc>({
+  const { data: user, ...rest } = useCustomQuery<IUserDoc>({
     url: '/private/user/current',
-    options: {
-      enabled: !!accessToken,
-    },
   })
 
   if (!accessToken) return null
 
-  return data
+  return { ...rest, user }
 }
 
 export default useCurrentUser
