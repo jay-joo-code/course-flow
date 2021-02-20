@@ -8,12 +8,16 @@ export const theme = {
   success500: '#66c088',
   success300: '#8DD0A6',
   success100: '#B3E0C4',
+
   info: '#0275d8',
   info500: '#0275d8',
   info300: '#4298E2',
   info100: '#81BAEC',
+  info50: '#D5E8F9',
+
   warning: '#f0ad4e',
   warning100: '#FDF1E2',
+
   danger: '#de6362',
   danger500: '#de6362',
   danger300: '#EFB1B1',

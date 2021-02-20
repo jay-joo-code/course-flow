@@ -102,11 +102,14 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
 
           {/* unassigned */}
           {!course && (
-            <Text
-              variant='h6'
-              fontWeight={400}
-              color={theme.danger500}
-            >Unassigned</Text>
+            <>
+              <Space margin='.5rem 0' />
+              <Pill
+                label='Unassigned'
+                background={theme.brandBg}
+                color={theme.brand300}
+              />
+            </>
           )}
 
           {(!isFixedAssignment && courseId && name) && (
@@ -114,14 +117,9 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
               <Space margin='.8rem 0' />
               <Pill
                 label={name}
-                background={theme.brandBg}
-                color={theme.brand500}
+                background={theme.info50}
+                color={theme.info300}
               />
-              {/* <Text
-                variant='h6'
-                fontWeight={400}
-                color={theme.textLight}
-              >{name}</Text> */}
             </>
           )}
         </div>
