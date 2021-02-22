@@ -10,6 +10,8 @@ import { useCurrentUserPlans } from 'src/api/user'
 import { IPlanDoc } from 'src/types/plan'
 import moment from 'moment'
 import Text from '../text'
+import useRouter from 'src/hooks/useRouter'
+import useCurrentPsid from 'src/hooks/useCurrentPsid'
 
 interface AuthedProps {
   userPhotoSrc: string
@@ -26,22 +28,31 @@ const StyledSubMenu = styled(Menu.SubMenu)`
   }
 `
 
-const menu = (plans: (IPlanDoc[] | null | undefined)) => (
+const StyledMenuItem = styled(Menu.Item)`
+  // highlight
+  background: ${(props) => props.highlight && props.theme.brandBg};
+`
+
+const menu = (plans: (IPlanDoc[] | null | undefined), currentPsid: (string | undefined)) => (
   <Menu>
     <StyledSubMenu title='My plans'>
       {plans?.map((plan) => (
-        <Menu.Item key={plan._id}>
+        <StyledMenuItem
+          key={plan._id}
+          highlight={plan.shortId === currentPsid}
+        >
           <Link to={`/plan/${plan.shortId}`}>
             <Text
-              variant='h5'
-              fontWeight={500}
+              variant='h6'
+              fontWeight={plan.shortId === currentPsid ? 500 : 400}
             >{plan.major.name}</Text>
             <Text
-              variant='h6'
+              variant='h7'
               color={theme.textMuted}
-            >Updated {moment(plan.updatedAt).fromNow()}</Text>
+              fontWeight={400}
+            >{moment(plan.updatedAt).fromNow()}</Text>
           </Link>
-        </Menu.Item>
+        </StyledMenuItem>
       ))}
       <Menu.Item>
         <Link to='/new'>+ Add new plan</Link>
@@ -62,15 +73,20 @@ const menu = (plans: (IPlanDoc[] | null | undefined)) => (
 )
 
 const Authed = ({ userPhotoSrc }: AuthedProps) => {
-  const { plans } = useCurrentUserPlans()
+  const { plans, refetch: refetchPlans } = useCurrentUserPlans()
+  const currentPsid = useCurrentPsid()
+
+  const handleClick = () => {
+    refetchPlans()
+  }
 
   return (
     <Dropdown
-      overlay={menu(plans)}
+      overlay={menu(plans, currentPsid)}
       trigger={['click']}
       arrow
     >
-      <Container>
+      <Container onClick={handleClick}>
         <Avatar src={userPhotoSrc} />
         <Space margin='0 .1rem' />
         <Icon

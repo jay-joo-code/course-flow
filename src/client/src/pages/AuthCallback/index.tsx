@@ -4,6 +4,7 @@ import { usePlanById, useUpdatePlanById } from 'src/api/plan'
 import { useCurrentUser } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
 import { setAccessToken } from 'src/slices/auth'
+import { resetPsid } from 'src/slices/plan'
 import { RootState } from 'src/types/redux'
 
 const AuthCallback = () => {
@@ -33,15 +34,12 @@ const AuthCallback = () => {
     (async () => {
       if (accessToken) {
         const { data: currentUser } = await refetchUser()
-        console.log('currentUser, psid :>> ', currentUser, psid)
+
         if (currentUser && psid) {
           const { data: fetchedPlan } = await refetchPlan()
-          console.log('fetchedPlan :>> ', fetchedPlan)
 
           if (!fetchedPlan?.userId) {
             // current plan is an unauthed plan
-            console.log('update plan')
-
             await updatePlan({
               userId: currentUser?._id,
             })
@@ -49,6 +47,9 @@ const AuthCallback = () => {
           } else {
             router.push('/')
           }
+
+          // reset psid on auth
+          dispatch(resetPsid())
         } else {
           router.push('/')
         }

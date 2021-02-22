@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 import { useRequirementById } from 'src/api/requirement'
 import theme from 'src/app/theme'
@@ -75,6 +75,8 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
     setIsWindowOpen(true)
   }
 
+  console.log('name :>> ', name)
+
   return (
     <RelativeContainer>
       <Container
@@ -142,4 +144,4 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
   )
 }
 
-export default RequirementListItem
+export default memo(RequirementListItem)

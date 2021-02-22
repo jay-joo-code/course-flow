@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useMajors } from 'src/api/major'
 import { useGeneratePlanByMajor } from 'src/api/plan'
 import { useCurrentUser } from 'src/api/user'
@@ -9,6 +10,7 @@ import Loading from 'src/components/loading'
 import Pill from 'src/components/pill'
 import Text from 'src/components/text'
 import useRouter from 'src/hooks/useRouter'
+import { setPsid } from 'src/slices/plan'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -73,13 +75,19 @@ const MajorSelector = () => {
   const router = useRouter()
   const { generatePlan, isLoading } = useGeneratePlanByMajor()
   const { currentUser } = useCurrentUser()
-
+  const dispatch = useDispatch()
   const [selectedMajorId, setSelectedMajorId] = useState<string | null>()
 
   const handleClickMajor = async (majorId) => {
     if (!selectedMajorId) {
       setSelectedMajorId(majorId)
       const newPsid = await generatePlan({ majorId, userId: currentUser?._id })
+
+      // if unauthed, save psid to redux to persist it
+      if (!currentUser) {
+        dispatch(setPsid({ psid: newPsid }))
+      }
+
       router.push(`/plan/${newPsid}`)
     }
   }

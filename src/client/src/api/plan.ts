@@ -14,14 +14,6 @@ export const usePlanById = (psid) => {
   }
 }
 
-// export const useListingById = (lid: string) => {
-//   const { data: listing, ...rest } = useCustomQuery<ListingDoc>(fetchListingByIdConfig(lid))
-//   return {
-//     ...rest,
-//     listing,
-//   }
-// }
-
 export const useGeneratePlanByMajor = () => {
   const { mutateAsync: generatePlan, ...rest } = useCustomMutation<IPlanDoc>({
     url: '/public/plan/major',

@@ -1,9 +1,4 @@
-import React, { useEffect } from 'react'
-
-import { useDispatch } from 'react-redux'
-import { usePlanById } from 'src/api/plan'
-import useRouter from 'src/hooks/useRouter'
-import { setPsid } from 'src/slices/plan'
+import React from 'react'
 import styled from 'styled-components'
 import SemesterList from './SemesterList'
 
@@ -13,20 +8,15 @@ const Container = styled.div`
 `
 
 const Plan = () => {
-  const { match }: { match: any } = useRouter()
-  const { plan } = usePlanById(match.params?.psid)
-
-  // save psid to redux to persist it
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (match.params?.psid) {
-      dispatch(setPsid({ psid: match.params?.psid }))
-    }
-  }, [])
+  // currently it's semesters data at the index component
+  // propagating down to all the child components
+  // this means when there is a change to the semesters position,
+  // all semesters rerender, leading to performance issues
+  // semester data (requirement id list) should be accessed independently by each RequirementList
 
   return (
     <Container>
-      {plan?.semesters && <SemesterList semesters={plan?.semesters} />}
+      <SemesterList />
     </Container>
   )
 }

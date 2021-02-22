@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useUpdatePlanById } from 'src/api/plan'
-import { FlexRow } from 'src/components/layout'
+import { FlexRow, Space } from 'src/components/layout'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import RequirementList from './RequirementList'
@@ -13,12 +13,20 @@ interface SemesterListProps {
 const WashBackground = styled.div`
   /* background: ${(props) => props.theme.grey[100]}; */
   background: white;
-  overflow: auto;
+  overflow: hidden;
 `
 
 const Container = styled(FlexRow)`
-  padding: 1rem 2rem;
-  align-items: flex-start;
+  overflow: auto;
+  height: 100%;
+
+  & > div:first-child {
+    padding-left: 1rem;
+  }
+
+  & > div:last-child {
+    padding-right: 1rem;
+  }
 `
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
@@ -68,15 +76,23 @@ const SemesterList = ({ semesters }: SemesterListProps) => {
       newSemesters[destSemesterNumber] = result[destSemesterNumber]
     }
 
-    updatePlan({
-      semesters: newSemesters,
-    })
+    // updatePlan({
+    //   semesters: newSemesters,
+    // })
   }
+
+  const deleteSemester = (semesterNumber: number) => {
+    // TODO:
+    const semester = semesters[semesterNumber]
+    console.log('semester :>> ', semester)
+  }
+
+  console.count('semesters rerender :>> ')
 
   return (
     <WashBackground>
-      <Container>
-        <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Container>
           {semesters.map((semester, semesterNumber) => (
             <Droppable
               key={semesterNumber}
@@ -88,12 +104,13 @@ const SemesterList = ({ semesters }: SemesterListProps) => {
                   isDraggingOver={snapshot.isDraggingOver}
                   semester={semester}
                   semesterNumber={semesterNumber}
+                  deleteSemester={deleteSemester}
                 />
               )}
             </Droppable>
           ))}
-        </DragDropContext>
-      </Container>
+        </Container>
+      </DragDropContext>
     </WashBackground>
   )
 }

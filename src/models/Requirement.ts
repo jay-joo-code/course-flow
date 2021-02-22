@@ -1,10 +1,8 @@
 import { model, Schema } from 'mongoose'
 import { IRequirementDoc } from 'src/client/src/types/requirement'
-import Major from './Major'
 import Course from './Course'
 
 const requirementSchema = new Schema({
-  // preset data
   name: {
     type: String,
     required: true,
@@ -20,8 +18,6 @@ const requirementSchema = new Schema({
   courseId: {
     type: Number,
   },
-
-  // requirement information (optional)
   description: {
     type: String,
   },

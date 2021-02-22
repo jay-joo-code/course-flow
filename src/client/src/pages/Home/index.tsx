@@ -36,13 +36,11 @@ const Illustration = styled(IllustHome)`
 const Home = () => {
   const isMobile = useIsMobile()
   const { currentUser } = useCurrentUser()
-  const { plans, ...rest } = useCurrentUserPlans()
+  const { plans, isError } = useCurrentUserPlans()
   const router = useRouter()
 
-  console.log('rest :>> ', rest)
-
   const getComponent = () => {
-    if (!currentUser) return <UnauthedHome />
+    if (!currentUser || isError) return <UnauthedHome />
     else {
       if (plans?.length === 0) {
         // no plans on this account

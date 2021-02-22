@@ -6,10 +6,6 @@ const departmentSchema = new Schema({
     type: String,
     required: true,
   },
-  foo: {
-    type: String,
-    required: true,
-  },
 }, { timestamps: true })
 
 export default model<IDepartmentDoc>('Department', departmentSchema)

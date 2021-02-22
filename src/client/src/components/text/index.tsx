@@ -9,7 +9,7 @@ interface TextProps {
   nowrap?: boolean
   color?: string
   fontWeight?: number
-  maxWidth?: boolean
+  maxWidth?: number
   margin?: boolean
   uppercase?: boolean
 }

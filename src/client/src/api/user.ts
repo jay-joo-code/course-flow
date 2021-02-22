@@ -8,6 +8,9 @@ export const fetchCurrentUserConfig = () => ({
 
 export const fetchCurrentUserPlansConfig = () => ({
   url: '/private/user/plans',
+  options: {
+    retry: false,
+  },
 })
 
 export const useCurrentUser = () => {

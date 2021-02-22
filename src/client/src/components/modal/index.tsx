@@ -46,6 +46,7 @@ interface ModalProps {
   children: React.ReactNode
   heading?: string
   onAfterOpen?: () => void
+  isHideHeader?: boolean
 }
 
 const Modal = (props: ModalProps) => {
@@ -66,17 +67,19 @@ const Modal = (props: ModalProps) => {
       onAfterOpen={props.onAfterOpen}
       style={customStyles}
     >
-      <TopRow
-        justifySpaceBetween
-        alignCenter
-      >
-        <Text variant='h4'>{props.heading}</Text>
-        <Icon
-          variant='close'
-          onClick={props.onRequestClose}
-          pointer
-        />
-      </TopRow>
+      {!props.isHideHeader && (
+        <TopRow
+          justifySpaceBetween
+          alignCenter
+        >
+          <Text variant='h4'>{props.heading}</Text>
+          <Icon
+            variant='close'
+            onClick={props.onRequestClose}
+            pointer
+          />
+        </TopRow>
+      )}
       <ContentContainer>
         {props.children}
       </ContentContainer>

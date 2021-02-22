@@ -14,10 +14,15 @@ planRouter.post('/major', async (req, res) => {
     const promises = template.semesters.map((semester) => semester.map((requirementId) => new Promise((resolve, reject) => {
       (async () => {
         try {
-          const requirement = await Requirement.findById(requirementId)
+          const requirement = (await Requirement.findById(requirementId)).toObject()
+          delete requirement._id
           const dupRequirement = await new Requirement(requirement).save()
+          if (requirement._id === '60310e4679be6c1f5075dc8f') {
+            console.log(requirement._id, dupRequirement._id)
+          }
           resolve(dupRequirement._id)
         } catch (error) {
+          console.log('error', error)
           reject(error)
         }
       })()
@@ -26,6 +31,8 @@ planRouter.post('/major', async (req, res) => {
     const dupSemesters = await Promise.all(promises.map((innerPromiseArray) => {
       return Promise.all(innerPromiseArray)
     }))
+
+    console.log('dupSemesters[1][2]', dupSemesters[1][2])
 
     const plan = await new Plan({
       majorId,
