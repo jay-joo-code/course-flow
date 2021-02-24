@@ -27,7 +27,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/display-name': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warning'],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'comma-dangle': ['error', {

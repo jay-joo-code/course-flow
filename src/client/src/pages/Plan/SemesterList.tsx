@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import { useUpdatePlanById } from 'src/api/plan'
+import { usePlanById, useUpdatePlanById } from 'src/api/plan'
 import { FlexRow, Space } from 'src/components/layout'
+import useCurrentPsid from 'src/hooks/useCurrentPsid'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import RequirementList from './RequirementList'
 
 interface SemesterListProps {
-  semesters: string[][]
+  semesters: string[][] | undefined
 }
 
 const WashBackground = styled.div`
@@ -51,19 +52,25 @@ const moveBetweenLists = (source: string[], destination: string[], droppableSour
 }
 
 const SemesterList = ({ semesters }: SemesterListProps) => {
-  const { match } = useRouter()
-  const { updatePlan } = useUpdatePlanById(match.params.psid)
+  const psid = useCurrentPsid()
+  const { updatePlan } = useUpdatePlanById(psid)
 
   const handleDragEnd = (result) => {
     const { source, destination } = result
 
-    if (!destination) {
+    if (!destination || !semesters || !source.droppableId) {
       // dropped outside the list
       return
     }
 
     const sourceSemesterNumber = +source.droppableId
     const destSemesterNumber = +destination.droppableId
+
+    // // filter out null requirements
+    // const newSemesters = semesters.map((semester) => {
+    //   return semester.filter((requirement) => requirement)
+    // })
+
     const newSemesters = [...semesters]
 
     if (sourceSemesterNumber === destSemesterNumber) {
@@ -76,38 +83,21 @@ const SemesterList = ({ semesters }: SemesterListProps) => {
       newSemesters[destSemesterNumber] = result[destSemesterNumber]
     }
 
-    // updatePlan({
-    //   semesters: newSemesters,
-    // })
+    updatePlan({
+      semesters: newSemesters,
+    })
   }
-
-  const deleteSemester = (semesterNumber: number) => {
-    // TODO:
-    const semester = semesters[semesterNumber]
-    console.log('semester :>> ', semester)
-  }
-
-  console.count('semesters rerender :>> ')
 
   return (
     <WashBackground>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Container>
-          {semesters.map((semester, semesterNumber) => (
-            <Droppable
-              key={semesterNumber}
-              droppableId={semesterNumber.toString()}
-            >
-              {(provided, snapshot) => (
-                <RequirementList
-                  provided={provided}
-                  isDraggingOver={snapshot.isDraggingOver}
-                  semester={semester}
-                  semesterNumber={semesterNumber}
-                  deleteSemester={deleteSemester}
-                />
-              )}
-            </Droppable>
+          {semesters?.map((semester, semesterNumber) => (
+            <RequirementList
+              key={semesterNumber+1}
+              semester={semester}
+              semesterNumber={semesterNumber}
+            />
           ))}
         </Container>
       </DragDropContext>
@@ -115,4 +105,4 @@ const SemesterList = ({ semesters }: SemesterListProps) => {
   )
 }
 
-export default SemesterList
+export default memo(SemesterList)

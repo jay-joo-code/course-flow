@@ -8,11 +8,9 @@ import Pill from 'src/components/pill'
 import Text from 'src/components/text'
 import styled from 'styled-components'
 import SideWindow from './SideWindow'
+import { Draggable } from 'react-beautiful-dnd'
 
 interface RequirementListItemProps {
-  provided: any
-  draggableStyle: any
-  isDragging: boolean
   requirementId: string
   row: number
   semesterNumber: number
@@ -63,7 +61,7 @@ const SideWindowContainer = styled.div`
   right: ${(props) => props.isAssigned && '-305px'};
 `
 
-const RequirementListItem = ({ provided, draggableStyle, isDragging, requirementId }: RequirementListItemProps) => {
+const RequirementListItem = ({ requirementId, row }: RequirementListItemProps) => {
   const { requirement } = useRequirementById(requirementId)
   const { name, course, courseId, isFixedAssignment } = requirement || {}
   const [isWindowOpen, setIsWindowOpen] = useState(false)
@@ -75,72 +73,78 @@ const RequirementListItem = ({ provided, draggableStyle, isDragging, requirement
     setIsWindowOpen(true)
   }
 
-  console.log('name :>> ', name)
-
   return (
-    <RelativeContainer>
-      <Container
-        style={draggableStyle}
-        isDragging={isDragging}
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        onClick={handleClick}
-      >
-        <div>
-          <Text
-            variant='p'
-            fontWeight={500}
-          >{title}</Text>
+    <Draggable
+      key={requirementId}
+      draggableId={requirementId}
+      index={row}
+    >
+      {(provided, snapshot) => (
+        <RelativeContainer>
+          <Container
+            style={provided.draggableProps.style}
+            isDragging={snapshot.isDragging}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            onClick={handleClick}
+          >
+            <div>
+              <Text
+                variant='p'
+                fontWeight={500}
+              >{title}</Text>
 
-          {/* has assigned course */}
-          {course && (
-            <Text
-              variant='h6'
-              fontWeight={400}
-              color={theme.textLight}
-            >{course.data.titleShort}</Text>
-          )}
+              {/* has assigned course */}
+              {course && (
+                <Text
+                  variant='h6'
+                  fontWeight={400}
+                  color={theme.textLight}
+                >{course.data.titleShort}</Text>
+              )}
 
-          {/* unassigned */}
-          {!course && (
-            <>
-              <Space margin='.5rem 0' />
-              <Pill
-                label='Unassigned'
-                background={theme.brandBg}
-                color={theme.brand300}
+              {/* unassigned */}
+              {!course && (
+                <>
+                  <Space margin='.5rem 0' />
+                  <Pill
+                    label='Unassigned'
+                    background={theme.brandBg}
+                    color={theme.brand300}
+                  />
+                </>
+              )}
+
+              {(!isFixedAssignment && courseId && name) && (
+                <>
+                  <Space margin='.8rem 0' />
+                  <Pill
+                    label={name}
+                    background={theme.info50}
+                    color={theme.info300}
+                  />
+                </>
+              )}
+            </div>
+            <SVGOnHover>
+              <Icon
+                variant='right'
+                interactiveHover
               />
-            </>
-          )}
-
-          {(!isFixedAssignment && courseId && name) && (
-            <>
-              <Space margin='.8rem 0' />
-              <Pill
-                label={name}
-                background={theme.info50}
-                color={theme.info300}
+            </SVGOnHover>
+          </Container>
+          <SideWindowContainer isAssigned={courseId}>
+            {isWindowOpen && (
+              <SideWindow
+                setIsWindowOpen={setIsWindowOpen}
+                requirement={requirement}
               />
-            </>
-          )}
-        </div>
-        <SVGOnHover>
-          <Icon
-            variant='right'
-            interactiveHover
-          />
-        </SVGOnHover>
-      </Container>
-      <SideWindowContainer isAssigned={courseId}>
-        {isWindowOpen && (
-          <SideWindow
-            setIsWindowOpen={setIsWindowOpen}
-            requirement={requirement}
-          />
-        )}
-      </SideWindowContainer>
-    </RelativeContainer>
+            )}
+          </SideWindowContainer>
+        </RelativeContainer>
+      )}
+    </Draggable>
   )
 }
 

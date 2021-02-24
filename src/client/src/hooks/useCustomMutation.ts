@@ -7,6 +7,7 @@ interface IUpdateLocal {
   queryConfigs: IQueryConfig[];
   type?: 'create' | 'update' | 'delete';
   mutationFn?: (oldVariables: any, newVariables: any) => any
+  isNotRefetchOnSettle?: boolean
 }
 
 interface IMutationOptions {
@@ -45,7 +46,7 @@ const useCustomMutation = <T>({
               // Optimistically update to the new value
               queryClient.setQueryData(queryKey, (old: any) => {
                 // custom mutationFn
-                if (updateLocal.mutationFn) {
+                if (updateLocal.mutationFn) {                  
                   return updateLocal.mutationFn(old, newVariables)
                 }
 
@@ -117,7 +118,7 @@ const useCustomMutation = <T>({
 
         // Always refetch after error or success:
         onSettled: () => {
-          if (updateLocal) {
+          if (updateLocal && !updateLocal.isNotRefetchOnSettle) {            
             updateLocal.queryConfigs.forEach(({ url, variables }) => {
               const queryKey = [url, variables]
               queryClient.invalidateQueries(queryKey)

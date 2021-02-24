@@ -4,6 +4,10 @@ import useCustomQuery from 'src/hooks/useCustomQuery'
 
 export const fetchPlanByIdConfig = (psid) => ({
   url: `/public/plan/${psid}`,
+  options: {
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  }
 })
 
 export const usePlanById = (psid) => {
@@ -37,6 +41,7 @@ export const useUpdatePlanById = (psid: string | null) => {
           ...newVariables,
         }
       },
+      isNotRefetchOnSettle: true,
     },
   })
   return {

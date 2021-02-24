@@ -4,6 +4,9 @@ import { IRequirementDoc } from 'src/types/requirement'
 
 export const fetchRequirementByIdConfg = (id) => ({
   url: `/public/requirement/${id}`,
+  options: {
+    refetchOnWindowFocus: false,
+  }
 })
 
 export const useRequirementById = (id) => {

@@ -1,4 +1,6 @@
 import React from 'react'
+import { usePlanById } from 'src/api/plan'
+import useCurrentPsid from 'src/hooks/useCurrentPsid'
 import styled from 'styled-components'
 import SemesterList from './SemesterList'
 
@@ -8,15 +10,12 @@ const Container = styled.div`
 `
 
 const Plan = () => {
-  // currently it's semesters data at the index component
-  // propagating down to all the child components
-  // this means when there is a change to the semesters position,
-  // all semesters rerender, leading to performance issues
-  // semester data (requirement id list) should be accessed independently by each RequirementList
+  const psid = useCurrentPsid()
+  const { plan } = usePlanById(psid)
 
   return (
     <Container>
-      <SemesterList />
+      <SemesterList semesters={plan?.semesters} />
     </Container>
   )
 }
