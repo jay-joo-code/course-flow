@@ -15,7 +15,7 @@ export const InputArea = styled.div`
 export const StyledInput = styled.input`
   flex: 1 0 auto;
   background: ${(props) => props.theme.bg};
-  font-weight: 500;
+  font-weight: 400;
   font-size: 1rem;
   border: 2px solid ${(props) => props.theme.borderDark};
   border-radius: 4px;
@@ -122,7 +122,7 @@ export const StyledCheckbox = styled.label`
     border: solid 2px transparent;
     border-right: none;
     border-top: none;
-    transform: translate(3px, 4px) rotate(-45deg);
+    transform: translate(4px, 5px) rotate(-45deg);
   }
 
   /* Checked, Indeterminate */
@@ -214,6 +214,9 @@ export const StyledTextArea = styled(Textarea)`
 
   // disabled
   background: ${(props) => props.disabled && props.theme.bgWash};
+
+  // error
+  border-color: ${(props) => props.error && props.theme.danger};
 
   &::placeholder {
     color: ${(props) => props.theme.textPlaceholder};
@@ -391,139 +394,17 @@ export const StyledDateWrapper = styled.div`
 `
 
 export const StyledDateRangeWrapper = styled.div`
+  & .DateRangePicker {
+    width: 100%;
+  }
+
+  & .DateInput {
+    width: 105px;
+  }
+
   & input {
     cursor: pointer !important;
+    font-size: .8rem;
+    font-weight: 400;
   }
 `
-
-/*
-export const StyledUnderlineInput = styled.input`
-  font-size: inherit;
-  font-weight: inherit;
-  color: ${props =>
-    props.disabled ? props.theme.text.alt : props.theme.text.default};
-  border-bottom: ${props =>
-    props.disabled
-      ? '2px solid transparent'
-      : `2px solid ${props.theme.bg.inactive}`};
-  width: 50%;
-  transition: ${Transition.hover.off};
-  &:hover {
-    border-color: ${props => (props.disabled ? 'transparent' : 'inherit')};
-    transition: ${Transition.hover.on};
-  }
-  &:focus {
-    border-color: ${props => props.theme.brand.default};
-    transition: ${Transition.hover.on};
-  }
-`;
-
-export const StyledError = styled.p`
-  font-size: 14px;
-  color: ${props => props.theme.warn.default};
-  padding: 8px 0 16px;
-  line-height: 1.4;
-  font-weight: 600;
-  a {
-    text-decoration: underline;
-  }
-`;
-
-export const StyledSuccess = styled.p`
-  font-size: 14px;
-  color: ${props => props.theme.success.default};
-  padding: 8px 0 16px;
-  line-height: 1.4;
-  font-weight: 600;
-`;
-
-export const PhotoInputLabel = styled.label`
-  position: relative;
-  height: ${props => `${props.size}px`};
-  width: ${props => `${props.size}px`};
-  border-radius: ${props =>
-    props.type === 'user' ? `${props.size}px` : '8px'};
-  margin-top: 8px;
-  background-color: ${props => props.theme.bg.reverse};
-`;
-
-export const PhotoInputImage = styled.img`
-  width: ${props => `${props.size}px`};
-  height: ${props => `${props.size}px`};
-  border-radius: ${props =>
-    props.type === 'user' ? `${props.size}px` : '8px'};
-  box-shadow: 0 0 0 2px ${props => props.theme.bg.default};
-`;
-
-export const CoverInputLabel = styled.label`
-  position: relative;
-  height: 114px;
-  max-width: 342px;
-  width: 100%;
-  margin-top: 8px;
-  border-radius: 8px;
-  background-color: ${props => props.theme.bg.reverse};
-`;
-
-export const ProfileImage = styled.img`
-  position: absolute;
-  object-fit: cover;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: ${props =>
-    props.type === 'user' ? `${props.size}px` : '8px'};
-  border: 2px solid ${props => props.theme.text.reverse};
-`;
-
-export const CoverImage = styled.div`
-  background-color: ${props => props.theme.brand.default};
-  background-image: url('${props => props.src}');
-  background-position: center;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 114px;
-  border-radius: 8px;
-`;
-
-export const InputOverlay = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: ${props => props.theme.text.reverse};
-  background-color: ${({ theme }) => hexToAlpha(theme.bg.reverse, 0.6)};
-  padding: 8px;
-  border-radius: ${props =>
-    props.type === 'user' ? `${props.size}px` : '8px'};
-  opacity: ${props => (props.visible ? '1' : '0')};
-  transition: ${Transition.hover.off};
-  &:hover {
-    opacity: 1;
-    transition: ${Transition.hover.on};
-    + img,
-    + div {
-      transition: ${Transition.hover.on};
-      opacity: 0.25;
-    }
-  }
-  &:hover div {
-    transition: ${Transition.hover.on};
-  }
-`;
-
-*/

@@ -9,7 +9,7 @@ const Container = styled.div`
 const MobileBlock = () => {
   return (
     <Container>
-      <Text variant='p'>Course Flow is not avaiable on mobile.</Text>
+      <Text variant='p'>Course Flow is currently not available on mobile.</Text>
     </Container>
   )
 }

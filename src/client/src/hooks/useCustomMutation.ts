@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from 'react-query'
 import api from 'src/api'
-import { queryCache } from 'src/app/App'
 import { IQueryConfig } from './useCustomQuery'
 
 interface IUpdateLocal {
   queryConfigs: IQueryConfig[];
   type?: 'create' | 'update' | 'delete';
-  mutationFn?: (oldVariables: any, newVariables: any) => any
+  mutationFn?: (oldData: any, newVariables: any) => any
   isNotRefetchOnSettle?: boolean
 }
 
@@ -44,15 +43,15 @@ const useCustomMutation = <T>({
               const previousValues = queryClient.getQueryData(queryKey)
 
               // Optimistically update to the new value
-              queryClient.setQueryData(queryKey, (old: any) => {
+              queryClient.setQueryData(queryKey, (oldData: any) => {
                 // custom mutationFn
-                if (updateLocal.mutationFn) {                  
-                  return updateLocal.mutationFn(old, newVariables)
+                if (updateLocal.mutationFn) {
+                  return updateLocal.mutationFn(oldData, newVariables)
                 }
 
                 // create
                 if (updateLocal.type === 'create') {
-                  if (old) return [...old, newVariables]
+                  if (oldData) return [...oldData, newVariables]
                   return [newVariables]
                 }
 
@@ -60,7 +59,7 @@ const useCustomMutation = <T>({
                 if (updateLocal.type === 'update') {
                   // update by id
                   if (newVariables._id) {
-                    const newValues = old?.map((value) => {
+                    const newValues = oldData?.map((value) => {
                       if (value._id === newVariables._id) {
                         return { ...value, ...newVariables }
                       }
@@ -69,7 +68,7 @@ const useCustomMutation = <T>({
                     return newValues
                   } else {
                     // if newVariables._id not defined, dont update locally
-                    if (old) return [...old]
+                    if (oldData) return [...oldData]
                     return undefined
                   }
                 }
@@ -78,18 +77,18 @@ const useCustomMutation = <T>({
                 if (updateLocal.type === 'delete') {
                   // delete by id
                   if (newVariables._id) {
-                    const newValues = old?.filter(
+                    const newValues = oldData?.filter(
                       (value) => value._id !== newVariables._id
                     )
                     return newValues
                   } else {
                     // if newVariables._id not defined, dont delete locally
-                    if (old) return [...old]
+                    if (oldData) return [...oldData]
                     return undefined
                   }
                 }
 
-                if (old) return [...old]
+                if (oldData) return [...oldData]
                 return undefined
               })
 
@@ -118,7 +117,7 @@ const useCustomMutation = <T>({
 
         // Always refetch after error or success:
         onSettled: () => {
-          if (updateLocal && !updateLocal.isNotRefetchOnSettle) {            
+          if (updateLocal && !updateLocal.isNotRefetchOnSettle) {
             updateLocal.queryConfigs.forEach(({ url, variables }) => {
               const queryKey = [url, variables]
               queryClient.invalidateQueries(queryKey)

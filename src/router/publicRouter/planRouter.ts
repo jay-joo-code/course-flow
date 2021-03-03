@@ -32,8 +32,6 @@ planRouter.post('/major', async (req, res) => {
       return Promise.all(innerPromiseArray)
     }))
 
-    console.log('dupSemesters[1][2]', dupSemesters[1][2])
-
     const plan = await new Plan({
       majorId,
       userId,
@@ -58,6 +56,70 @@ planRouter.put('/:psid', async (req, res) => {
   try {
     const doc = await Plan.findOneAndUpdate({ shortId: req.params.psid }, req.body, { new: true })
     res.send(doc)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+planRouter.post('/:psid/add-requirement', async (req, res) => {
+  try {
+    // create requirement and add to target semester
+    const { psid } = req.params
+    const { semesterNumber, requirementData } = req.body
+
+    const newRequirement = await new Requirement(requirementData).save()
+    const plan = await Plan.findOne({ shortId: psid })
+    plan.semesters[semesterNumber]?.push(newRequirement._id)
+    await plan.save()
+
+    res.send(plan)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+planRouter.post('/:psid/add-semester', async (req, res) => {
+  try {
+    // adds semester (empty array) after req.body.semesterNumber
+    const { psid } = req.params
+    const { semesterNumber } = req.body
+
+    const plan = await Plan.findOne({ shortId: psid })
+
+    plan.semesters.splice(semesterNumber + 1, 0, [])
+    await plan.save()
+
+    res.send(plan)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+planRouter.post('/:psid/delete-semester', async (req, res) => {
+  try {
+    const { psid } = req.params
+    const { semesterNumber } = req.body
+
+    const plan = await Plan.findOne({ shortId: psid })
+
+    // delete requirements
+    const promises = plan.semesters[semesterNumber]?.map((requirementId) => new Promise<void>((resolve, reject) => {
+      (async () => {
+        try {
+          await Requirement.findByIdAndDelete(requirementId)
+          resolve()
+        } catch (error) {
+          reject(error)
+        }
+      })()
+    }))
+    await Promise.all(promises)
+
+    // delete semester
+    plan.semesters.splice(semesterNumber, 1)
+    await plan.save()
+
+    res.send(plan)
   } catch (e) {
     res.status(500).send(e)
   }

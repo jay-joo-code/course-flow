@@ -40,6 +40,9 @@ const Loading = styled.div`
     }
   }
 
+  // isHidden
+  opacity: ${(props) => props.isHidden && 0};
+
 `
 
 export default Loading

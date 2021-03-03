@@ -8,6 +8,7 @@ import UnauthedHome from './UnauthedHome'
 import { useCurrentUser, useCurrentUserPlans } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
 import SelectPlanHome from './SelectPlanHome'
+import NoPlansHome from './NoPlansHome'
 
 const Container = styled(FlexRow)`
 
@@ -36,14 +37,17 @@ const Illustration = styled(IllustHome)`
 const Home = () => {
   const isMobile = useIsMobile()
   const { currentUser } = useCurrentUser()
-  const { plans, isError } = useCurrentUserPlans()
+  const { plans, ...rest } = useCurrentUserPlans()
   const router = useRouter()
 
+  console.log('plans rest :>> ', plans?.length, rest)
+
   const getComponent = () => {
-    if (!currentUser || isError) return <UnauthedHome />
+    if (!currentUser) return <UnauthedHome />
     else {
       if (plans?.length === 0) {
         // no plans on this account
+        return <NoPlansHome />
       } else if (plans?.length === 1) {
         // only 1 plan on this account
         // redirect to the single plan

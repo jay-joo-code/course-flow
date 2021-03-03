@@ -1,11 +1,12 @@
 import moment from 'moment'
-import React, { useState, InputHTMLAttributes, forwardRef } from 'react'
+import React, { useState, InputHTMLAttributes, forwardRef, ReactNode } from 'react'
 
 import {
   DateRangePicker as DateRangePickerAirbnb, DayPickerSingleDateController, isInclusivelyAfterDay
 } from 'react-dates'
 import 'react-dates/initialize'
 import 'react-dates/lib/css/_datepicker.css'
+import { Controller } from 'react-hook-form'
 import theme from 'src/app/theme'
 import useIsMobile from 'src/hooks/useIsMobile'
 import Icon from '../icon'
@@ -37,8 +38,20 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean
   width?: number
   fullWidth?: boolean
-  error?: boolean | string
+  error?: string
   type?: string
+}
+
+const ErrorMsg = (props: { error?: string }) => {
+  return (
+    <>
+      {props.error && <Text
+        variant='h6'
+        color={theme.danger}
+        fontWeight={400}
+      >{props.error}</Text>}
+    </>
+  )
 }
 
 export const Input = forwardRef((props: InputProps, ref) => {
@@ -58,56 +71,64 @@ export const Input = forwardRef((props: InputProps, ref) => {
           {...props}
         />
       </InputArea>
-      {props.error && <Text
-        variant='h5'
-        color={theme.danger}
-      >{props.error}</Text>}
+      <ErrorMsg error={props.error} />
     </InputContainer>
   )
 })
 
-export interface CheckboxProps {
+export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
-  checked: boolean
-  onChange: React.FormEventHandler<HTMLInputElement>
+  checked?: boolean
+  onChange?: React.FormEventHandler<HTMLInputElement>
+  name?: string
+  error?: string
 }
 
-export const Checkbox = (props: CheckboxProps) => {
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   return (
-    <CheckboxContainer>
-      <StyledCheckbox>
-        <input
-          type='checkbox'
-          onChange={props.onChange}
-          checked={props.checked}
-        />
-        <span />
-      </StyledCheckbox>
-      <Label
-        noMargin={true}
-        {...props}
-      >
-        {props.label}
-      </Label>
-    </CheckboxContainer>
+    <div>
+      <CheckboxContainer>
+        <StyledCheckbox>
+          <input
+            {...props}
+            ref={ref}
+            type='checkbox'
+            onChange={props.onChange}
+            checked={props.checked}
+          />
+          <span />
+        </StyledCheckbox>
+        <Label
+          noMargin={true}
+          {...props}
+        >
+          {props.label}
+        </Label>
+      </CheckboxContainer>
+      <ErrorMsg error={props.error} />
+    </div>
   )
-}
+})
 
 export interface TextAreaProps extends InputProps {
   maxRows?: number
   minRows?: number
 }
 
-export const TextArea = (props: TextAreaProps) => {
+export const TextArea = forwardRef((props: TextAreaProps, ref) => {
   return (
     <TextAreaContainer>
       <Label {...props}>{props.label}</Label>
       <div>
-        <StyledTextArea {...props} />
+        <StyledTextArea
+          ref={ref}
+          {...props}
+        />
       </div>
+      <ErrorMsg error={props.error} />
     </TextAreaContainer>
   )
-}
+})
 
 export interface IOption {
   label: string
@@ -116,18 +137,14 @@ export interface IOption {
 
 export interface SelectProps {
   options: IOption[]
-  value: string
-  onChange: React.FormEventHandler<HTMLInputElement>
+  value?: string
+  onChange?: React.FormEventHandler<HTMLInputElement>
   label?: string
   disabled?: boolean
   maxMenuHeight?: number
-
-  // react-hook-props
-  name: string
-
 }
 
-export const Select = (props: SelectProps) => {
+export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => {
   const valueObject = props.options.find(
     (option) => option.value === props.value
   )
@@ -135,6 +152,7 @@ export const Select = (props: SelectProps) => {
     <div>
       <Label {...props}>{props.label}</Label>
       <StyledSelect
+        ref={ref}
         isDisabled={props.disabled}
         theme={(defaultStyles) => ({
           ...defaultStyles,
@@ -150,6 +168,31 @@ export const Select = (props: SelectProps) => {
         key={`select-key-${JSON.stringify(valueObject)}`}
         isSearchable={false}
       />
+    </div>
+  )
+})
+
+export interface HookedSelectProps {
+  name: string
+  control: any
+  options: IOption[]
+  error: string | undefined
+}
+
+export const HookedSelect = (props: HookedSelectProps) => {
+  return (
+    <div>
+      <Controller
+        name={props.name}
+        control={props.control}
+        options={[
+          { value: 'chocolate', label: 'Chocolate' },
+          { value: 'strawberry', label: 'Strawberry' },
+          { value: 'vanilla', label: 'Vanilla' },
+        ]}
+        as={StyledSelect}
+      />
+      <ErrorMsg error={props.error} />
     </div>
   )
 }
@@ -190,6 +233,31 @@ export const RadioGroup = (props: RadioGroupProps) => {
   )
 }
 
+interface HookedRadioGroupProps extends InputProps {
+  name: string
+  options: IOption[]
+  error: string | undefined
+}
+
+export const HookedRadioGroup = forwardRef<HTMLInputElement, HookedRadioGroupProps>((props, ref) => {
+  return (
+    <RadioGroupContainer>
+      {props.options.map(({ value, label }) => (
+        <RadioLabel key={value}>
+          <input
+            ref={ref}
+            type='radio'
+            name={props.name}
+            value={value}
+          />
+          <span>{label}</span>
+        </RadioLabel>
+      ))}
+      <ErrorMsg error={props.error} />
+    </RadioGroupContainer>
+  )
+})
+
 export interface DatePickerProps {
   date: Date | undefined
   setDate: (newDate: any) => void
@@ -214,6 +282,30 @@ export const DatePicker = (props: DatePickerProps) => {
   )
 }
 
+export interface HookedDatePickerProps {
+  name: string
+  control: any
+  error?: string
+}
+
+export const HookedDatePicker = (props: HookedDatePickerProps) => {
+  return (
+    <div>
+      <Controller
+        name={props.name}
+        control={props.control}
+        render={({ onChange, value }) =>
+          <DatePicker
+            setDate={onChange}
+            date={value}
+          />
+        }
+      />
+      <ErrorMsg error={props.error} />
+    </div>
+  )
+}
+
 export interface DateRangePickerProps {
   label: string
   startDate: Date | undefined
@@ -223,46 +315,60 @@ export interface DateRangePickerProps {
 }
 
 export const DateRangePicker = ({ label, startDate, endDate, setStartDate, setEndDate }: DateRangePickerProps) => {
-  const [previousFocus, setPreviousFocus] = useState<string | null>(null)
   const [focusedInput, setFocusedInput] = useState<string | null>(null)
-
-  const handleFocusChange = (newFocus) => {
-    if (newFocus === 'startDate' && !focusedInput) {
-      setFocusedInput('startDate')
-    } else if (newFocus === 'endDate' && focusedInput === 'endDate' && previousFocus === 'endDate') {
-      setFocusedInput('startDate')
-    } else if (!focusedInput && newFocus === 'endDate') {
-      setFocusedInput('startDate')
-    } else {
-      setFocusedInput(newFocus)
-    }
-    setPreviousFocus(focusedInput)
-  }
-
-  const isMobile = useIsMobile()
+  const handleFocusChange = (newFocus) => setFocusedInput(newFocus)
 
   const handleDateChange = ({ startDate: startDateAirbnb, endDate: endDateAirbnb }) => {
     if (startDateAirbnb) setStartDate(startDateAirbnb.toDate())
     if (endDateAirbnb) setEndDate(endDateAirbnb.toDate())
   }
 
+  const isMobile = useIsMobile()
+
   return (
     <StyledDateRangeWrapper>
       <Label>{label}</Label>
       <DateRangePickerAirbnb
-        startDate={startDate ? moment(startDate) : null}
         startDateId='start-date-id'
-        endDate={endDate ? moment(endDate) : null}
         endDateId='end-date-id'
+        startDate={startDate ? moment(startDate) : null}
+        endDate={endDate ? moment(endDate) : null}
         onDatesChange={handleDateChange}
         focusedInput={focusedInput}
         onFocusChange={handleFocusChange}
         withPortal={isMobile}
         orientation={isMobile ? 'vertical' : 'horizontal'}
-        keepOpenOnDateSelect
         readOnly
       />
     </StyledDateRangeWrapper>
+  )
+}
+
+export interface HookedDateRangePickerProps {
+  name: string
+  control: any
+  setValue: Function
+  error?: string
+}
+
+export const HookedDateRangePicker = (props: HookedDateRangePickerProps) => {
+  return (
+    <div>
+      <Controller
+        name={props.name}
+        control={props.control}
+        render={({ onChange, value }) =>
+          <DateRangePicker
+            label='dateRangePickerName'
+            startDate={value?.startDate}
+            endDate={value?.endDate}
+            setStartDate={(date) => props.setValue('dateRangePickerName', { ...value, startDate: date })}
+            setEndDate={(date) => props.setValue('dateRangePickerName', { ...value, endDate: date })}
+          />
+        }
+      />
+      <ErrorMsg error={props.error} />
+    </div>
   )
 }
 
@@ -338,5 +444,31 @@ export const Incrementor = ({
         />
       </FlexRow>
     </FlexRow>
+  )
+}
+
+export interface HookedIncrementorProps {
+  name: string
+  control: any
+  label: string
+  error?: string
+}
+
+export const HookedIncrementor = (props: HookedIncrementorProps) => {
+  return (
+    <div>
+      <Controller
+        name={props.name}
+        control={props.control}
+        render={({ onChange, value }) =>
+          <Incrementor
+            label={props.label}
+            value={value}
+            onChange={onChange}
+          />
+        }
+      />
+      <ErrorMsg error={props.error} />
+    </div>
   )
 }

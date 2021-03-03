@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { queryCache } from 'src/app/App'
 import useRouter from 'src/hooks/useRouter'
 import { logout } from 'src/slices/auth'
+import { resetPsid } from 'src/slices/plan'
 
 const LogOut = () => {
   const router = useRouter()
@@ -10,6 +11,7 @@ const LogOut = () => {
 
   useEffect(() => {
     dispatch(logout())
+    dispatch(resetPsid())
     queryCache.clear()
     router.push('/')
   }, [dispatch, router])

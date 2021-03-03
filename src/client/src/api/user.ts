@@ -1,5 +1,7 @@
+import { useSelector } from 'react-redux'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IPlanDoc } from 'src/types/plan'
+import { RootState } from 'src/types/redux'
 import { IUserDoc } from 'src/types/user'
 
 export const fetchCurrentUserConfig = () => ({
@@ -15,7 +17,12 @@ export const fetchCurrentUserPlansConfig = () => ({
 
 export const useCurrentUser = () => {
   const { data: currentUser, ...rest } = useCustomQuery<IUserDoc>(fetchCurrentUserConfig())
-  return { ...rest, currentUser }
+  const { accessToken } = useSelector((state: RootState) => state.authState)
+
+  return {
+    ...rest,
+    currentUser: accessToken ? currentUser : null,
+  }
 }
 
 export const useCurrentUserPlans = () => {

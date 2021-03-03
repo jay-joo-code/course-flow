@@ -5,7 +5,7 @@ import { useGeneratePlanByMajor } from 'src/api/plan'
 import { useCurrentUser } from 'src/api/user'
 import theme from 'src/app/theme'
 import { ReactComponent as EngineeringIconRaw } from 'src/assets/svgs/departments/engineering.svg'
-import { FlexRow, Space } from 'src/components/layout'
+import { FlexColumn, FlexRow, Space } from 'src/components/layout'
 import Loading from 'src/components/loading'
 import Pill from 'src/components/pill'
 import Text from 'src/components/text'
@@ -17,6 +17,7 @@ const Container = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 8px;
   display: flex;
+  height: 250px;
 `
 
 const DepartmentList = styled.div`
@@ -34,7 +35,7 @@ const DepartmentListItem = styled(FlexRow)`
 `
 
 const EngineeringIcon = styled(EngineeringIconRaw)`
-  fill: ${(props) => props.theme.text};
+  fill: ${(props) => props.theme.textLight};
 `
 
 const MajorList = styled.div`
@@ -43,11 +44,7 @@ const MajorList = styled.div`
   overflow: auto;
 
   & > div {
-    border-top: 1px solid ${(props) => props.theme.border};
-  }
-
-  & > div::first-child {
-    border-top: none;
+    border-bottom: 1px solid ${(props) => props.theme.border};
   }
 `
 
@@ -92,37 +89,45 @@ const MajorSelector = () => {
     }
   }
 
+  if (!majors) return <Loading />
+
   return (
-    <Container>
-          <DepartmentList>
-            <DepartmentListItem>
-              <EngineeringIcon />
-              <Space margin='0 .2rem' />
-              <Text
-                variant='h5'
-                fontWeight={500}
-              >Engineering</Text>
-            </DepartmentListItem>
-          </DepartmentList>
-          <MajorList>
-            {majors?.map((major) => (
-              <MajorListItem
-                key={major._id}
-                isComingSoon={major.isComingSoon}
-                onClick={() => handleClickMajor(major._id)}
-              >
-                <TextContainer>
-                  <Text
-                    variant='h5'
-                    color={major.isComingSoon ? theme.textMuted : theme.text}
-                  >{major.name}</Text>
-                </TextContainer>
-                {major.isComingSoon && <Pill label='Coming soon' />}
-                {(isLoading && selectedMajorId === major._id) && <Loading />}
-              </MajorListItem>
-            ))}
-          </MajorList>
-        </Container>
+    <FlexColumn ac>
+      <Container>
+        <DepartmentList>
+          <DepartmentListItem>
+            <EngineeringIcon />
+            <Space margin='0 .2rem' />
+            <Text
+              variant='h5'
+              fontWeight={500}
+            >Engineering</Text>
+          </DepartmentListItem>
+        </DepartmentList>
+        <MajorList>
+          {majors?.map((major) => !major.isComingSoon && (
+            <MajorListItem
+              key={major._id}
+              isComingSoon={major.isComingSoon}
+              onClick={() => handleClickMajor(major._id)}
+            >
+              <TextContainer>
+                <Text
+                  variant='h5'
+                  color={theme.text}
+                >{major.name}</Text>
+              </TextContainer>
+              <Loading isHidden={!isLoading || selectedMajorId !== major._id} />
+            </MajorListItem>
+          ))}
+        </MajorList>
+      </Container>
+      <Space margin='.3rem 0' />
+      <Text
+        variant='h5'
+        color={theme.textMuted}
+      >More departments and majors will be added soon!</Text>
+    </FlexColumn>
   )
 }
 

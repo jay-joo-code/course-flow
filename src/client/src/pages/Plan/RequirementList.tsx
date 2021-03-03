@@ -1,17 +1,17 @@
 import { Dropdown, Menu } from 'antd'
 import React, { memo, useState } from 'react'
-import { Draggable, Droppable } from 'react-beautiful-dnd'
+import { Droppable } from 'react-beautiful-dnd'
+import { useDeleteSemester } from 'src/api/plan'
 import theme from 'src/app/theme'
 import { Button } from 'src/components/buttons'
 import Icon from 'src/components/icon'
 import { FlexRow, Space } from 'src/components/layout'
 import Modal from 'src/components/modal'
 import Text from 'src/components/text'
-import usePreviousValue from 'src/hooks/usePreviousValue'
+import useCurrentPsid from 'src/hooks/useCurrentPsid'
 import { ISemester } from 'src/types/requirement'
 import styled from 'styled-components'
 import RequirementListItem from './RequirementListItem'
-
 
 interface RequirementListProps {
   semester: ISemester
@@ -19,12 +19,11 @@ interface RequirementListProps {
 }
 
 const Wrapper = styled.div`
-  padding: .5rem;
 `
 
 const Container = styled.div`
   padding: 1rem;
-  min-width: 240px;
+  width: 240px;
   background: ${(props) => props.theme.grey[100]};
   border-radius: 8px;
 
@@ -48,24 +47,16 @@ const RequirementList = ({ semester, semesterNumber }: RequirementListProps) => 
     ? 'Transfer Credits'
     : `Semester ${semesterNumber}`
 
-  // compute credits
-  const totalCredits = 0
-  semester
-    .forEach((requirementId: string) => {
-      // totalCredits += requirementCredits(idToRequirement[requirementId])
-    })
-
   // delete semester handling
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const psid = useCurrentPsid()
+  const { deleteSemester } = useDeleteSemester(psid)
 
-  const openDeleteModal = () => {
-    setIsModalOpen(true)
-  }
-
+  const openDeleteModal = () => setIsDeleteModalOpen(true)
   const handleClickDelete = () => {
-    // TODO: create and connect delete semester endpoint
+    deleteSemester({ semesterNumber })
 
-    setIsModalOpen(false)
+    setIsDeleteModalOpen(false)
   }
 
   return (
@@ -123,8 +114,8 @@ const RequirementList = ({ semester, semesterNumber }: RequirementListProps) => 
             {provided.placeholder}
           </Container>
           <Modal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
+            isOpen={isDeleteModalOpen}
+            onRequestClose={() => setIsDeleteModalOpen(false)}
             isHideHeader
           >
             <Text
@@ -144,7 +135,7 @@ const RequirementList = ({ semester, semesterNumber }: RequirementListProps) => 
               <Button
                 text
                 label='Cancel'
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsDeleteModalOpen(true)}
               />
               <Space margin='0 .5rem' />
               <Button

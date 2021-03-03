@@ -5,6 +5,7 @@ import { FlexRow, Space } from 'src/components/layout'
 import useCurrentPsid from 'src/hooks/useCurrentPsid'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
+import CreateSemesterButton from './CreateSemesterButton'
 import RequirementList from './RequirementList'
 
 interface SemesterListProps {
@@ -20,6 +21,7 @@ const WashBackground = styled.div`
 const Container = styled(FlexRow)`
   overflow: auto;
   height: 100%;
+  padding: .5rem 0;
 
   & > div:first-child {
     padding-left: 1rem;
@@ -92,12 +94,16 @@ const SemesterList = ({ semesters }: SemesterListProps) => {
     <WashBackground>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Container>
+          <CreateSemesterButton semesterNumber={0} />
           {semesters?.map((semester, semesterNumber) => (
-            <RequirementList
-              key={semesterNumber+1}
-              semester={semester}
-              semesterNumber={semesterNumber}
-            />
+            <>
+              <RequirementList
+                key={semesterNumber + 1}
+                semester={semester}
+                semesterNumber={semesterNumber}
+              />
+              <CreateSemesterButton semesterNumber={semesterNumber} />
+            </>
           ))}
         </Container>
       </DragDropContext>

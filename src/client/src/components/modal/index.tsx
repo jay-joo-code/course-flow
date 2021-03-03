@@ -77,6 +77,8 @@ const Modal = (props: ModalProps) => {
             variant='close'
             onClick={props.onRequestClose}
             pointer
+            interactiveHover
+            size='1.7rem'
           />
         </TopRow>
       )}

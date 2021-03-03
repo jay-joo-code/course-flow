@@ -41,7 +41,7 @@ export const ENGI_MATH2940 = {
   name: 'MATH 2940',
   credits: 4,
   isFixedAssignment: true,
-  courseId: CRSEID_MATH1920,
+  courseId: CRSEID_MATH2940,
   description: 'Math requirement desc',
   links: [{ label: 'Google', href: 'https://www.google.com/' }],
 }
@@ -105,6 +105,69 @@ export const ENGI_CS4410 = {
   credits: 3,
   isFixedAssignment: true,
   courseId: CRSEID_CS4410,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+// fixed course assignments (ISST)
+export const CRSEID_ENGRD2700 = '358622'
+export const CRSEID_INFO2040 = '359378'
+
+export const CRSEID_INFO2300 = '358551'
+export const CRSEID_ORIE3300 = '351723'
+export const CRSEID_ORIE3500 = '351755'
+export const CRSEID_ORIE3800 = '351771'
+
+export const ISST_ENGRD2700 = {
+  name: 'ENGRD 2700',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_ENGRD2700,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_INFO2040 = {
+  name: 'INFO 2040',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_INFO2040,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_INFO2300 = {
+  name: 'INFO 2300',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_INFO2300,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_ORIE3300 = {
+  name: 'ORIE 3300',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_ORIE3300,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_ORIE3500 = {
+  name: 'ORIE 3500',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_ORIE3500,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_ORIE3800 = {
+  name: 'ORIE 3800',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_ORIE3800,
   description: 'Test requirement desc',
   links: [{ label: 'Google', href: 'https://www.google.com/' }],
 }
@@ -195,6 +258,47 @@ export const ENGI_FWS = {
   credits: 3,
   isFixedAssignment: false,
   description: 'FWS desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+// non-fixed course assignments (ISST)
+export const ISST_INFO2450 = {
+  name: 'INFO 2450 or ENGRC 3350',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_PHYS2214 = {
+  name: 'PHYS 2214',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_CS2800 = {
+  name: 'CS 2800 or MATH 3040 or MATH 2930',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_SPELECTIVE = {
+  name: 'Special Elective',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_3300OR4300 = {
+  name: 'ISST 3300 or 4300',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
   links: [{ label: 'Google', href: 'https://www.google.com/' }],
 }
 

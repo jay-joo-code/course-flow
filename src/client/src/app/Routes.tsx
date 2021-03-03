@@ -11,6 +11,7 @@ import MobileBlock from 'src/pages/MobileBlock'
 import { RootState } from 'src/types/redux'
 import New from 'src/pages/New'
 import ResetPsid from 'src/pages/ResetPsid'
+import FormTest from 'src/pages/FormTest'
 
 interface IRoute {
   path: string
@@ -75,6 +76,15 @@ export const routes: IRoute[] = [
     path: '/new',
     component: New,
     label: 'New',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: true,
+  },
+  {
+    path: '/form-test',
+    component: FormTest,
+    label: 'FormTest',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
