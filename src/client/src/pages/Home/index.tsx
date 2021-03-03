@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useCurrentUser, useCurrentUserPlans } from 'src/api/user'
+import { ReactComponent as IllustHome } from 'src/assets/illustrations/illust-home.svg'
 import { FlexColumn, FlexRow, Space } from 'src/components/layout'
 import Text from 'src/components/text'
 import useIsMobile from 'src/hooks/useIsMobile'
-import styled from 'styled-components'
-import { ReactComponent as IllustHome } from 'src/assets/illustrations/illust-home.svg'
-import UnauthedHome from './UnauthedHome'
-import { useCurrentUser, useCurrentUserPlans } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
-import SelectPlanHome from './SelectPlanHome'
+import styled from 'styled-components'
 import NoPlansHome from './NoPlansHome'
+import SelectPlanHome from './SelectPlanHome'
+import UnauthedHome from './UnauthedHome'
 
 const Container = styled(FlexRow)`
 
@@ -37,10 +37,8 @@ const Illustration = styled(IllustHome)`
 const Home = () => {
   const isMobile = useIsMobile()
   const { currentUser } = useCurrentUser()
-  const { plans, ...rest } = useCurrentUserPlans()
+  const { plans } = useCurrentUserPlans()
   const router = useRouter()
-
-  console.log('plans rest :>> ', plans?.length, rest)
 
   const getComponent = () => {
     if (!currentUser) return <UnauthedHome />
