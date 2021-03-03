@@ -5,5 +5,5 @@
 /cypress
 .idea
 .DS_Store
-.env
+/.env
 .vscode
