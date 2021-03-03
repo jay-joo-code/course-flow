@@ -82,7 +82,7 @@
   },
   "scripts": {
     "lint": "eslint --fix src/**/*.{ts,tsx}",
-    "start": "HTTPS=true && NODE_ENV=production && node src/app.ts",
+    "start": "HTTPS=true && NODE_ENV=production && ts-node src/app.ts",
     "dev": "NODE_ENV=development run-p api-dev client-dev",
     "api-dev": "PORT=5000 && cd src && nodemon app.ts --ignore './client/'",
     "client-dev": "cd src/client && npm run-script dev",
