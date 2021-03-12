@@ -1,6 +1,6 @@
 import express from 'express'
-import { IDepartmentDoc } from 'src/client/src/types/department'
 import Department from '../../models/Department'
+import { IDepartmentDoc } from './../../client/src/types/department'
 
 const departmentRouter = express.Router()
 

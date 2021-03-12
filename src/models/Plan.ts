@@ -1,9 +1,9 @@
-import { model, Schema } from 'mongoose'
-import { IPlanDoc } from 'src/client/src/types/plan'
-import Major from './Major'
-import User from './User'
-import Requirement from './Requirement'
 import generator from 'generate-password'
+import { model, Schema } from 'mongoose'
+import { IPlanDoc } from './../client/src/types/plan'
+import Major from './Major'
+import Requirement from './Requirement'
+import User from './User'
 
 const planSchema = new Schema({
   majorId: {

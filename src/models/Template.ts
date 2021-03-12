@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose'
-import { ITemplateDoc } from 'src/client/src/types/Template'
+import { ITemplateDoc } from './../client/src/types/Template'
 import Major from './Major'
 import Requirement from './Requirement'
 

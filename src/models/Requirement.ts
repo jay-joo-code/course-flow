@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose'
-import { IRequirementDoc } from 'src/client/src/types/requirement'
+import { IRequirementDoc } from './../client/src/types/requirement'
 import Course from './Course'
 
 const requirementSchema = new Schema({

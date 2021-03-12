@@ -1,6 +1,6 @@
 import express from 'express'
-import { IMajorDoc } from 'src/client/src/types/major'
 import Major from '../../models/Major'
+import { IMajorDoc } from './../../client/src/types/major'
 
 const majorRouter = express.Router()
 

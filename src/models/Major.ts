@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose'
-import { IMajorDoc } from 'src/client/src/types/major'
+import { IMajorDoc } from './../client/src/types/major'
 import Department from './Department'
 
 const majorSchema = new Schema({

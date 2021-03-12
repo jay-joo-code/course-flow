@@ -1,9 +1,9 @@
-import { IMajorDoc } from 'src/client/src/types/major'
 import Course from '../models/Course'
 import Department from '../models/Department'
 import Major from '../models/Major'
 import Requirement from '../models/Requirement'
 import Template from '../models/Template'
+import { IMajorDoc } from './../client/src/types/major'
 import { ENGI_ADVELECTIVE, ENGI_CHEM2080, ENGI_CHEM2090, ENGI_CS111X, ENGI_CS2110, ENGI_CS2800, ENGI_CS3110, ENGI_CS3410, ENGI_CS4410, ENGI_CS4820, ENGI_ENGRD, ENGI_ENGRI1XXX, ENGI_FWS, ENGI_LIBSTUD, ENGI_MAJELECTIVE, ENGI_MATH1910, ENGI_MATH1920, ENGI_MATH2940, ENGI_PE, ENGI_PHYS1112, ENGI_PHYS2213, ISST_3300OR4300, ISST_CONC1, ISST_CONC2, ISST_CS2800, ISST_ENGRD2700, ISST_INFO1200, ISST_INFO2040, ISST_INFO2300, ISST_INFO2450, ISST_MLDS, ISST_ORIE3120, ISST_ORIE3300, ISST_ORIE3500, ISST_ORIE3800, ISST_PHYS2214, ISST_SPELECTIVE } from './data'
 import { fetchAllClasses } from './roster'
 

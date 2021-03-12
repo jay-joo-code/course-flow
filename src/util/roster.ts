@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { ISemesterSlug, ISubjectSlug } from 'src/client/src/types/roster'
-import Course from './../models/Course'
+import { ISemesterSlug, ISubjectSlug } from './../client/src/types/roster'
 
 const BASE_URL = 'https://classes.cornell.edu/api/2.0'
 
