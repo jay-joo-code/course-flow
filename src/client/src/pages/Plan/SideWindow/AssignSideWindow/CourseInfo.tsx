@@ -101,27 +101,27 @@ const CourseInfo = ({ requirement, assignedCourse }: CourseInfoProps) => {
       {catalogWhenOffered && (
         <>
           <Text
-            variant='h5'
+            variant='h6'
             fontWeight={500}
           >When offered</Text>
-          <Text variant='h5'>{catalogWhenOffered}</Text>
+          <Text variant='h6'>{catalogWhenOffered}</Text>
           <Space margin='.5rem 0' />
         </>
       )}
       <Text
-        variant='h5'
+        variant='h6'
         fontWeight={500}
       >Prerequisites / Corequisites</Text>
-      <Text variant='h5'>{catalogPrereqCoreq || 'None'}</Text>
+      <Text variant='h6'>{catalogPrereqCoreq || 'None'}</Text>
       {description && (
         <>
           <Space margin='.5rem 0' />
           <Text
-            variant='h5'
+            variant='h6'
             fontWeight={500}
           >Description</Text>
           <Description
-            variant='h5'
+            variant='h6'
             isExpanded={isExpanded}
           >{description}</Description>
           <Space margin='.2rem 0' />

@@ -111,9 +111,12 @@ export const ENGI_CS4410 = {
 
 // fixed course assignments (ISST)
 export const CRSEID_ENGRD2700 = '358622'
-export const CRSEID_INFO2040 = '359378'
 
+export const CRSEID_INFO1200 = '366630'
+export const CRSEID_INFO2040 = '359378'
 export const CRSEID_INFO2300 = '358551'
+
+export const CRSEID_ORIE3120 = '358529'
 export const CRSEID_ORIE3300 = '351723'
 export const CRSEID_ORIE3500 = '351755'
 export const CRSEID_ORIE3800 = '351771'
@@ -123,6 +126,15 @@ export const ISST_ENGRD2700 = {
   credits: 3,
   isFixedAssignment: true,
   courseId: CRSEID_ENGRD2700,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_INFO1200 = {
+  name: 'INFO 1200',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_INFO1200,
   description: 'Test requirement desc',
   links: [{ label: 'Google', href: 'https://www.google.com/' }],
 }
@@ -141,6 +153,15 @@ export const ISST_INFO2300 = {
   credits: 3,
   isFixedAssignment: true,
   courseId: CRSEID_INFO2300,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_ORIE3120 = {
+  name: 'ORIE 3120',
+  credits: 3,
+  isFixedAssignment: true,
+  courseId: CRSEID_ORIE3120,
   description: 'Test requirement desc',
   links: [{ label: 'Google', href: 'https://www.google.com/' }],
 }
@@ -262,6 +283,30 @@ export const ENGI_FWS = {
 }
 
 // non-fixed course assignments (ISST)
+export const ISST_CONC1 = {
+  name: 'Conc. I Course',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_CONC2 = {
+  name: 'Conc. II Course',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
+export const ISST_MLDS = {
+  name: 'ML / Data Science',
+  credits: 3,
+  isFixedAssignment: false,
+  description: 'Test requirement desc',
+  links: [{ label: 'Google', href: 'https://www.google.com/' }],
+}
+
 export const ISST_INFO2450 = {
   name: 'INFO 2450 or ENGRC 3350',
   credits: 3,
